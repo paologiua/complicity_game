@@ -47,9 +47,9 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
       if (visible != _isKeyboardVisible) {
         if (widget.onKeyboardChange != null) widget.onKeyboardChange!(visible);
         if (visible) {
-          (widget.onKeyboardShow ?? (){})();
+          (widget.onKeyboardShow ?? () {})();
         } else {
-          (widget.onKeyboardHide ?? (){})();
+          (widget.onKeyboardHide ?? () {})();
         }
         _isKeyboardVisible = visible;
       }
@@ -132,27 +132,25 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
               horizontal: ThemeConstants.defaultPadding,
               vertical: ThemeConstants.defaultPadding / 2,
             ),
-            child: Center(
-              child: TextFormField(
-                initialValue: _player.name,
-                maxLength: 15,
-                cursorColor: Colors.black,
-                autofocus: true,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge,
-                decoration: const InputDecoration(
-                  hintText: 'Nome del giocatore',
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  counterText: '',
-                ),
-                onChanged: (String playerName) => setState(() {
-                  _player.name = playerName;
-                }),
-                onFieldSubmitted: (_) => {
-                  if (widget.onSubmitted != null) widget.onSubmitted!(_player)
-                },
+            child: TextFormField(
+              initialValue: _player.name,
+              maxLength: 15,
+              cursorColor: Colors.black,
+              autofocus: true,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge,
+              decoration: const InputDecoration(
+                hintText: 'Nome del giocatore',
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                counterText: '',
               ),
+              onChanged: (String playerName) => setState(() {
+                _player.name = playerName;
+              }),
+              onFieldSubmitted: (_) => {
+                if (widget.onSubmitted != null) widget.onSubmitted!(_player)
+              },
             ),
           ),
         ],

@@ -49,6 +49,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
                   child: FloatingButtonsSection(
                     buttons: [
                       FloatingButtonModel(
+                        key: "right_button",
                         icon: Icons.arrow_forward_rounded,
                         action: () =>
                             Navigator.pushNamed(context, "/second_step"),

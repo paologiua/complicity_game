@@ -34,18 +34,16 @@ class _FloatingButtonsSectionState extends State<FloatingButtonsSection> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: widget.buttons
-            .asMap()
-            .entries
-            .map((entry) => Padding(
+            .map((FloatingButtonModel button) => Padding(
                   padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
                   child: FloatingActionButton(
-                    heroTag: entry.key,
-                    onPressed: entry.value.action,
+                    heroTag: button.key,
+                    onPressed: button.action,
                     backgroundColor: ThemeConstants.greyPrimaryColor,
                     elevation: 0,
                     highlightElevation: 0,
                     child: Icon(
-                      entry.value.icon,
+                      button.icon,
                       color: ThemeConstants.defaultTextStyle.color,
                     ),
                   ),
