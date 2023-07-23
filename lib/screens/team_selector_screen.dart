@@ -103,7 +103,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                     child: Popup(
                       color: ThemeConstants.greyPrimaryColor,
                       borderColor: ThemeConstants.greySecondaryColor,
-                      icon: Icons.workspace_premium_outlined,
+                      icon: Icons.group_add_outlined,
                       text: "Inserisci i nomi dei partecipanti.",
                     ),
                   ),
