@@ -1,5 +1,4 @@
 import 'package:complicity_game/screens/first_step_screen.dart';
-import 'package:complicity_game/screens/home_screen.dart';
 import 'package:complicity_game/screens/second_step_screen.dart';
 import 'package:complicity_game/screens/team_selector_screen.dart';
 import 'package:complicity_game/screens/third_step_screen.dart';
