@@ -17,8 +17,12 @@ class ThemeConstants {
   static const Color bluePrimaryColor = Color(0xFF788AA3);
   static const Color blueSecondaryColor = Color(0xFF6D819A);
 
+  static const Color purplePrimaryColor = Color(0xFF666A86);
+  static const Color purpleSecondaryColor = Color(0xFF62647E);
+
   static const double defaultBorder = 20.0;
   static const double defaultPadding = 20.0;
+  static const double defaultMaxWidth = 400.0;
 
   static const double defaultIconSize = 48.0;
 

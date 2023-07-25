@@ -23,8 +23,12 @@ class _PopupState extends State<Popup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(vertical: ThemeConstants.defaultPadding),
+      padding: const EdgeInsets.symmetric(
+        vertical: ThemeConstants.defaultPadding,
+      ),
+      constraints: const BoxConstraints(
+        maxWidth: ThemeConstants.defaultMaxWidth,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [

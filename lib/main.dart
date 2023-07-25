@@ -58,6 +58,7 @@ class ComplicityGame extends StatelessWidget {
         ),
       ),
       routes: routes,
+      initialRoute: '/splash',
     );
   }
 }
