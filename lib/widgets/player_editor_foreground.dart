@@ -148,9 +148,13 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
               onChanged: (String playerName) => setState(() {
                 _player.name = playerName;
               }),
-              onFieldSubmitted: (_) => {
-                if (widget.onSubmitted != null) widget.onSubmitted!(_player)
-              },
+              onFieldSubmitted: widget.onSubmitted != null
+                  ? (_) => widget.onSubmitted!(
+                        _player.copyWith(
+                          name: _player.name.trim(),
+                        ),
+                      )
+                  : null,
             ),
           ),
         ],
