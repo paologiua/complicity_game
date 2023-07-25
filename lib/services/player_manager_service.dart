@@ -10,6 +10,12 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     return _players.map((PlayerModel player) => player.copy()).toList();
   }
 
+  List<PlayerModel> getPlayersByTeam(Team team) {
+    return getPlayers()
+        .where((PlayerModel player) => player.team == team)
+        .toList();
+  }
+
   PlayerModel? insertPlayer(PlayerModel player) {
     if (player.name.isEmpty) {
       return null;
@@ -58,14 +64,8 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     return index;
   }
 
-  List<PlayerModel> getPlayersByTeam(Team team) {
-    return getPlayers()
-        .where((PlayerModel player) => player.team == team)
-        .toList();
-  }
-
   void clear() {
-    _players = [];
-    lastKey = 0;
+    _players.clear();
+    lastKey = -1;
   }
 }
