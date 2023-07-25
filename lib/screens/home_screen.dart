@@ -47,19 +47,51 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  direction: Axis.vertical,
+                  spacing: ThemeConstants.defaultPadding,
                   children: [
                     SizedBox(
-                      height: 84.0,
+                      height: 64.0,
+                      width: 160.0,
                       child: FloatingActionButton.extended(
-                        backgroundColor: Colors.white,
-                        onPressed: () => Navigator.pushNamed(context, "/game_rules/1"),
-                        icon: Icon(Icons.emoji_objects_outlined, color: ThemeConstants.defaultTextStyle.color, size: ThemeConstants.defaultIconSize,),
-                        label: const Text(
-                          "Regole del gioco",
-                          style: ThemeConstants.defaultTextStyle,
+                        heroTag: "rules_button",
+                        backgroundColor: ThemeConstants.greyPrimaryColor,
+                        icon: Icon(
+                          Icons.emoji_objects_outlined,
+                          color: ThemeConstants.defaultTextStyle.color,
+                          size: ThemeConstants.defaultIconSize,
                         ),
+                        label: Text(
+                          "Regole",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        elevation: 0,
+                        highlightElevation: 0,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, "/game_rules/1"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 64.0,
+                      width: 160.0,
+                      child: FloatingActionButton.extended(
+                        heroTag: "game_button",
+                        backgroundColor: ThemeConstants.greyPrimaryColor,
+                        icon: Icon(
+                          Icons.psychology_alt_outlined,
+                          color: ThemeConstants.defaultTextStyle.color,
+                          size: ThemeConstants.defaultIconSize,
+                        ),
+                        label: Text(
+                          "Gioca",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        elevation: 0,
+                        highlightElevation: 0,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, "/team_selector"),
                       ),
                     ),
                   ],

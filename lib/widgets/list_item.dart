@@ -40,10 +40,7 @@ class _ListItemState extends State<ListItem> {
             child: Text(
               widget.text,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.0,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
         ),
