@@ -135,7 +135,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
             child: TextFormField(
               initialValue: _player.name,
               maxLength: 15,
-              cursorColor: Colors.black,
+              cursorColor: ThemeConstants.defaultTextStyle.color,
               autofocus: true,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
@@ -144,6 +144,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                 focusedBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
                 counterText: '',
+                contentPadding: EdgeInsets.all(0.0),
               ),
               onChanged: (String playerName) => setState(() {
                 _player.name = playerName;
