@@ -4,37 +4,49 @@ import 'package:flutter/foundation.dart';
 class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
   List<PlayerModel> _players = [];
 
-  int lastKey = 0;
+  int lastKey = -1;
 
   List<PlayerModel> getPlayers() {
-    return _players;
+    return _players.map((PlayerModel player) => player.copy()).toList();
   }
 
   PlayerModel? insertPlayer(PlayerModel player) {
-    if (player.name == "") {
+    if (player.name.isEmpty) {
       return null;
     }
 
     if (player.key == null) {
-      _players.add(player.copyWith(key: lastKey++));
+      _players.add(player.copyWith(key: ++lastKey));
 
-      return _players.last;
+      return _players.last.copy();
     }
 
-    int playerIndex = replacePlayerByKey(player);
+    int playerIndex = replacePlayer(player);
 
-    return playerIndex != -1 ? _players[playerIndex] : null;
+    return playerIndex != -1 ? _players[playerIndex].copy() : null;
   }
 
-  void removeLastPlayer() {
-    _players.removeLast();
+  PlayerModel? removeLastPlayer() {
+    if (_players.isEmpty) {
+      return null;
+    }
+
+    return _players.removeLast();
   }
 
-  void removePlayerByKey(dynamic key) {
-    _players.removeWhere((PlayerModel player) => player.key == key);
+  PlayerModel? removePlayerByKey(dynamic key) {
+    int index = _players.indexWhere(
+      (PlayerModel player) => player.key == key,
+    );
+
+    if (index == -1) {
+      return null;
+    }
+
+    return _players.removeAt(index);
   }
 
-  int replacePlayerByKey(PlayerModel player) {
+  int replacePlayer(PlayerModel player) {
     int index = _players.indexWhere(
       (PlayerModel item) => item.key == player.key,
     );
@@ -47,7 +59,9 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   List<PlayerModel> getPlayersByTeam(Team team) {
-    return _players.where((PlayerModel player) => player.team == team).toList();
+    return getPlayers()
+        .where((PlayerModel player) => player.team == team)
+        .toList();
   }
 
   void clear() {
