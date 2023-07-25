@@ -136,7 +136,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                         initialValue: _playerInEdit,
                         onKeyboardHide: closePlayerEditor,
                         onSubmitted: (PlayerModel player) => addPlayer(player),
-                        onCancel: () => closePlayerEditor(),
+                        onCancel: closePlayerEditor,
                       )
                     : null,
               ),

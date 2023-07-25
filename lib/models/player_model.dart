@@ -11,6 +11,14 @@ class PlayerModel {
   String name;
   Team team;
 
+  PlayerModel copy() {
+    return PlayerModel(
+      key: key,
+      name: name,
+      team: team,
+    );
+  }
+
   PlayerModel copyWith({
     dynamic key,
     String? name,

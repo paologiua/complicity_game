@@ -16,19 +16,14 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     }
 
     if (player.key == null) {
-      PlayerModel newPlayer = PlayerModel(
-        key: lastKey++,
-        name: player.name,
-        team: player.team,
-      );
-      _players.add(newPlayer);
+      _players.add(player.copyWith(key: lastKey++));
 
-      return newPlayer;
+      return _players.last;
     }
 
-    replacePlayerByKey(player);
-    
-    return player;
+    int playerIndex = replacePlayerByKey(player);
+
+    return playerIndex != -1 ? _players[playerIndex] : null;
   }
 
   void removeLastPlayer() {
@@ -39,14 +34,16 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     _players.removeWhere((PlayerModel player) => player.key == key);
   }
 
-  void replacePlayerByKey(PlayerModel player) {
-    int index =
-        _players.indexWhere((PlayerModel item) => item.key == player.key);
-    _players[index] = PlayerModel(
-      key: player.key,
-      name: player.name,
-      team: player.team,
+  int replacePlayerByKey(PlayerModel player) {
+    int index = _players.indexWhere(
+      (PlayerModel item) => item.key == player.key,
     );
+
+    if (index != -1) {
+      _players[index] = player.copy();
+    }
+
+    return index;
   }
 
   List<PlayerModel> getPlayersByTeam(Team team) {
