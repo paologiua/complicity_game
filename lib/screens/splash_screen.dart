@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(
       const Duration(seconds: 3),
-      () => Navigator.pushNamed(context, '/first_step'),
+      () => Navigator.pushNamed(context, '/'),
     );
     super.initState();
   }
@@ -110,14 +110,17 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
         Center(
-          child: Container(
-            padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-            constraints: const BoxConstraints(
-              maxWidth: ThemeConstants.defaultMaxWidth,
-            ),
-            child: SvgPicture.asset(
-              'assets/images/splash-icon.svg',
-              width: double.infinity,
+          child: Hero(
+            tag: "logo",
+            child: Container(
+              padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
+              constraints: const BoxConstraints(
+                maxWidth: ThemeConstants.defaultMaxWidth,
+              ),
+              child: SvgPicture.asset(
+                'assets/images/splash-icon.svg',
+                width: double.infinity,
+              ),
             ),
           ),
         )

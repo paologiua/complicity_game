@@ -57,7 +57,7 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
                     FloatingButtonModel(
                       key: "right_button",
                       icon: Icons.arrow_forward_rounded,
-                      action: () => Navigator.pushNamed(context, "/third_step"),
+                      action: () => Navigator.pushNamed(context, "/game_rules/3"),
                     ),
                   ],
                 ),

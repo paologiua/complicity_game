@@ -53,7 +53,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
                       key: "right_button",
                       icon: Icons.arrow_forward_rounded,
                       action: () =>
-                          Navigator.pushNamed(context, "/second_step"),
+                          Navigator.pushNamed(context, "/game_rules/2"),
                     ),
                   ],
                 ),

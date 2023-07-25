@@ -9,7 +9,10 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => PlayerManagerService()),
+        ChangeNotifierProvider(
+          create: (_) => PlayerManagerService(),
+          lazy: false,
+        ),
       ],
       child: const ComplicityGame(),
     ),

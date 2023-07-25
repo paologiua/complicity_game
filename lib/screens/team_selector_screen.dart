@@ -119,7 +119,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                     FloatingButtonModel(
                       key: "right_button",
                       icon: Icons.arrow_forward_rounded,
-                      action: () => Navigator.pushNamed(context, '/first_step'),
+                      action: () => Navigator.pushNamed(context, '/'),
                     ),
                   ],
                 ),
