@@ -16,6 +16,7 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeConstants.blueSecondaryColor,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -26,43 +27,42 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
               width: ThemeConstants.defaultBorder,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: ThemeConstants.defaultPadding),
-            child: Stack(
-              children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: Hero(
-                    tag: "popup",
-                    child: Popup(
-                      color: ThemeConstants.yellowPrimaryColor,
-                      borderColor: ThemeConstants.yellowSecondaryColor,
-                      icon: Icons.workspace_premium_outlined,
-                      text: "Vince la squadra che indovina più parole.",
+          padding: const EdgeInsets.symmetric(
+            horizontal: ThemeConstants.defaultPadding,
+          ),
+          child: Stack(
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Hero(
+                  tag: "popup",
+                  child: Popup(
+                    color: ThemeConstants.yellowPrimaryColor,
+                    borderColor: ThemeConstants.yellowSecondaryColor,
+                    icon: Icons.workspace_premium_outlined,
+                    text: "Vince la squadra che indovina più parole.",
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingButtonsSection(
+                  buttons: [
+                    FloatingButtonModel(
+                      key: "left_button",
+                      icon: Icons.arrow_back_rounded,
+                      action: () => Navigator.pop(context),
                     ),
-                  ),
+                    FloatingButtonModel(
+                      key: "right_button",
+                      icon: Icons.arrow_forward_rounded,
+                      action: () =>
+                          Navigator.pushNamed(context, '/team_selector'),
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingButtonsSection(
-                    buttons: [
-                      FloatingButtonModel(
-                        key: "left_button",
-                        icon: Icons.arrow_back_rounded,
-                        action: () => Navigator.pop(context),
-                      ),
-                      FloatingButtonModel(
-                        key: "right_button",
-                        icon: Icons.arrow_forward_rounded,
-                        action: () =>
-                            Navigator.pushNamed(context, '/team_selector'),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

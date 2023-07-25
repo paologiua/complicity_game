@@ -2,7 +2,7 @@ import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/routes.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,7 +14,7 @@ void main() {
       child: const ComplicityGame(),
     ),
   );
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 }
 
 class ComplicityGame extends StatelessWidget {
@@ -35,6 +35,9 @@ class ComplicityGame extends StatelessWidget {
           builders: {
             TargetPlatform.android: NoTransitionPageTransitionsBuilder(),
             TargetPlatform.iOS: NoTransitionPageTransitionsBuilder(),
+            TargetPlatform.linux: NoTransitionPageTransitionsBuilder(),
+            TargetPlatform.macOS: NoTransitionPageTransitionsBuilder(),
+            TargetPlatform.windows: NoTransitionPageTransitionsBuilder(),
           },
         ),
       ),

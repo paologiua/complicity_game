@@ -51,6 +51,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeConstants.blueSecondaryColor,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -61,90 +62,85 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
               width: ThemeConstants.defaultBorder,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: ThemeConstants.defaultPadding,
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: ThemeConstants.defaultPadding),
-                  child: ListView(
-                    children: [
-                      const SizedBox(height: 212.0),
-                      ...playerManagerService
-                          .getPlayers()
-                          .map(
-                            (PlayerModel player) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: ListItem(
-                                text: player.name,
-                                color: player.team == Team.green
-                                    ? ThemeConstants.greenPrimaryColor
-                                    : ThemeConstants.yellowPrimaryColor,
-                                borderColor: player.team == Team.green
-                                    ? ThemeConstants.greenSecondaryColor
-                                    : ThemeConstants.yellowSecondaryColor,
-                                onTap: () => openPlayerEditor(player),
-                              ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: ThemeConstants.defaultPadding,
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: ThemeConstants.defaultPadding),
+                child: ListView(
+                  children: [
+                    const SizedBox(height: 212.0),
+                    ...playerManagerService
+                        .getPlayers()
+                        .map(
+                          (PlayerModel player) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: ListItem(
+                              text: player.name,
+                              color: player.team == Team.green
+                                  ? ThemeConstants.greenPrimaryColor
+                                  : ThemeConstants.yellowPrimaryColor,
+                              borderColor: player.team == Team.green
+                                  ? ThemeConstants.greenSecondaryColor
+                                  : ThemeConstants.yellowSecondaryColor,
+                              onTap: () => openPlayerEditor(player),
                             ),
-                          )
-                          .toList(),
-                      const SizedBox(height: 96.0),
-                    ],
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment.topCenter,
-                  child: Hero(
-                    tag: "popup",
-                    child: Popup(
-                      color: ThemeConstants.greyPrimaryColor,
-                      borderColor: ThemeConstants.greySecondaryColor,
-                      icon: Icons.group_add_outlined,
-                      text: "Inserisci i nomi dei partecipanti.",
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingButtonsSection(
-                    buttons: [
-                      FloatingButtonModel(
-                        key: "left_button",
-                        icon: Icons.add_rounded,
-                        action: () => openPlayerEditor(null),
-                      ),
-                      FloatingButtonModel(
-                        key: "right_button",
-                        icon: Icons.arrow_forward_rounded,
-                        action: () =>
-                            Navigator.pushNamed(context, '/first_step'),
-                      ),
-                    ],
-                  ),
-                ),
-                AnimatedSwitcher(
-                  duration: ThemeConstants.defaultDuration,
-                  switchInCurve: ThemeConstants.defaultCurve,
-                  switchOutCurve: ThemeConstants.defaultCurve,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) =>
-                          FadeTransition(opacity: animation, child: child),
-                  child: !playerEditorClosed
-                      ? PlayerEditorForeground(
-                          initialValue: _playerInEdit,
-                          onKeyboardHide: closePlayerEditor,
-                          onSubmitted: (PlayerModel player) =>
-                              addPlayer(player),
-                          onCancel: () => closePlayerEditor(),
+                          ),
                         )
-                      : null,
+                        .toList(),
+                    const SizedBox(height: 96.0),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Hero(
+                  tag: "popup",
+                  child: Popup(
+                    color: ThemeConstants.greyPrimaryColor,
+                    borderColor: ThemeConstants.greySecondaryColor,
+                    icon: Icons.group_add_outlined,
+                    text: "Inserisci i nomi dei partecipanti.",
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingButtonsSection(
+                  buttons: [
+                    FloatingButtonModel(
+                      key: "left_button",
+                      icon: Icons.add_rounded,
+                      action: () => openPlayerEditor(null),
+                    ),
+                    FloatingButtonModel(
+                      key: "right_button",
+                      icon: Icons.arrow_forward_rounded,
+                      action: () => Navigator.pushNamed(context, '/first_step'),
+                    ),
+                  ],
+                ),
+              ),
+              AnimatedSwitcher(
+                duration: ThemeConstants.defaultDuration,
+                switchInCurve: ThemeConstants.defaultCurve,
+                switchOutCurve: ThemeConstants.defaultCurve,
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) =>
+                        FadeTransition(opacity: animation, child: child),
+                child: !playerEditorClosed
+                    ? PlayerEditorForeground(
+                        initialValue: _playerInEdit,
+                        onKeyboardHide: closePlayerEditor,
+                        onSubmitted: (PlayerModel player) => addPlayer(player),
+                        onCancel: () => closePlayerEditor(),
+                      )
+                    : null,
+              ),
+            ],
           ),
         ),
       ),

@@ -16,6 +16,7 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeConstants.blueSecondaryColor,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -26,45 +27,42 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
               width: ThemeConstants.defaultBorder,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: ThemeConstants.defaultPadding),
-            child: Stack(
-              children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: Hero(
-                    tag: "popup",
-                    child: Popup(
-                      color: ThemeConstants.greenPrimaryColor,
-                      borderColor: ThemeConstants.greenSecondaryColor,
-                      icon: Icons.psychology_alt_outlined,
-                      text:
-                          "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la praola alla propria squadra piuttosto che a quella avversaria.",
+          padding: const EdgeInsets.symmetric(
+            horizontal: ThemeConstants.defaultPadding,
+          ),
+          child: Stack(
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Hero(
+                  tag: "popup",
+                  child: Popup(
+                    color: ThemeConstants.greenPrimaryColor,
+                    borderColor: ThemeConstants.greenSecondaryColor,
+                    icon: Icons.psychology_alt_outlined,
+                    text:
+                        "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la praola alla propria squadra piuttosto che a quella avversaria.",
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingButtonsSection(
+                  buttons: [
+                    FloatingButtonModel(
+                      key: "left_button",
+                      icon: Icons.arrow_back_rounded,
+                      action: () => Navigator.pop(context),
                     ),
-                  ),
+                    FloatingButtonModel(
+                      key: "right_button",
+                      icon: Icons.arrow_forward_rounded,
+                      action: () => Navigator.pushNamed(context, "/third_step"),
+                    ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingButtonsSection(
-                    buttons: [
-                      FloatingButtonModel(
-                        key: "left_button",
-                        icon: Icons.arrow_back_rounded,
-                        action: () =>
-                            Navigator.pop(context),
-                      ),
-                      FloatingButtonModel(
-                        key: "right_button",
-                        icon: Icons.arrow_forward_rounded,
-                        action: () =>
-                            Navigator.pushNamed(context, "/third_step"),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

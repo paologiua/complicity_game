@@ -16,6 +16,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeConstants.blueSecondaryColor,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -26,39 +27,38 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
               width: ThemeConstants.defaultBorder,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: ThemeConstants.defaultPadding),
-            child: Stack(
-              children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: Hero(
-                    tag: "popup",
-                    child: Popup(
-                      color: ThemeConstants.greenPrimaryColor,
-                      borderColor: ThemeConstants.greenSecondaryColor,
-                      icon: Icons.emoji_objects_outlined,
-                      text:
-                          "Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco.",
+          padding: const EdgeInsets.symmetric(
+            horizontal: ThemeConstants.defaultPadding,
+          ),
+          child: Stack(
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Hero(
+                  tag: "popup",
+                  child: Popup(
+                    color: ThemeConstants.greenPrimaryColor,
+                    borderColor: ThemeConstants.greenSecondaryColor,
+                    icon: Icons.emoji_objects_outlined,
+                    text:
+                        "Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco.",
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingButtonsSection(
+                  buttons: [
+                    FloatingButtonModel(
+                      key: "right_button",
+                      icon: Icons.arrow_forward_rounded,
+                      action: () =>
+                          Navigator.pushNamed(context, "/second_step"),
                     ),
-                  ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FloatingButtonsSection(
-                    buttons: [
-                      FloatingButtonModel(
-                        key: "right_button",
-                        icon: Icons.arrow_forward_rounded,
-                        action: () =>
-                            Navigator.pushNamed(context, "/second_step"),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
