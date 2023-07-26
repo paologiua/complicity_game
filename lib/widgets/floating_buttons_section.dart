@@ -42,6 +42,8 @@ class _FloatingButtonsSectionState extends State<FloatingButtonsSection> {
                     backgroundColor: ThemeConstants.greyPrimaryColor,
                     elevation: 0,
                     highlightElevation: 0,
+                    focusElevation: 0,
+                    hoverElevation: 0,
                     child: Icon(
                       button.icon,
                       color: ThemeConstants.defaultTextStyle.color,

@@ -69,6 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         elevation: 0,
                         highlightElevation: 0,
+                        focusElevation: 0,
+                        hoverElevation: 0,
                         onPressed: () =>
                             Navigator.pushNamed(context, "/game_rules/1"),
                       ),
@@ -90,6 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         elevation: 0,
                         highlightElevation: 0,
+                        focusElevation: 0,
+                        hoverElevation: 0,
                         onPressed: () =>
                             Navigator.pushNamed(context, "/team_selector"),
                       ),

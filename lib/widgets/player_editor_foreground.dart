@@ -74,7 +74,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 80.0, sigmaY: 80.0),
+      filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -90,6 +90,8 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                       backgroundColor: ThemeConstants.greyPrimaryColor,
                       elevation: 0,
                       highlightElevation: 0,
+                      focusElevation: 0,
+                      hoverElevation: 0,
                       icon: Icon(
                         Icons.close,
                         color: ThemeConstants.defaultTextStyle.color,
