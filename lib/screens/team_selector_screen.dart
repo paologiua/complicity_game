@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
@@ -102,7 +103,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                   child: Popup(
                     color: ThemeConstants.greyPrimaryColor,
                     borderColor: ThemeConstants.greySecondaryColor,
-                    icon: Icons.group_add_outlined,
+                    icon: IconsConstants.groupAdd,
                     text: "Inserisci i nomi dei partecipanti.",
                   ),
                 ),
@@ -113,12 +114,12 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                   buttons: [
                     FloatingButtonModel(
                       key: "left_button",
-                      icon: Icons.add_rounded,
+                      icon: IconsConstants.add,
                       action: () => openPlayerEditor(null),
                     ),
                     FloatingButtonModel(
                       key: "right_button",
-                      icon: Icons.arrow_forward_rounded,
+                      icon: IconsConstants.arrowForward,
                       action: () => Navigator.pushNamed(context, '/'),
                     ),
                   ],

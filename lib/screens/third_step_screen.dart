@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
                   child: Popup(
                     color: ThemeConstants.yellowPrimaryColor,
                     borderColor: ThemeConstants.yellowSecondaryColor,
-                    icon: Icons.workspace_premium_outlined,
+                    icon: IconsConstants.socialLeaderboard,
                     text: "Vince la squadra che indovina più parole.",
                   ),
                 ),
@@ -50,12 +51,12 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
                   buttons: [
                     FloatingButtonModel(
                       key: "left_button",
-                      icon: Icons.arrow_back_rounded,
+                      icon: IconsConstants.arrowBack,
                       action: () => Navigator.pop(context),
                     ),
                     FloatingButtonModel(
                       key: "right_button",
-                      icon: Icons.arrow_forward_rounded,
+                      icon: IconsConstants.arrowForward,
                       action: () =>
                           Navigator.pushNamed(context, '/team_selector'),
                     ),

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/widgets/team_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -93,7 +94,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                       focusElevation: 0,
                       hoverElevation: 0,
                       icon: Icon(
-                        Icons.close,
+                        IconsConstants.close,
                         color: ThemeConstants.defaultTextStyle.color,
                       ),
                       label: Text(

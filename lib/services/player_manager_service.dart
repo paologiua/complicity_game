@@ -2,7 +2,7 @@ import 'package:complicity_game/models/player_model.dart';
 import 'package:flutter/foundation.dart';
 
 class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
-  List<PlayerModel> _players = [];
+  final List<PlayerModel> _players = [];
 
   int lastKey = -1;
 

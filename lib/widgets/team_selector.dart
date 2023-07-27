@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -66,10 +67,11 @@ class _TeamSelectorState extends State<TeamSelector> {
                 child: Column(
                   children: <Widget>[
                     Icon(
-                      Icons.emoji_objects_outlined,
+                      IconsConstants.emojiObjects,
                       size: ThemeConstants.defaultIconSize,
                       color: ThemeConstants.defaultTextStyle.color,
                     ),
+                    const SizedBox(height: 10.0),
                     Text(
                       "Squadra gialla",
                       textAlign: TextAlign.center,
@@ -101,10 +103,11 @@ class _TeamSelectorState extends State<TeamSelector> {
                 child: Column(
                   children: <Widget>[
                     Icon(
-                      Icons.psychology_alt_outlined,
+                      IconsConstants.cognition,
                       size: ThemeConstants.defaultIconSize,
                       color: ThemeConstants.defaultTextStyle.color,
                     ),
+                    const SizedBox(height: 10.0),
                     Text(
                       "Squadra verde",
                       textAlign: TextAlign.center,

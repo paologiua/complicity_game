@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
                   child: Popup(
                     color: ThemeConstants.greenPrimaryColor,
                     borderColor: ThemeConstants.greenSecondaryColor,
-                    icon: Icons.emoji_objects_outlined,
+                    icon: IconsConstants.emojiObjects,
                     text:
                         "Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco.",
                   ),
@@ -51,7 +52,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
                   buttons: [
                     FloatingButtonModel(
                       key: "right_button",
-                      icon: Icons.arrow_forward_rounded,
+                      icon: IconsConstants.arrowForward,
                       action: () =>
                           Navigator.pushNamed(context, "/game_rules/2"),
                     ),

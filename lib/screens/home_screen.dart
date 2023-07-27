@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         heroTag: "rules_button",
                         backgroundColor: ThemeConstants.greyPrimaryColor,
                         icon: Icon(
-                          Icons.emoji_objects_outlined,
+                          IconsConstants.emojiObjects,
                           color: ThemeConstants.defaultTextStyle.color,
                           size: ThemeConstants.defaultIconSize,
                         ),
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         heroTag: "game_button",
                         backgroundColor: ThemeConstants.greyPrimaryColor,
                         icon: Icon(
-                          Icons.psychology_alt_outlined,
+                          IconsConstants.cognition,
                           color: ThemeConstants.defaultTextStyle.color,
                           size: ThemeConstants.defaultIconSize,
                         ),

@@ -93,6 +93,10 @@ flutter:
         - asset: fonts/Poppins/Poppins-Italic.ttf
           style: italic
 
+    - family: icomoon
+      fonts:
+        - asset: fonts/icomoon/icomoon.ttf
+
 flutter_icons:
   android: true
   image_path_android: "assets/images/android-icon.png"
