@@ -53,8 +53,10 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
                     FloatingButtonModel(
                       key: "right_button",
                       icon: IconsConstants.arrowForward,
-                      action: () =>
-                          Navigator.pushNamed(context, "/game_rules/2"),
+                      action: () => Navigator.pushNamed(
+                        context,
+                        "/game_rules/2",
+                      ),
                     ),
                   ],
                 ),

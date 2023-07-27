@@ -58,8 +58,10 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
                     FloatingButtonModel(
                       key: "right_button",
                       icon: IconsConstants.arrowForward,
-                      action: () =>
-                          Navigator.pushNamed(context, '/team_selector'),
+                      action: () => Navigator.pushNamed(
+                        context,
+                        '/team_selector',
+                      ),
                     ),
                   ],
                 ),
