@@ -4,6 +4,7 @@ import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
 import '../widgets/floating_buttons_section.dart';
@@ -96,7 +97,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                   ],
                 ),
               ),
-              const Align(
+              Align(
                 alignment: Alignment.topCenter,
                 child: Hero(
                   tag: "popup",
@@ -104,7 +105,8 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                     color: ThemeConstants.greyPrimaryColor,
                     borderColor: ThemeConstants.greySecondaryColor,
                     icon: IconsConstants.groupAdd,
-                    text: "Inserisci i nomi dei partecipanti.",
+                    text: AppLocalizations.of(context)!
+                        .enterParticipantsNamesText,
                   ),
                 ),
               ),

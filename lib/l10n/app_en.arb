@@ -1,0 +1,18 @@
+{
+  "gameRulesPart1": "Complicity Game is a group game. You need to divide the participants into two teams composed of people with a great sense of mutual complicity.",
+  "@gameRulesPart1": {
+    "description": "The first part of the game rules displayed to the user"
+  },
+  "gameRulesPart2": "At each turn the game chooses a word and a participant. The latter, through clues, will have to get their team to guess the word rather than the opposing team.",
+  "@gameRulesPart2": {
+    "description": "The second part of the game rules displayed to the user"
+  },
+  "gameRulesPart3": "The team that guesses the most words wins.",
+  "@gameRulesPart3": {
+    "description": "The third part of the game rules displayed to the user"
+  },
+	"enterParticipantsNamesText": "Enter participants' names.",
+	"@enterParticipantsNamesText": {
+    "description": "The text prompting the user to enter participants' names"
+	}
+}

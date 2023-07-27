@@ -2,6 +2,7 @@ import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/floating_buttons_section.dart';
 import '../widgets/popup.dart';
@@ -33,7 +34,7 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
           ),
           child: Stack(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Hero(
                   tag: "popup",
@@ -41,8 +42,7 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
                     color: ThemeConstants.greenPrimaryColor,
                     borderColor: ThemeConstants.greenSecondaryColor,
                     icon: IconsConstants.cognition,
-                    text:
-                        "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la praola alla propria squadra piuttosto che a quella avversaria.",
+                    text: AppLocalizations.of(context)!.gameRulesPart2,
                   ),
                 ),
               ),
@@ -58,7 +58,10 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
                     FloatingButtonModel(
                       key: "right_button",
                       icon: IconsConstants.arrowForward,
-                      action: () => Navigator.pushNamed(context, "/game_rules/3"),
+                      action: () => Navigator.pushNamed(
+                        context,
+                        "/game_rules/3",
+                      ),
                     ),
                   ],
                 ),

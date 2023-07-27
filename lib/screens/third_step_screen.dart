@@ -2,6 +2,7 @@ import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/floating_button_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/floating_buttons_section.dart';
 import '../widgets/popup.dart';
@@ -33,7 +34,7 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
           ),
           child: Stack(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Hero(
                   tag: "popup",
@@ -41,7 +42,7 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
                     color: ThemeConstants.yellowPrimaryColor,
                     borderColor: ThemeConstants.yellowSecondaryColor,
                     icon: IconsConstants.socialLeaderboard,
-                    text: "Vince la squadra che indovina più parole.",
+                    text: AppLocalizations.of(context)!.gameRulesPart3,
                   ),
                 ),
               ),

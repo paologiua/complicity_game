@@ -3,6 +3,7 @@ import 'package:complicity_game/routes.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -17,7 +18,7 @@ void main() {
       child: const ComplicityGame(),
     ),
   );
-  
+
   //Setting SysemUIOverlay
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -60,6 +61,8 @@ class ComplicityGame extends StatelessWidget {
           },
         ),
       ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routes: routes,
       initialRoute: '/splash',
     );
