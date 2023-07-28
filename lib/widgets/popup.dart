@@ -61,7 +61,7 @@ class _PopupState extends State<Popup> {
             Icon(
               widget.icon,
               size: ThemeConstants.defaultIconSize,
-              color: ThemeConstants.defaultTextStyle.color,
+              color: ThemeConstants.defaultTextColor,
             ),
             Text(
               widget.text,

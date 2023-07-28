@@ -46,7 +46,7 @@ class _FloatingButtonsSectionState extends State<FloatingButtonsSection> {
                     hoverElevation: 0,
                     child: Icon(
                       button.icon,
-                      color: ThemeConstants.defaultTextStyle.color,
+                      color: ThemeConstants.defaultTextColor,
                     ),
                   ),
                 ))

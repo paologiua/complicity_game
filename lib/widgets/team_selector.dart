@@ -66,10 +66,10 @@ class _TeamSelectorState extends State<TeamSelector> {
                 curve: ThemeConstants.defaultCurve,
                 child: Column(
                   children: <Widget>[
-                    Icon(
+                    const Icon(
                       IconsConstants.emojiObjects,
                       size: ThemeConstants.defaultIconSize,
-                      color: ThemeConstants.defaultTextStyle.color,
+                      color: ThemeConstants.defaultTextColor,
                     ),
                     const SizedBox(height: 10.0),
                     Text(
@@ -102,10 +102,10 @@ class _TeamSelectorState extends State<TeamSelector> {
                 curve: ThemeConstants.defaultCurve,
                 child: Column(
                   children: <Widget>[
-                    Icon(
+                    const Icon(
                       IconsConstants.cognition,
                       size: ThemeConstants.defaultIconSize,
-                      color: ThemeConstants.defaultTextStyle.color,
+                      color: ThemeConstants.defaultTextColor,
                     ),
                     const SizedBox(height: 10.0),
                     Text(

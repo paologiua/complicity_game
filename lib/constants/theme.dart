@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ThemeConstants {
-  static const Color primaryColor = Color(0xFF007AFF);
-  static const Color secondaryColor = Color(0xFF00C853);
-  // Altre costanti relative al tema...
-
   static const Color greenPrimaryColor = Color(0xFFB2C9AB);
   static const Color greenSecondaryColor = Color(0xFFA6C19F);
 
@@ -20,17 +16,18 @@ class ThemeConstants {
   static const Color purplePrimaryColor = Color(0xFF666A86);
   static const Color purpleSecondaryColor = Color(0xFF62647E);
 
+  static const Color defaultTextColor = Color(0xFF1C1B1F);
+  static const TextStyle defaultTextStyle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 18.0,
+    color: defaultTextColor,
+  );
+
   static const double defaultBorder = 20.0;
   static const double defaultPadding = 20.0;
   static const double defaultMaxWidth = 400.0;
 
   static const double defaultIconSize = 48.0;
-
-  static const TextStyle defaultTextStyle = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 18.0,
-    color: Color(0xFF1C1B1F),
-  );
 
   static const Duration defaultDuration = Duration(milliseconds: 300);
   static const Curve defaultCurve = Curves.easeOutCirc;

@@ -39,11 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       tag: "popup",
                       child: Container(
                         height: 300.0,
+                        constraints: const BoxConstraints(
+                          maxWidth: ThemeConstants.defaultMaxWidth,
+                        ),
                         padding:
                             const EdgeInsets.all(ThemeConstants.defaultPadding),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF606971),
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          color:
+                              ThemeConstants.defaultTextColor.withOpacity(0.3),
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(60.0),
                           ),
                         ),
@@ -74,11 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     direction: Axis.vertical,
                                     runSpacing: ThemeConstants.defaultPadding,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.rule_rounded,
-                                        color: ThemeConstants
-                                            .defaultTextStyle.color,
-                                        size: 48.0,
+                                        color: ThemeConstants.defaultTextColor,
+                                        size: ThemeConstants.defaultIconSize,
                                       ),
                                       Center(
                                         child: Text(
@@ -117,11 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     direction: Axis.vertical,
                                     runSpacing: ThemeConstants.defaultPadding,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.sports_kabaddi_rounded,
-                                        color: ThemeConstants
-                                            .defaultTextStyle.color,
-                                        size: 48.0,
+                                        color: ThemeConstants.defaultTextColor,
+                                        size: ThemeConstants.defaultIconSize,
                                       ),
                                       Center(
                                         child: Text(

@@ -93,9 +93,9 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                       highlightElevation: 0,
                       focusElevation: 0,
                       hoverElevation: 0,
-                      icon: Icon(
+                      icon: const Icon(
                         IconsConstants.close,
-                        color: ThemeConstants.defaultTextStyle.color,
+                        color: ThemeConstants.defaultTextColor,
                       ),
                       label: Text(
                         "Elimina",
@@ -138,7 +138,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
             child: TextFormField(
               initialValue: _player.name,
               maxLength: 15,
-              cursorColor: ThemeConstants.defaultTextStyle.color,
+              cursorColor: ThemeConstants.defaultTextColor,
               autofocus: true,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
