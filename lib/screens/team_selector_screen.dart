@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
+import '../widgets/custom_scaffold.dart';
 import '../widgets/floating_buttons_section.dart';
 import '../widgets/list_item.dart';
 import '../widgets/player_editor_foreground.dart';
@@ -52,118 +53,102 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeConstants.blueSecondaryColor,
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            color: ThemeConstants.bluePrimaryColor,
-            border: Border.all(
-              color: ThemeConstants.blueSecondaryColor,
-              style: BorderStyle.solid,
-              width: ThemeConstants.defaultBorder,
+    return CustomScaffold(
+      body: Stack(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(top: ThemeConstants.defaultPadding),
+            child: ListView(
+              children: [
+                const SizedBox(height: 212.0),
+                ...playerManagerService
+                    .getPlayers()
+                    .map(
+                      (PlayerModel player) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: ListItem(
+                          text: player.name,
+                          color: player.team == Team.green
+                              ? ThemeConstants.greenPrimaryColor
+                              : ThemeConstants.yellowPrimaryColor,
+                          borderColor: player.team == Team.green
+                              ? ThemeConstants.greenSecondaryColor
+                              : ThemeConstants.yellowSecondaryColor,
+                          onTap: () => openPlayerEditor(player),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                const SizedBox(height: 96.0),
+              ],
             ),
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: ThemeConstants.defaultPadding,
-          ),
-          child: Stack(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: ThemeConstants.defaultPadding),
-                child: ListView(
-                  children: [
-                    const SizedBox(height: 212.0),
-                    ...playerManagerService
-                        .getPlayers()
-                        .map(
-                          (PlayerModel player) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: ListItem(
-                              text: player.name,
-                              color: player.team == Team.green
-                                  ? ThemeConstants.greenPrimaryColor
-                                  : ThemeConstants.yellowPrimaryColor,
-                              borderColor: player.team == Team.green
-                                  ? ThemeConstants.greenSecondaryColor
-                                  : ThemeConstants.yellowSecondaryColor,
-                              onTap: () => openPlayerEditor(player),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    const SizedBox(height: 96.0),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: ThemeConstants.defaultPadding,
+              ),
+              constraints: const BoxConstraints(
+                maxWidth: ThemeConstants.defaultMaxWidth,
+              ),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    ThemeConstants.bluePrimaryColor,
+                    ThemeConstants.bluePrimaryColor.withOpacity(0.0),
                   ],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(0.0, 1.0),
+                  stops: const [0.8, 1.0],
+                  tileMode: TileMode.clamp,
                 ),
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: ThemeConstants.defaultPadding,
-                  ),
-                  constraints: const BoxConstraints(
-                    maxWidth: ThemeConstants.defaultMaxWidth,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        ThemeConstants.bluePrimaryColor,
-                        ThemeConstants.bluePrimaryColor.withOpacity(0.0),
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(0.0, 1.0),
-                      stops: const [0.8, 1.0],
-                      tileMode: TileMode.clamp,
-                    ),
-                  ),
-                  child: Pill(
-                    heroTag: "popup",
-                    color: ThemeConstants.greyPrimaryColor,
-                    borderColor: ThemeConstants.greySecondaryColor,
-                    icon: IconsConstants.groupAdd,
-                    text: AppLocalizations.of(context)!
-                        .enterParticipantsNamesText,
-                  ),
-                ),
+              child: Pill(
+                heroTag: "popup",
+                color: ThemeConstants.greyPrimaryColor,
+                borderColor: ThemeConstants.greySecondaryColor,
+                icon: IconsConstants.groupAdd,
+                text: AppLocalizations.of(context)!
+                    .enterParticipantsNamesText,
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingButtonsSection(
-                  buttons: [
-                    FloatingButtonModel(
-                      key: "left_button",
-                      icon: IconsConstants.add,
-                      action: () => openPlayerEditor(null),
-                    ),
-                    FloatingButtonModel(
-                      key: "right_button",
-                      icon: IconsConstants.arrowForward,
-                      action: () => Navigator.pushNamed(context, '/'),
-                    ),
-                  ],
-                ),
-              ),
-              AnimatedSwitcher(
-                duration: ThemeConstants.defaultDuration,
-                switchInCurve: ThemeConstants.defaultCurve,
-                switchOutCurve: ThemeConstants.defaultCurve,
-                transitionBuilder:
-                    (Widget child, Animation<double> animation) =>
-                        FadeTransition(opacity: animation, child: child),
-                child: !playerEditorClosed
-                    ? PlayerEditorForeground(
-                        initialValue: _playerInEdit,
-                        onKeyboardHide: closePlayerEditor,
-                        onSubmitted: (PlayerModel player) => addPlayer(player),
-                        onCancel: closePlayerEditor,
-                      )
-                    : null,
-              ),
-            ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FloatingButtonsSection(
+              buttons: [
+                FloatingButtonModel(
+                  key: "left_button",
+                  icon: IconsConstants.add,
+                  action: () => openPlayerEditor(null),
+                ),
+                FloatingButtonModel(
+                  key: "right_button",
+                  icon: IconsConstants.arrowForward,
+                  action: () => Navigator.pushNamed(context, '/'),
+                ),
+              ],
+            ),
+          ),
+          AnimatedSwitcher(
+            duration: ThemeConstants.defaultDuration,
+            switchInCurve: ThemeConstants.defaultCurve,
+            switchOutCurve: ThemeConstants.defaultCurve,
+            transitionBuilder:
+                (Widget child, Animation<double> animation) =>
+                    FadeTransition(opacity: animation, child: child),
+            child: !playerEditorClosed
+                ? PlayerEditorForeground(
+                    initialValue: _playerInEdit,
+                    onKeyboardHide: closePlayerEditor,
+                    onSubmitted: (PlayerModel player) => addPlayer(player),
+                    onCancel: closePlayerEditor,
+                  )
+                : null,
+          ),
+        ],
       ),
     );
   }
