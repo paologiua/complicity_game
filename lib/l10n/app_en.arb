@@ -14,5 +14,13 @@
 	"enterParticipantsNamesText": "Enter participants' names.",
 	"@enterParticipantsNamesText": {
     "description": "The text prompting the user to enter participants' names"
+	},
+	"gameRulesButtonLabel": "Game rules",
+	"@gameRulesButtonLabel": {
+    "description": "Text of the button to access the game rules screen"
+	},
+	"startGameButtonLabel": "Start game",
+	"@startGameButtonLabel": {
+    "description": "Text of the button to start a game"
 	}
 }

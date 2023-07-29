@@ -1,6 +1,7 @@
 import 'package:complicity_game/widgets/pill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../constants/theme.dart';
 import '../widgets/custom_scaffold.dart';
@@ -41,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: ThemeConstants.greenPrimaryColor,
                         borderColor: ThemeConstants.greenSecondaryColor,
                         icon: Icons.rule_rounded,
-                        text: "Regolamento",
+                        text:
+                            AppLocalizations.of(context)!.gameRulesButtonLabel,
                         direction: Axis.horizontal,
                         onTap: () => Navigator.pushNamed(
                           context,
@@ -52,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: ThemeConstants.yellowPrimaryColor,
                         borderColor: ThemeConstants.yellowSecondaryColor,
                         icon: Icons.sports_kabaddi_rounded,
-                        text: "Inizia una partita",
+                        text:
+                            AppLocalizations.of(context)!.startGameButtonLabel,
                         direction: Axis.horizontal,
                         onTap: () => Navigator.pushNamed(
                           context,
