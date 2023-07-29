@@ -90,9 +90,6 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
               padding: const EdgeInsets.symmetric(
                 vertical: ThemeConstants.defaultPadding,
               ),
-              constraints: const BoxConstraints(
-                maxWidth: ThemeConstants.defaultMaxWidth,
-              ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [

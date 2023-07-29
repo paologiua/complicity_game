@@ -27,9 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Hero(
                 tag: "popup",
                 child: Container(
-                  constraints: const BoxConstraints(
-                    maxWidth: ThemeConstants.defaultMaxWidth,
-                  ),
                   padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
                   decoration: BoxDecoration(
                     color: ThemeConstants.defaultTextColor.withOpacity(0.3),
@@ -76,9 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 padding: const EdgeInsets.all(
                   ThemeConstants.defaultPadding,
-                ),
-                constraints: const BoxConstraints(
-                  maxWidth: ThemeConstants.defaultMaxWidth,
                 ),
                 child: SvgPicture.asset(
                   'assets/images/splash-icon.svg',

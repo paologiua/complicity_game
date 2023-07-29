@@ -23,7 +23,7 @@ class ThemeConstants {
     color: defaultTextColor,
   );
 
-  static const double defaultMaxWidth = 400.0;
+  static const double defaultMaxWidth = 350.0;
   static const double defaultPadding = 20.0;
   static const double defaultBorder = 20.0;
   static const double defaultBorderRadius = 20.0;

@@ -32,7 +32,14 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           padding: const EdgeInsets.symmetric(
             horizontal: ThemeConstants.defaultPadding,
           ),
-          child: widget.body,
+          child: Center(
+            child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: ThemeConstants.defaultMaxWidth,
+              ),
+              child: widget.body,
+            ),
+          ),
         ),
       ),
     );
