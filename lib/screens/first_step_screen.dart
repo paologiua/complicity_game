@@ -36,14 +36,12 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Hero(
-                  tag: "popup",
-                  child: Popup(
-                    color: ThemeConstants.greenPrimaryColor,
-                    borderColor: ThemeConstants.greenSecondaryColor,
-                    icon: IconsConstants.emojiObjects,
-                    text: AppLocalizations.of(context)!.gameRulesPart1,
-                  ),
+                child: Popup(
+                  heroTag: "popup",
+                  color: ThemeConstants.greenPrimaryColor,
+                  borderColor: ThemeConstants.greenSecondaryColor,
+                  icon: IconsConstants.emojiObjects,
+                  text: AppLocalizations.of(context)!.gameRulesPart1,
                 ),
               ),
               Align(

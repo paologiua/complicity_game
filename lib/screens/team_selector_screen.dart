@@ -99,9 +99,27 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child: Hero(
-                  tag: "popup",
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: ThemeConstants.defaultPadding,
+                  ),
+                  constraints: const BoxConstraints(
+                    maxWidth: ThemeConstants.defaultMaxWidth,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        ThemeConstants.bluePrimaryColor,
+                        ThemeConstants.bluePrimaryColor.withOpacity(0.0),
+                      ],
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(0.0, 1.0),
+                      stops: const [0.8, 1.0],
+                      tileMode: TileMode.clamp,
+                    ),
+                  ),
                   child: Popup(
+                    heroTag: "popup",
                     color: ThemeConstants.greyPrimaryColor,
                     borderColor: ThemeConstants.greySecondaryColor,
                     icon: IconsConstants.groupAdd,

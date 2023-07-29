@@ -36,14 +36,12 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Hero(
-                  tag: "popup",
-                  child: Popup(
-                    color: ThemeConstants.greenPrimaryColor,
-                    borderColor: ThemeConstants.greenSecondaryColor,
-                    icon: IconsConstants.cognition,
-                    text: AppLocalizations.of(context)!.gameRulesPart2,
-                  ),
+                child: Popup(
+                  heroTag: "popup",
+                  color: ThemeConstants.greenPrimaryColor,
+                  borderColor: ThemeConstants.greenSecondaryColor,
+                  icon: IconsConstants.cognition,
+                  text: AppLocalizations.of(context)!.gameRulesPart2,
                 ),
               ),
               Align(

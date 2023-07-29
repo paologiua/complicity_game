@@ -36,14 +36,12 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Hero(
-                  tag: "popup",
-                  child: Popup(
-                    color: ThemeConstants.yellowPrimaryColor,
-                    borderColor: ThemeConstants.yellowSecondaryColor,
-                    icon: IconsConstants.socialLeaderboard,
-                    text: AppLocalizations.of(context)!.gameRulesPart3,
-                  ),
+                child: Popup(
+                  heroTag: "popup",
+                  color: ThemeConstants.yellowPrimaryColor,
+                  borderColor: ThemeConstants.yellowSecondaryColor,
+                  icon: IconsConstants.socialLeaderboard,
+                  text: AppLocalizations.of(context)!.gameRulesPart3,
                 ),
               ),
               Align(

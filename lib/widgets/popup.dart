@@ -8,69 +8,101 @@ class Popup extends StatefulWidget {
     required this.borderColor,
     required this.icon,
     required this.text,
+    this.direction = Axis.vertical,
+    this.onTap,
+    this.heroTag,
   });
 
   final Color color;
   final Color borderColor;
   final IconData icon;
   final String text;
+  final Axis direction;
+  final void Function()? onTap;
+  final Object? heroTag;
 
   @override
   State<Popup> createState() => _PopupState();
 }
 
 class _PopupState extends State<Popup> {
+  late Color _color;
+
+  @override
+  void initState() {
+    _color = widget.color;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: ThemeConstants.defaultPadding,
-      ),
-      constraints: const BoxConstraints(
-        maxWidth: ThemeConstants.defaultMaxWidth,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            ThemeConstants.bluePrimaryColor,
-            ThemeConstants.bluePrimaryColor.withOpacity(0.0),
-          ],
-          begin: const FractionalOffset(0.0, 0.0),
-          end: const FractionalOffset(0.0, 1.0),
-          stops: const [0.8, 1.0],
-          tileMode: TileMode.clamp,
-        ),
-      ),
-      child: Container(
+    final Widget child = GestureDetector(
+      onTap: widget.onTap,
+      onTapDown: widget.onTap != null
+          ? (_) => setState(() {
+                _color = widget.borderColor;
+              })
+          : null,
+      onTapUp: widget.onTap != null
+          ? (_) => setState(() {
+                _color = widget.color;
+              })
+          : null,
+      child: AnimatedContainer(
+        duration: ThemeConstants.defaultDuration,
+        curve: ThemeConstants.defaultCurve,
         decoration: BoxDecoration(
-          color: widget.color,
+          color: _color,
           border: Border.all(
             color: widget.borderColor,
             width: ThemeConstants.defaultBorder,
           ),
           borderRadius: const BorderRadius.all(
-              Radius.circular(ThemeConstants.defaultBorder * 2)),
+            Radius.circular(
+              ThemeConstants.defaultBorderRadius * 2,
+            ),
+          ),
         ),
         padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
         width: double.infinity,
         child: Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.center,
-          runSpacing: ThemeConstants.defaultPadding,
-          children: <Widget>[
-            Icon(
-              widget.icon,
-              size: ThemeConstants.defaultIconSize,
-              color: ThemeConstants.defaultTextColor,
-            ),
-            Text(
-              widget.text,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+          children: [
+            Flex(
+              direction: widget.direction,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  widget.icon,
+                  size: ThemeConstants.defaultIconSize,
+                  color: ThemeConstants.defaultTextColor,
+                ),
+                const SizedBox(
+                  height: ThemeConstants.defaultPadding,
+                  width: ThemeConstants.defaultPadding,
+                ),
+                widget.direction == Axis.horizontal
+                    ? Flexible(
+                        child: Text(
+                          widget.text,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      )
+                    : Text(
+                        widget.text,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+              ],
             ),
           ],
         ),
       ),
     );
+
+    return widget.heroTag == null
+        ? child
+        : Hero(tag: widget.heroTag!, child: child);
   }
 }
