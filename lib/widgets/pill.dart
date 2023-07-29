@@ -6,17 +6,17 @@ class Pill extends StatefulWidget {
     super.key,
     required this.color,
     required this.borderColor,
-    required this.icon,
-    required this.text,
     this.direction = Axis.vertical,
+    this.icon,
+    this.text,
     this.onTap,
     this.heroTag,
   });
 
   final Color color;
   final Color borderColor;
-  final IconData icon;
-  final String text;
+  final IconData? icon;
+  final String? text;
   final Axis direction;
   final void Function()? onTap;
   final Object? heroTag;
@@ -72,28 +72,31 @@ class _PillState extends State<Pill> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Icon(
-                  widget.icon,
-                  size: ThemeConstants.defaultIconSize,
-                  color: ThemeConstants.defaultTextColor,
-                ),
-                const SizedBox(
-                  height: ThemeConstants.defaultPadding,
-                  width: ThemeConstants.defaultPadding,
-                ),
-                widget.direction == Axis.horizontal
-                    ? Flexible(
-                        child: Text(
-                          widget.text,
+                if (widget.icon != null)
+                  Icon(
+                    widget.icon,
+                    size: ThemeConstants.defaultIconSize,
+                    color: ThemeConstants.defaultTextColor,
+                  ),
+                if (widget.icon != null && widget.text != null)
+                  const SizedBox(
+                    height: ThemeConstants.defaultPadding,
+                    width: ThemeConstants.defaultPadding,
+                  ),
+                if (widget.text != null)
+                  widget.direction == Axis.horizontal
+                      ? Flexible(
+                          child: Text(
+                            widget.text!,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        )
+                      : Text(
+                          widget.text!,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                      )
-                    : Text(
-                        widget.text,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
               ],
             ),
           ],

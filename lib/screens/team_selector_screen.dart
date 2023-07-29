@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/player_model.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/floating_buttons_section.dart';
-import '../widgets/list_item.dart';
 import '../widgets/player_editor_foreground.dart';
 import '../widgets/pill.dart';
 
@@ -67,7 +66,8 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                     .map(
                       (PlayerModel player) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: ListItem(
+                        child: Pill(
+                          direction: Axis.horizontal,
                           text: player.name,
                           color: player.team == Team.green
                               ? ThemeConstants.greenPrimaryColor
