@@ -1,8 +1,8 @@
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
 
-class Popup extends StatefulWidget {
-  const Popup({
+class Pill extends StatefulWidget {
+  const Pill({
     super.key,
     required this.color,
     required this.borderColor,
@@ -22,10 +22,10 @@ class Popup extends StatefulWidget {
   final Object? heroTag;
 
   @override
-  State<Popup> createState() => _PopupState();
+  State<Pill> createState() => _PillState();
 }
 
-class _PopupState extends State<Popup> {
+class _PillState extends State<Pill> {
   late Color _color;
 
   @override

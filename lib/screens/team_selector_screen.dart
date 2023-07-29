@@ -10,7 +10,7 @@ import '../models/player_model.dart';
 import '../widgets/floating_buttons_section.dart';
 import '../widgets/list_item.dart';
 import '../widgets/player_editor_foreground.dart';
-import '../widgets/popup.dart';
+import '../widgets/pill.dart';
 
 class TeamSelectorScreen extends StatefulWidget {
   const TeamSelectorScreen({super.key});
@@ -118,7 +118,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                       tileMode: TileMode.clamp,
                     ),
                   ),
-                  child: Popup(
+                  child: Pill(
                     heroTag: "popup",
                     color: ThemeConstants.greyPrimaryColor,
                     borderColor: ThemeConstants.greySecondaryColor,

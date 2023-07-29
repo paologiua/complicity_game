@@ -1,4 +1,4 @@
-import 'package:complicity_game/widgets/popup.dart';
+import 'package:complicity_game/widgets/pill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Wrap(
                           runSpacing: ThemeConstants.defaultPadding,
                           children: [
-                            Popup(
+                            Pill(
                               color: ThemeConstants.greenPrimaryColor,
                               borderColor: ThemeConstants.greenSecondaryColor,
                               icon: Icons.rule_rounded,
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "/game_rules/1",
                               ),
                             ),
-                            Popup(
+                            Pill(
                               color: ThemeConstants.yellowPrimaryColor,
                               borderColor: ThemeConstants.yellowSecondaryColor,
                               icon: Icons.sports_kabaddi_rounded,

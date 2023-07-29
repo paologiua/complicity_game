@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/floating_buttons_section.dart';
-import '../widgets/popup.dart';
+import '../widgets/pill.dart';
 
 class FirstStepScreen extends StatefulWidget {
   const FirstStepScreen({super.key});
@@ -36,7 +36,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Popup(
+                child: Pill(
                   heroTag: "popup",
                   color: ThemeConstants.greenPrimaryColor,
                   borderColor: ThemeConstants.greenSecondaryColor,
