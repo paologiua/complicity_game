@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../models/player_model.dart';
 
-class TeamSelector extends StatefulWidget {
-  const TeamSelector({
+class TeamSwitch extends StatefulWidget {
+  const TeamSwitch({
     super.key,
     required this.initialValue,
     required this.onChange,
@@ -15,10 +15,10 @@ class TeamSelector extends StatefulWidget {
   final void Function(Team team) onChange;
 
   @override
-  State<TeamSelector> createState() => _TeamSelectorState();
+  State<TeamSwitch> createState() => _TeamSwitchState();
 }
 
-class _TeamSelectorState extends State<TeamSelector> {
+class _TeamSwitchState extends State<TeamSwitch> {
   late Team _team;
 
   void onChange(Team team) {

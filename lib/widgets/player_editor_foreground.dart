@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:complicity_game/constants/icons.dart';
-import 'package:complicity_game/widgets/team_selector.dart';
+import 'package:complicity_game/widgets/team_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -105,7 +105,7 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                     ),
                   ),
                 ),
-                TeamSelector(
+                TeamSwitch(
                   initialValue: _player.team,
                   onChange: (Team team) => setState(() {
                     _player.team = team;
