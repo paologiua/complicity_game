@@ -29,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 tag: "popup",
                 child: Container(
                   padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                  decoration: BoxDecoration(
-                    color: ThemeConstants.defaultTextColor.withOpacity(0.3),
-                    borderRadius: const BorderRadius.all(
+                  decoration: const BoxDecoration(
+                    color: ThemeConstants.blueDarkColor,
+                    borderRadius: BorderRadius.all(
                       Radius.circular(ThemeConstants.defaultBorderRadius * 3),
                     ),
                   ),

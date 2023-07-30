@@ -12,14 +12,18 @@ class ThemeConstants {
 
   static const Color bluePrimaryColor = Color(0xFF788AA3);
   static const Color blueSecondaryColor = Color(0xFF6D819A);
+  static const Color blueDarkColor = Color(0xFF5D677C);
 
   static const Color purplePrimaryColor = Color(0xFF666A86);
   static const Color purpleSecondaryColor = Color(0xFF62647E);
 
+  static const FontWeight defaultFontWeight = FontWeight.w600;
+  static const double defaultFontSize = 18.0;
   static const Color defaultTextColor = Color(0xFF1C1B1F);
+  
   static const TextStyle defaultTextStyle = TextStyle(
-    fontWeight: FontWeight.w600,
-    fontSize: 18.0,
+    fontWeight: defaultFontWeight,
+    fontSize: defaultFontSize,
     color: defaultTextColor,
   );
 
