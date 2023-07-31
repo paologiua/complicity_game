@@ -26,13 +26,7 @@ class Pill extends StatefulWidget {
 }
 
 class _PillState extends State<Pill> {
-  late Color _color;
-
-  @override
-  void initState() {
-    _color = widget.color;
-    super.initState();
-  }
+  bool _pressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +34,24 @@ class _PillState extends State<Pill> {
       onTap: widget.onTap,
       onTapDown: widget.onTap != null
           ? (_) => setState(() {
-                _color = widget.borderColor;
+                _pressed = true;
               })
           : null,
       onTapUp: widget.onTap != null
           ? (_) => setState(() {
-                _color = widget.color;
+                _pressed = false;
+              })
+          : null,
+      onTapCancel: widget.onTap != null
+          ? () => setState(() {
+                _pressed = false;
               })
           : null,
       child: AnimatedContainer(
         duration: ThemeConstants.defaultDuration,
         curve: ThemeConstants.defaultCurve,
         decoration: BoxDecoration(
-          color: _color,
+          color: !_pressed ? widget.color : widget.borderColor,
           border: Border.all(
             color: widget.borderColor,
             width: ThemeConstants.defaultBorder,
