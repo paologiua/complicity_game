@@ -1,6 +1,7 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
 
@@ -73,7 +74,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                     ),
                     const SizedBox(height: 10.0),
                     Text(
-                      "Squadra gialla",
+                      AppLocalizations.of(context)!.yellowTeamText,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
@@ -109,7 +110,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                     ),
                     const SizedBox(height: 10.0),
                     Text(
-                      "Squadra verde",
+                      AppLocalizations.of(context)!.greenTeamText,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),

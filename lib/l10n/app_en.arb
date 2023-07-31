@@ -22,5 +22,25 @@
 	"startGameButtonLabel": "Start game",
 	"@startGameButtonLabel": {
     "description": "Text of the button to start a game"
+	},
+	"deleteButtonLabel": "Delete",
+	"@deleteButtonLabel": {
+    "description": "Text of the button to delete a player"
+	},
+	"cancelButtonLabel": "Cancel",
+	"@cancelButtonLabel": {
+    "description": "Text of the button to cancel the insertion of a player"
+	},
+	"playerNameHintText": "Player name",
+	"@playerNameHintText": {
+    "description": "HintText of the input to insert or edit a player"
+	},
+	"greenTeamText": "Green team",
+	"@greenTeamText": {
+    "description": "Green team name"
+	},
+	"yellowTeamText": "Yellow team",
+	"@yellowTeamText": {
+    "description": "Yellow team name"
 	}
 }

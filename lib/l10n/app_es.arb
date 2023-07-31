@@ -4,5 +4,10 @@
 	"gameRulesPart3": "Gana el equipo que adivine más palabras.",
 	"enterParticipantsNamesText": "Introduzca los nombres de los participantes.",
 	"gameRulesButtonLabel": "Reglas del juego",
-	"startGameButtonLabel": "Iniciar una partida"
+	"startGameButtonLabel": "Iniciar una partida",
+	"deleteButtonLabel": "Eliminar",
+	"cancelButtonLabel": "Cancelar",
+	"playerNameHintText": "Nombre del jugador",
+	"greenTeamText": "Equipo verde",
+	"yellowTeamText": "Equipo amarillo"
 }

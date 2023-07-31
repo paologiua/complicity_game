@@ -4,6 +4,7 @@ import 'package:complicity_game/widgets/pill_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:async';
 
 import '../constants/theme.dart';
@@ -79,7 +80,9 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                     ? () => (widget.onRemove ?? () {})(_player)
                     : widget.onCancel,
                 icon: IconsConstants.close,
-                text: _player.key != null ? "Elimina" : "Annulla",
+                text: _player.key != null
+                    ? AppLocalizations.of(context)!.deleteButtonLabel
+                    : AppLocalizations.of(context)!.cancelButtonLabel,
                 size: 64.0,
               ),
               const SizedBox(height: ThemeConstants.defaultPadding),
@@ -99,18 +102,18 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
           borderColor: _player.team == Team.green
               ? ThemeConstants.greenSecondaryColor
               : ThemeConstants.yellowSecondaryColor,
-            initialValue: _player.name,
-            maxLength: 15,
-            autofocus: true,
-              hintText: 'Nome del giocatore',
-            onChange: (String playerName) => setState(() {
-              _player.name = playerName;
-            }),
-            onSubmit: (_) => (widget.onInsert ?? () {})(
-              _player.copyWith(
-                name: _player.name.trim(),
-              ),
+          initialValue: _player.name,
+          maxLength: 15,
+          autofocus: true,
+          hintText: AppLocalizations.of(context)!.playerNameHintText,
+          onChange: (String playerName) => setState(() {
+            _player.name = playerName;
+          }),
+          onSubmit: (_) => (widget.onInsert ?? () {})(
+            _player.copyWith(
+              name: _player.name.trim(),
             ),
+          ),
         ),
       ],
     );

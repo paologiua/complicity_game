@@ -4,5 +4,10 @@
 	"gameRulesPart3": "Vince la squadra che indovina più parole.",
 	"enterParticipantsNamesText": "Inserisci i nomi dei partecipanti.",
 	"gameRulesButtonLabel": "Regole del gioco",
-	"startGameButtonLabel": "Inizia una partita"
+	"startGameButtonLabel": "Inizia una partita",
+	"deleteButtonLabel": "Elimina",
+	"cancelButtonLabel": "Annulla",
+	"playerNameHintText": "Nome del giocatore",
+	"greenTeamText": "Squadra verde",
+	"yellowTeamText": "Squadra gialla"
 }
