@@ -19,6 +19,11 @@ void main() {
     ),
   );
 
+  //Setting PreferredOrientations
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   //Setting SysemUIOverlay
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
