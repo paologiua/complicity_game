@@ -17,4 +17,6 @@ class IconsConstants {
   static const IconData cognition = IconData(0xe908, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData socialLeaderboard = IconData(0xe909, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData emojiObjects = IconData(0xe90a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData sportsKabaddi = IconData(0xe90b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData rule = IconData(0xe90c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

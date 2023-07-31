@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/widgets/pill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Pill(
                           color: ThemeConstants.greenPrimaryColor,
                           borderColor: ThemeConstants.greenSecondaryColor,
-                          icon: Icons.rule_rounded,
+                          icon: IconsConstants.rule,
                           text: AppLocalizations.of(context)!
                               .gameRulesButtonLabel,
                           direction: Axis.horizontal,
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Pill(
                           color: ThemeConstants.yellowPrimaryColor,
                           borderColor: ThemeConstants.yellowSecondaryColor,
-                          icon: Icons.sports_kabaddi_rounded,
+                          icon: IconsConstants.sportsKabaddi,
                           text: AppLocalizations.of(context)!
                               .startGameButtonLabel,
                           direction: Axis.horizontal,
