@@ -73,17 +73,15 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
         Expanded(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                child: CustomFloatingButton(
-                  onPressed: _player.key != null
-                      ? () => (widget.onRemove ?? () {})(_player)
-                      : widget.onCancel,
-                  icon: IconsConstants.close,
-                  text: _player.key != null ? "Elimina" : "Annulla",
-                  size: 64.0,
-                ),
+              CustomFloatingButton(
+                onPressed: _player.key != null
+                    ? () => (widget.onRemove ?? () {})(_player)
+                    : widget.onCancel,
+                icon: IconsConstants.close,
+                text: _player.key != null ? "Elimina" : "Annulla",
+                size: 64.0,
               ),
+              const SizedBox(height: ThemeConstants.defaultPadding),
               TeamSwitch(
                 initialValue: _player.team,
                 onChange: (Team team) => setState(() {
