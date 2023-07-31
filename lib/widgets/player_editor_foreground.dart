@@ -79,7 +79,6 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
                     : widget.onCancel,
                 icon: IconsConstants.close,
                 text: _player.key != null ? "Elimina" : "Annulla",
-                size: 64.0,
               ),
               const SizedBox(height: ThemeConstants.defaultPadding),
               TeamSwitch(

@@ -11,7 +11,7 @@ class CustomFloatingButton extends StatefulWidget {
     this.icon,
     this.color,
     this.text,
-    this.size = 56.0,
+    this.size = 60.0,
   });
 
   final Object? heroTag;
