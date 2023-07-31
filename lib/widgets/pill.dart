@@ -28,25 +28,25 @@ class Pill extends StatefulWidget {
 class _PillState extends State<Pill> {
   bool _pressed = false;
 
+  void _startPress() {
+    setState(() {
+      _pressed = true;
+    });
+  }
+
+  void _stopPress() {
+    setState(() {
+      _pressed = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Widget child = GestureDetector(
       onTap: widget.onTap,
-      onTapDown: widget.onTap != null
-          ? (_) => setState(() {
-                _pressed = true;
-              })
-          : null,
-      onTapUp: widget.onTap != null
-          ? (_) => setState(() {
-                _pressed = false;
-              })
-          : null,
-      onTapCancel: widget.onTap != null
-          ? () => setState(() {
-                _pressed = false;
-              })
-          : null,
+      onTapDown: widget.onTap != null ? (_) => _startPress() : null,
+      onTapUp: widget.onTap != null ? (_) => _stopPress() : null,
+      onTapCancel: widget.onTap != null ? () => _stopPress() : null,
       child: AnimatedContainer(
         duration: ThemeConstants.defaultDuration,
         curve: ThemeConstants.defaultCurve,
