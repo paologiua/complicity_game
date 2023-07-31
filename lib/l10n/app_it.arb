@@ -3,6 +3,6 @@
 	"gameRulesPart2": "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la parola alla propria squadra piuttosto che a quella avversaria.",
 	"gameRulesPart3": "Vince la squadra che indovina più parole.",
 	"enterParticipantsNamesText": "Inserisci i nomi dei partecipanti.",
-	"gameRulesButtonLabel": "Regolamento",
+	"gameRulesButtonLabel": "Regole del gioco",
 	"startGameButtonLabel": "Inizia una partita"
 }
