@@ -42,7 +42,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
       decoration: const BoxDecoration(
         color: ThemeConstants.greySecondaryColor,
         borderRadius: BorderRadius.all(
-          Radius.circular(ThemeConstants.defaultBorder * 2),
+          Radius.circular(ThemeConstants.defaultBorderRadius * 2),
         ),
       ),
       padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
@@ -59,7 +59,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                       ? ThemeConstants.yellowPrimaryColor
                       : ThemeConstants.greyPrimaryColor,
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(ThemeConstants.defaultBorder),
+                    Radius.circular(ThemeConstants.defaultBorderRadius),
                   ),
                 ),
                 duration: ThemeConstants.defaultDuration,
@@ -95,7 +95,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                       ? ThemeConstants.greenPrimaryColor
                       : ThemeConstants.greyPrimaryColor,
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(ThemeConstants.defaultBorder),
+                    Radius.circular(ThemeConstants.defaultBorderRadius),
                   ),
                 ),
                 duration: ThemeConstants.defaultDuration,

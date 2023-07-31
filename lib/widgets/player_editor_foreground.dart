@@ -1,5 +1,6 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/widgets/team_switch.dart';
+import 'package:complicity_game/widgets/pill_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -91,50 +92,25 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
             ],
           ),
         ),
-        AnimatedContainer(
-          decoration: BoxDecoration(
-            color: _player.team == Team.green
-                ? ThemeConstants.greenPrimaryColor
-                : ThemeConstants.yellowPrimaryColor,
-            border: Border.all(
-              color: _player.team == Team.green
-                  ? ThemeConstants.greenSecondaryColor
-                  : ThemeConstants.yellowSecondaryColor,
-              width: ThemeConstants.defaultBorder,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(ThemeConstants.defaultBorder * 2),
-            ),
-          ),
-          duration: ThemeConstants.defaultDuration,
-          curve: ThemeConstants.defaultCurve,
-          padding: const EdgeInsets.symmetric(
-            horizontal: ThemeConstants.defaultPadding,
-            vertical: ThemeConstants.defaultPadding / 2,
-          ),
-          child: TextFormField(
+        PillInput(
+          color: _player.team == Team.green
+              ? ThemeConstants.greenPrimaryColor
+              : ThemeConstants.yellowPrimaryColor,
+          borderColor: _player.team == Team.green
+              ? ThemeConstants.greenSecondaryColor
+              : ThemeConstants.yellowSecondaryColor,
             initialValue: _player.name,
             maxLength: 15,
-            cursorColor: ThemeConstants.defaultTextColor,
             autofocus: true,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge,
-            decoration: const InputDecoration(
               hintText: 'Nome del giocatore',
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              counterText: '',
-              contentPadding: EdgeInsets.all(0.0),
-            ),
-            onChanged: (String playerName) => setState(() {
+            onChange: (String playerName) => setState(() {
               _player.name = playerName;
             }),
-            onFieldSubmitted: (_) => (widget.onInsert ?? () {})(
+            onSubmit: (_) => (widget.onInsert ?? () {})(
               _player.copyWith(
                 name: _player.name.trim(),
               ),
             ),
-          ),
         ),
       ],
     );
