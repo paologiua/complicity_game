@@ -52,6 +52,10 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     return _players.removeAt(index);
   }
 
+  PlayerModel? removePlayer(PlayerModel player) {
+    return removePlayerByKey(player.key);
+  }
+
   int replacePlayer(PlayerModel player) {
     int index = _players.indexWhere(
       (PlayerModel item) => item.key == player.key,

@@ -36,19 +36,11 @@ class _CustomScaffoldState extends State<CustomScaffold> {
   bool _foregroundClosed = true;
 
   void _openForeground() {
-    if (_foregroundClosed == true) {
-      setState(() {
-        _foregroundClosed = false;
-      });
-    }
+    _foregroundClosed = false;
   }
 
   void _closeForeground() {
-    if (_foregroundClosed == false) {
-      setState(() {
-        _foregroundClosed = true;
-      });
-    }
+    _foregroundClosed = true;
   }
 
   @override
@@ -131,9 +123,14 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                                 sigmaX: 100.0,
                                 sigmaY: 100.0,
                               ),
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: widget.foreground,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: widget.foreground,
+                                ),
                               ),
                             )
                           : null,
@@ -148,7 +145,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
 
     return widget.foreground != null
         ? GestureDetector(
-            onTap: _closeForeground,
+            onTap: () => setState(() => _closeForeground()),
             child: child,
           )
         : child;

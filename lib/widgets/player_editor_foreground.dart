@@ -8,23 +8,20 @@ import 'dart:async';
 
 import '../constants/theme.dart';
 import '../models/player_model.dart';
+import 'custom_floating_button.dart';
 
 class PlayerEditorForeground extends StatefulWidget {
   const PlayerEditorForeground({
     super.key,
     this.initialValue,
-    this.onKeyboardChange,
-    this.onKeyboardShow,
-    this.onKeyboardHide,
-    this.onSubmitted,
+    this.onInsert,
+    this.onRemove,
     this.onCancel,
   });
 
   final PlayerModel? initialValue;
-  final void Function(bool)? onKeyboardChange;
-  final void Function()? onKeyboardShow;
-  final void Function()? onKeyboardHide;
-  final void Function(PlayerModel)? onSubmitted;
+  final void Function(PlayerModel)? onInsert;
+  final void Function(PlayerModel)? onRemove;
   final void Function()? onCancel;
 
   @override
@@ -46,11 +43,8 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
       if (visible != _isKeyboardVisible) {
-        if (widget.onKeyboardChange != null) widget.onKeyboardChange!(visible);
-        if (visible) {
-          (widget.onKeyboardShow ?? () {})();
-        } else {
-          (widget.onKeyboardHide ?? () {})();
+        if (!visible) {
+          (widget.onCancel ?? () {})();
         }
         _isKeyboardVisible = visible;
       }
@@ -82,25 +76,13 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                child: SizedBox(
-                  height: 64.0,
-                  child: FloatingActionButton.extended(
-                    onPressed: widget.onCancel,
-                    backgroundColor: ThemeConstants.greyPrimaryColor,
-                    elevation: 0,
-                    highlightElevation: 0,
-                    focusElevation: 0,
-                    hoverElevation: 0,
-                    icon: const Icon(
-                      IconsConstants.close,
-                      color: ThemeConstants.defaultTextColor,
-                    ),
-                    label: Text(
-                      "Elimina",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
+                child: CustomFloatingButton(
+                  onPressed: _player.key != null
+                      ? () => (widget.onRemove ?? () {})(_player)
+                      : widget.onCancel,
+                  icon: IconsConstants.close,
+                  text: _player.key != null ? "Elimina" : "Annulla",
+                  size: 64.0,
                 ),
               ),
               TeamSwitch(
@@ -150,13 +132,11 @@ class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
             onChanged: (String playerName) => setState(() {
               _player.name = playerName;
             }),
-            onFieldSubmitted: widget.onSubmitted != null
-                ? (_) => widget.onSubmitted!(
-                      _player.copyWith(
-                        name: _player.name.trim(),
-                      ),
-                    )
-                : null,
+            onFieldSubmitted: (_) => (widget.onInsert ?? () {})(
+              _player.copyWith(
+                name: _player.name.trim(),
+              ),
+            ),
           ),
         ),
       ],

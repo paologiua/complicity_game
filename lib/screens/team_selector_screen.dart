@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
@@ -29,6 +32,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     if (_openForeground != null) {
       _playerInEdit = player;
       _openForeground!();
+      setState(() {});
     }
   }
 
@@ -36,12 +40,19 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     if (_closeForeground != null) {
       _playerInEdit = null;
       _closeForeground!();
+      setState(() {});
     }
   }
 
   void _insertPlayer(PlayerModel player) {
     if (_playerManagerService.insertPlayer(player) != null) {
-      setState(() {});
+      _closePlayerEditor();
+    }
+  }
+
+  void _removePlayer(PlayerModel player) {
+    if (_playerManagerService.removePlayer(player) != null) {
+      _closePlayerEditor();
     }
   }
 
@@ -56,8 +67,8 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     return CustomScaffold(
       foreground: PlayerEditorForeground(
         initialValue: _playerInEdit,
-        onKeyboardHide: _closePlayerEditor,
-        onSubmitted: (PlayerModel player) => _insertPlayer(player),
+        onInsert: _insertPlayer,
+        onRemove: _removePlayer,
         onCancel: _closePlayerEditor,
       ),
       foregroundOpenGetter: (open) => _openForeground = open,
