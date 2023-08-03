@@ -11,10 +11,10 @@ import 'dart:async';
 
 import '../constants/theme.dart';
 import '../models/player_model.dart';
-import 'custom_floating_button.dart';
+import '../widgets/custom_floating_button.dart';
 
-class PlayerEditorForeground extends StatefulWidget {
-  const PlayerEditorForeground({
+class PlayerEditorDialog extends StatefulWidget {
+  const PlayerEditorDialog({
     super.key,
     required this.onInsert,
     required this.onRemove,
@@ -26,10 +26,10 @@ class PlayerEditorForeground extends StatefulWidget {
   final PlayerModel? initialValue;
 
   @override
-  State<PlayerEditorForeground> createState() => _PlayerEditorForegroundState();
+  State<PlayerEditorDialog> createState() => _PlayerEditorDialogState();
 }
 
-class _PlayerEditorForegroundState extends State<PlayerEditorForeground> {
+class _PlayerEditorDialogState extends State<PlayerEditorDialog> {
   late PlayerModel _player;
   late StreamSubscription<bool> _keyboardSubscription;
   bool _isKeyboardVisible = false;

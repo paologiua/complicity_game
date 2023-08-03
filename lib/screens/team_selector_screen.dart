@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
 import '../widgets/custom_scaffold.dart';
-import '../widgets/player_editor_foreground.dart';
+import '../dialogs/player_editor_dialog.dart';
 import '../widgets/pill.dart';
 
 class TeamSelectorScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     return showDialog<void>(
       context: context,
       barrierColor: Colors.transparent,
-      builder: (BuildContext context) => PlayerEditorForeground(
+      builder: (BuildContext context) => PlayerEditorDialog(
         initialValue: player,
         onInsert: _playerManagerService.insertPlayer,
         onRemove: _playerManagerService.removePlayer,
