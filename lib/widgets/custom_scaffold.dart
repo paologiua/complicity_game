@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../constants/theme.dart';
@@ -10,54 +8,19 @@ class CustomScaffold extends StatefulWidget {
     super.key,
     required this.children,
     this.floatingButtons,
-    this.foreground,
-    this.foregroundOpenGetter,
-    this.foregroundCloseGetter,
   });
 
   final List<Widget> children;
   final List<CustomFloatingButton>? floatingButtons;
-
-  final Widget? foreground;
-
-  final void Function(
-    void Function()? open,
-  )? foregroundOpenGetter;
-
-  final void Function(
-    void Function()? close,
-  )? foregroundCloseGetter;
 
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
 }
 
 class _CustomScaffoldState extends State<CustomScaffold> {
-  bool _foregroundClosed = true;
-
-  void _openForeground() {
-    _foregroundClosed = false;
-  }
-
-  void _closeForeground() {
-    _foregroundClosed = true;
-  }
-
-  @override
-  void initState() {
-    if (widget.foregroundOpenGetter != null) {
-      widget.foregroundOpenGetter!(_openForeground);
-    }
-    if (widget.foregroundCloseGetter != null) {
-      widget.foregroundCloseGetter!(_closeForeground);
-    }
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    Widget child = Scaffold(
+    return Scaffold(
       backgroundColor: ThemeConstants.blueSecondaryColor,
       body: SafeArea(
         child: Container(
@@ -109,32 +72,6 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                                 .toList(),
                           ),
                         )),
-                  if (widget.foreground != null)
-                    AnimatedSwitcher(
-                      duration: ThemeConstants.defaultDuration,
-                      switchInCurve: ThemeConstants.defaultCurve,
-                      switchOutCurve: ThemeConstants.defaultCurve,
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) =>
-                              FadeTransition(opacity: animation, child: child),
-                      child: !_foregroundClosed
-                          ? BackdropFilter(
-                              filter: ImageFilter.blur(
-                                sigmaX: 100.0,
-                                sigmaY: 100.0,
-                              ),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.transparent,
-                                ),
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: widget.foreground,
-                                ),
-                              ),
-                            )
-                          : null,
-                    ),
                 ],
               ),
             ),
@@ -142,12 +79,5 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         ),
       ),
     );
-
-    return widget.foreground != null
-        ? GestureDetector(
-            onTap: () => setState(() => _closeForeground()),
-            child: child,
-          )
-        : child;
   }
 }

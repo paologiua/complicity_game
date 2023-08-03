@@ -21,36 +21,16 @@ class TeamSelectorScreen extends StatefulWidget {
 class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   late PlayerManagerService _playerManagerService;
 
-  PlayerModel? _playerInEdit;
-  void Function()? _openForeground;
-  void Function()? _closeForeground;
-
-  void _openPlayerEditor({PlayerModel? player}) {
-    if (_openForeground != null) {
-      _playerInEdit = player;
-      _openForeground!();
-      setState(() {});
-    }
-  }
-
-  void _closePlayerEditor() {
-    if (_closeForeground != null) {
-      _playerInEdit = null;
-      _closeForeground!();
-      setState(() {});
-    }
-  }
-
-  void _insertPlayer(PlayerModel player) {
-    if (_playerManagerService.insertPlayer(player) != null) {
-      _closePlayerEditor();
-    }
-  }
-
-  void _removePlayer(PlayerModel player) {
-    if (_playerManagerService.removePlayer(player) != null) {
-      _closePlayerEditor();
-    }
+  Future<void> showEditorDialog({PlayerModel? player}) {
+    return showDialog<void>(
+      context: context,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext context) => PlayerEditorForeground(
+        initialValue: player,
+        onInsert: _playerManagerService.insertPlayer,
+        onRemove: _playerManagerService.removePlayer,
+      ),
+    ).then((_) => setState(() {}));
   }
 
   @override
@@ -62,19 +42,11 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      foreground: PlayerEditorForeground(
-        initialValue: _playerInEdit,
-        onInsert: _insertPlayer,
-        onRemove: _removePlayer,
-        onCancel: _closePlayerEditor,
-      ),
-      foregroundOpenGetter: (open) => _openForeground = open,
-      foregroundCloseGetter: (close) => _closeForeground = close,
       floatingButtons: [
         CustomFloatingButton(
           heroTag: "left_button",
           icon: IconsConstants.add,
-          onPressed: _openPlayerEditor,
+          onPressed: showEditorDialog,
         ),
         CustomFloatingButton(
           heroTag: "right_button",
@@ -102,7 +74,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                         borderColor: player.team == Team.green
                             ? ThemeConstants.greenSecondaryColor
                             : ThemeConstants.yellowSecondaryColor,
-                        onTap: () => _openPlayerEditor(player: player),
+                        onTap: () => showEditorDialog(player: player),
                       ),
                     ),
                   )
