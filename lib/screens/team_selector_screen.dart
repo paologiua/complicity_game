@@ -24,7 +24,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   Future<void> showEditorDialog({PlayerModel? player}) {
     return showDialog<void>(
       context: context,
-      barrierColor: Colors.transparent,
+      barrierColor: Colors.black12,
       barrierDismissible: false,
       builder: (BuildContext context) => PlayerEditorDialog(
         initialValue: player,

@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     child: Wrap(
+                      clipBehavior: Clip.hardEdge,
                       runSpacing: ThemeConstants.defaultPadding,
                       children: [
                         Pill(

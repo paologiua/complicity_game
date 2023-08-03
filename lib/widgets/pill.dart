@@ -65,6 +65,7 @@ class _PillState extends State<Pill> {
         padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
         width: double.infinity,
         child: Wrap(
+          clipBehavior: Clip.hardEdge,
           children: [
             Flex(
               direction: widget.direction,
