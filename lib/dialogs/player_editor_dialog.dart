@@ -55,7 +55,6 @@ class _PlayerEditorDialogState extends State<PlayerEditorDialog> {
   void initState() {
     SystemChannels.textInput.invokeMethod("TextInput.show");
 
-    // Subscribe
     _keyboardSubscription = KeyboardVisibilityController().onChange.listen(
       (bool visible) {
         if (visible != _isKeyboardVisible) {
@@ -81,64 +80,68 @@ class _PlayerEditorDialogState extends State<PlayerEditorDialog> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _close,
-      child: Dialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 100.0,
-            sigmaY: 100.0,
-          ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: 100.0,
+          sigmaY: 100.0,
+        ),
+        child: Dialog(
+          insetPadding: const EdgeInsets.all(0.0),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
           child: GestureDetector(
             onTap: () {},
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: [
-                      _player.key != null
-                          ? CustomFloatingButton(
-                              onPressed: _onRemove,
-                              icon: IconsConstants.close,
-                              text: AppLocalizations.of(context)!
-                                  .deleteButtonLabel,
-                              size: 64.0,
-                            )
-                          : CustomFloatingButton(
-                              onPressed: _close,
-                              icon: IconsConstants.close,
-                              text: AppLocalizations.of(context)!
-                                  .cancelButtonLabel,
-                              size: 64.0,
-                            ),
-                      const SizedBox(height: ThemeConstants.defaultPadding),
-                      TeamSwitch(
-                        initialValue: _player.team,
-                        onChange: (Team team) => setState(() {
-                          _player.team = team;
-                        }),
-                      ),
-                    ],
+            child: Padding(
+              padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      children: [
+                        _player.key != null
+                            ? CustomFloatingButton(
+                                onPressed: _onRemove,
+                                icon: IconsConstants.close,
+                                text: AppLocalizations.of(context)!
+                                    .deleteButtonLabel,
+                                size: 64.0,
+                              )
+                            : CustomFloatingButton(
+                                onPressed: _close,
+                                icon: IconsConstants.close,
+                                text: AppLocalizations.of(context)!
+                                    .cancelButtonLabel,
+                                size: 64.0,
+                              ),
+                        const SizedBox(height: ThemeConstants.defaultPadding),
+                        TeamSwitch(
+                          initialValue: _player.team,
+                          onChange: (Team team) => setState(() {
+                            _player.team = team;
+                          }),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                PillInput(
-                  color: _player.team == Team.green
-                      ? ThemeConstants.greenPrimaryColor
-                      : ThemeConstants.yellowPrimaryColor,
-                  borderColor: _player.team == Team.green
-                      ? ThemeConstants.greenSecondaryColor
-                      : ThemeConstants.yellowSecondaryColor,
-                  initialValue: _player.name,
-                  maxLength: 15,
-                  autofocus: true,
-                  hintText: AppLocalizations.of(context)!.playerNameHintText,
-                  onChange: (String playerName) => setState(() {
-                    _player.name = playerName;
-                  }),
-                  onSubmit: (_) => _onInsert(),
-                ),
-              ],
+                  PillInput(
+                    color: _player.team == Team.green
+                        ? ThemeConstants.greenPrimaryColor
+                        : ThemeConstants.yellowPrimaryColor,
+                    borderColor: _player.team == Team.green
+                        ? ThemeConstants.greenSecondaryColor
+                        : ThemeConstants.yellowSecondaryColor,
+                    initialValue: _player.name,
+                    maxLength: 15,
+                    autofocus: true,
+                    hintText: AppLocalizations.of(context)!.playerNameHintText,
+                    onChange: (String playerName) => setState(() {
+                      _player.name = playerName;
+                    }),
+                    onSubmit: (_) => _onInsert(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

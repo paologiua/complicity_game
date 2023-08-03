@@ -25,6 +25,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     return showDialog<void>(
       context: context,
       barrierColor: Colors.transparent,
+      barrierDismissible: false,
       builder: (BuildContext context) => PlayerEditorDialog(
         initialValue: player,
         onInsert: _playerManagerService.insertPlayer,
