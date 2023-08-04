@@ -19,6 +19,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       floatingButtons: [
+        const CustomFloatingButton(heroTag: "left_button", size: 0),
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
@@ -27,6 +28,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
             "/game_rules/2",
           ),
         ),
+        const CustomFloatingButton(size: 0),
       ],
       children: [
         Align(
