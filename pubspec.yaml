@@ -112,4 +112,4 @@ flutter_icons:
 
   web:
     generate: true
-    image_path: "assets/images/ios-icon.png"
+    image_path: "assets/images/web-icon.png"
