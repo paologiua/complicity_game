@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class ThemeConstants {
-  static const Color greenPrimaryColor = Color(0xFFB2C9AB);
-  static const Color greenSecondaryColor = Color(0xFFA6C19F);
+  static const Color greenPrimaryColor = Color(0xFFACC8A4);
+  static const Color greenSecondaryColor = Color(0xFF91B888);
 
-  static const Color yellowPrimaryColor = Color(0xFFE8DDB5);
-  static const Color yellowSecondaryColor = Color(0xFFE3D3A1);
+  static const Color yellowPrimaryColor = Color(0xFFE9DCAD);
+  static const Color yellowSecondaryColor = Color(0xFFE0CE95);
 
-  static const Color greyPrimaryColor = Color(0xFFD9D9D9);
-  static const Color greySecondaryColor = Color(0xFFC0C0C0);
+  static const Color greyPrimaryColor = Color(0xFFF3F3F3);
+  static const Color greySecondaryColor = Color(0xFFCECECE);
 
-  static const Color bluePrimaryColor = Color(0xFF788AA3);
-  static const Color blueSecondaryColor = Color(0xFF6D819A);
+  static const Color bluePrimaryColor = Color(0xFF7188A8);
+  static const Color blueSecondaryColor = Color(0xFF597597);
   static const Color blueDarkColor = Color(0xFF5D677C);
 
-  static const Color purplePrimaryColor = Color(0xFF666A86);
-  static const Color purpleSecondaryColor = Color(0xFF62647E);
+  static const Color purplePrimaryColor = Color(0xFF606586);
+  static const Color purpleSecondaryColor = Color(0xFF575978);
 
   static const FontWeight defaultFontWeight = FontWeight.w600;
   static const double defaultFontSize = 18.0;
