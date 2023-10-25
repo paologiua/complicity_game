@@ -13,8 +13,11 @@ class GameState {
     required List<PlayerModel> players,
     required this.words,
   }) {
+    for (Team team in Team.values) {
+      _players[team.name] = [];
+    }
+
     for (PlayerModel player in players..shuffle()) {
-      _players[player.team.name] = _players[player.team.name] ?? [];
       _players[player.team.name]?.add(player);
     }
 

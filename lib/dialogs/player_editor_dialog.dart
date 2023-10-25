@@ -94,56 +94,61 @@ class _PlayerEditorDialogState extends State<PlayerEditorDialog> {
           elevation: 0.0,
           child: GestureDetector(
             onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      children: [
-                        _player.key != null
-                            ? CustomFloatingButton(
-                                onPressed: _onRemove,
-                                icon: IconsConstants.close,
-                                text: AppLocalizations.of(context)!
-                                    .deleteButtonLabel,
-                                size: 64.0,
-                              )
-                            : CustomFloatingButton(
-                                onPressed: _close,
-                                icon: IconsConstants.close,
-                                text: AppLocalizations.of(context)!
-                                    .cancelButtonLabel,
-                                size: 64.0,
-                              ),
-                        const SizedBox(height: ThemeConstants.defaultPadding),
-                        TeamSwitch(
-                          initialValue: _player.team,
-                          onChange: (Team team) => setState(() {
-                            _player.team = team;
-                          }),
-                        ),
-                      ],
+            child: Center(
+              child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: ThemeConstants.defaultMaxWidth,
+              ),
+                margin: const EdgeInsets.all(ThemeConstants.defaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: [
+                          _player.key != null
+                              ? CustomFloatingButton(
+                                  onPressed: _onRemove,
+                                  icon: IconsConstants.close,
+                                  text: AppLocalizations.of(context)!
+                                      .deleteButtonLabel,
+                                  size: 64.0,
+                                )
+                              : CustomFloatingButton(
+                                  onPressed: _close,
+                                  icon: IconsConstants.close,
+                                  text: AppLocalizations.of(context)!
+                                      .cancelButtonLabel,
+                                  size: 64.0,
+                                ),
+                          const SizedBox(height: ThemeConstants.defaultPadding),
+                          TeamSwitch(
+                            initialValue: _player.team,
+                            onChange: (Team team) => setState(() {
+                              _player.team = team;
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  PillInput(
-                    color: _player.team == Team.green
-                        ? ThemeConstants.greenPrimaryColor
-                        : ThemeConstants.yellowPrimaryColor,
-                    borderColor: _player.team == Team.green
-                        ? ThemeConstants.greenSecondaryColor
-                        : ThemeConstants.yellowSecondaryColor,
-                    initialValue: _player.name,
-                    maxLength: 15,
-                    autofocus: true,
-                    hintText: AppLocalizations.of(context)!.playerNameHintText,
-                    onChange: (String playerName) => setState(() {
-                      _player.name = playerName;
-                    }),
-                    onSubmit: (_) => _onInsert(),
-                  ),
-                ],
+                    PillInput(
+                      color: _player.team == Team.green
+                          ? ThemeConstants.greenPrimaryColor
+                          : ThemeConstants.yellowPrimaryColor,
+                      borderColor: _player.team == Team.green
+                          ? ThemeConstants.greenSecondaryColor
+                          : ThemeConstants.yellowSecondaryColor,
+                      initialValue: _player.name,
+                      maxLength: 15,
+                      autofocus: true,
+                      hintText: AppLocalizations.of(context)!.playerNameHintText,
+                      onChange: (String playerName) => setState(() {
+                        _player.name = playerName;
+                      }),
+                      onSubmit: (_) => _onInsert(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
