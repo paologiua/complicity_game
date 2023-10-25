@@ -66,6 +66,9 @@ class _PillState extends State<Pill> {
         width: double.infinity,
         child: Wrap(
           clipBehavior: Clip.hardEdge,
+          alignment: widget.direction == Axis.horizontal
+              ? WrapAlignment.start
+              : WrapAlignment.center,
           children: [
             Flex(
               direction: widget.direction,

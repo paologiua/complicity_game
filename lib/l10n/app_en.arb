@@ -42,5 +42,18 @@
 	"yellowTeamText": "Yellow team",
 	"@yellowTeamText": {
     "description": "Yellow team name"
+	},
+	"hideScreenText": "{playerName}\n({team, select, green{GREEN TEAM} yellow{YELLOW TEAM} other{NULL}})\n\nhides the screen from other players",
+	"@hideScreenText": {
+		"description": "Text telling players to hide the screen",
+		"placeholders": {
+			"playerName": {
+				"type": "String",
+				"example": "Bob"
+			},
+			"team": {
+				"type": "String"
+			}
+		}
 	}
 }

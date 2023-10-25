@@ -1,79 +1,81 @@
+import 'dart:math';
+
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../models/player_model.dart';
 
 class GameState {
   GameState({
-    required this.player,
-    required this.word,
-  });
-
-  PlayerModel player;
-  String word;
-}
-
-class GameService with ChangeNotifier, DiagnosticableTreeMixin {
-  final List<PlayerModel> _greenPlayers = [];
-  final List<PlayerModel> _yellowPlayers = [];
-
-  int _greenScore = 0;
-  int _yellowScore = 0;
-
-  Team? _turn;
-
-  void start(BuildContext context) {
-    reset();
-
-    PlayerManagerService playerManagerService =
-        context.read<PlayerManagerService>();
-
-    _greenPlayers.addAll(playerManagerService.getPlayersByTeam(Team.green));
-    _yellowPlayers.addAll(playerManagerService.getPlayersByTeam(Team.yellow));
+    required List<PlayerModel> players,
+    required this.words,
+  }) {
+    for (PlayerModel player in players..shuffle()) {
+      _players[player.team.name] = _players[player.team.name] ?? [];
+      _players[player.team.name]?.add(player);
+    }
 
     _turn = (Team.values.toList()..shuffle()).first;
+    _word = words.removeAt(Random().nextInt(words.length));
   }
 
-  GameState next() {
-    PlayerModel player = _turn == Team.green
-        ? (_greenPlayers..shuffle()).first
-        : (_yellowPlayers..shuffle()).first;
+  final Map<String, int> _indexes = {};
+  final Map<String, List<PlayerModel>> _players = {};
+  final Map<String, int> _scores = {};
 
-    return GameState(
-      player: player,
-      word: "",
-    );
-  }
+  List<String> words;
 
-  void toggleTurn() {
-    if (_turn == Team.green) {
-      _turn = Team.yellow;
-    } else {
-      _turn = Team.green;
-    }
+  late Team _turn;
+  late String _word;
+
+  void _next() {
+    _turn = Team.values[(Team.values.indexOf(_turn) + 1) % Team.values.length];
+    _indexes[_turn.name] =
+        ((_indexes[_turn.name] ?? 0) + 1) % (_players[_turn.name] ?? []).length;
+
+    _word = words.removeAt(Random().nextInt(words.length));
   }
 
   void win(Team team) {
-    if (team == Team.green) {
-      _greenScore++;
-    } else {
-      _yellowScore++;
-    }
+    _scores[team.name] = (_scores[team.name] ?? 0) + 1;
 
-    toggleTurn();
+    _next();
+  }
+
+  PlayerModel getCurrentPlayer() {
+    return (_players[_turn.name] ?? [])[_indexes[_turn.name] ?? 0];
   }
 
   int getScore(Team team) {
-    return team == Team.green ? _greenScore : _yellowScore;
+    return _scores[team.name] ?? 0;
   }
 
-  void reset() {
-    _greenPlayers.clear();
-    _yellowPlayers.clear();
-    _turn = null;
-    _greenScore = 0;
-    _yellowScore = 0;
+  String getWord() {
+    return _word;
+  }
+}
+
+class GameService with ChangeNotifier, DiagnosticableTreeMixin {
+  GameService() {
+    rootBundle.loadString("assets/data/nouns_it.csv").then((String rawData) {
+      _words = rawData.split("\n");
+    });
+  }
+
+  List<String> _words = [];
+  
+  late GameState state;
+
+  void start(BuildContext context) {
+    PlayerManagerService playerManagerService =
+        context.read<PlayerManagerService>();
+
+    state = GameState(
+      players: playerManagerService.getPlayers(),
+      words: _words,
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
+import 'package:complicity_game/services/game_service.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:complicity_game/widgets/custom_floating_button.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,11 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
-          onPressed: () => Navigator.pushNamed(context, '/'),
+          onPressed: () {
+            context.read<GameService>().start(context);
+
+            Navigator.pushNamed(context, '/game/init');
+          },
         ),
       ],
       children: [
