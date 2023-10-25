@@ -11,6 +11,7 @@ import '../models/player_model.dart';
 import '../widgets/custom_scaffold.dart';
 import '../dialogs/player_editor_dialog.dart';
 import '../widgets/pill.dart';
+import '../widgets/size_measurer.dart';
 
 class TeamSelectorScreen extends StatefulWidget {
   const TeamSelectorScreen({super.key});
@@ -21,6 +22,7 @@ class TeamSelectorScreen extends StatefulWidget {
 
 class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   late PlayerManagerService _playerManagerService;
+  double _popupHeight = 0.0;
 
   Future<void> showEditorDialog({PlayerModel? player}) {
     return showDialog<void>(
@@ -47,8 +49,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
 
     return CustomScaffold(
       floatingButtons: [
-        if (!isReadyToPlay)
-          const CustomFloatingButton(size: 0),
+        if (!isReadyToPlay) const CustomFloatingButton(size: 0),
         CustomFloatingButton(
           heroTag: "left_button",
           icon: IconsConstants.add,
@@ -71,7 +72,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
           padding: const EdgeInsets.only(top: ThemeConstants.defaultPadding),
           child: ListView(
             children: [
-              const SizedBox(height: 212.0),
+              SizedBox(height: _popupHeight + ThemeConstants.defaultPadding),
               ..._playerManagerService
                   .getPlayers()
                   .map(
@@ -113,12 +114,17 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                 tileMode: TileMode.clamp,
               ),
             ),
-            child: Pill(
-              heroTag: "popup",
-              color: ThemeConstants.greyPrimaryColor,
-              borderColor: ThemeConstants.greySecondaryColor,
-              icon: IconsConstants.groupAdd,
-              text: AppLocalizations.of(context)!.enterParticipantsNamesText,
+            child: SizeMeasurer(
+              onChange: (Size size) => setState(() {
+                _popupHeight = size.height;
+              }),
+              child: Pill(
+                heroTag: "popup",
+                color: ThemeConstants.greyPrimaryColor,
+                borderColor: ThemeConstants.greySecondaryColor,
+                icon: IconsConstants.groupAdd,
+                text: AppLocalizations.of(context)!.enterParticipantsNamesText,
+              ),
             ),
           ),
         ),
