@@ -72,4 +72,10 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
     _players.clear();
     lastKey = -1;
   }
+
+  bool isReadyToPlay() {
+    return Team.values
+        .map((Team team) => getPlayersByTeam(team).length)
+        .every((int teamSize) => teamSize >= 2);
+  }
 }

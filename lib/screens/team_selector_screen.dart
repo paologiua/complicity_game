@@ -43,22 +43,28 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isReadyToPlay = _playerManagerService.isReadyToPlay();
+
     return CustomScaffold(
       floatingButtons: [
+        if (!isReadyToPlay)
+          const CustomFloatingButton(size: 0),
         CustomFloatingButton(
           heroTag: "left_button",
           icon: IconsConstants.add,
           onPressed: showEditorDialog,
         ),
-        CustomFloatingButton(
-          heroTag: "right_button",
-          icon: IconsConstants.arrowForward,
-          onPressed: () {
-            context.read<GameService>().start(context);
+        isReadyToPlay
+            ? CustomFloatingButton(
+                heroTag: "right_button",
+                icon: IconsConstants.arrowForward,
+                onPressed: () {
+                  context.read<GameService>().start(context);
 
-            Navigator.pushNamed(context, '/game/init');
-          },
-        ),
+                  Navigator.pushNamed(context, '/game/init');
+                },
+              )
+            : const CustomFloatingButton(heroTag: "right_button", size: 0),
       ],
       children: [
         Padding(

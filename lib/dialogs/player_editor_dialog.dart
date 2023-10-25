@@ -41,11 +41,11 @@ class _PlayerEditorDialogState extends State<PlayerEditorDialog> {
 
   void _onInsert() {
     String name = _player.name.trim();
-    name = name[0].toUpperCase() + name.substring(1);
+    if (name.isNotEmpty) {
+      name = name[0].toUpperCase() + name.substring(1);
+    }
 
-    widget.onInsert(_player.copyWith(
-      name: name
-    ));
+    widget.onInsert(_player.copyWith(name: name));
     _close();
   }
 

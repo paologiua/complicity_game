@@ -11,7 +11,7 @@
   "@gameRulesPart3": {
     "description": "The third part of the game rules displayed to the user"
   },
-	"enterParticipantsNamesText": "Enter participants' names.",
+	"enterParticipantsNamesText": "Enter at least two participants per team",
 	"@enterParticipantsNamesText": {
     "description": "The text prompting the user to enter participants' names"
 	},
