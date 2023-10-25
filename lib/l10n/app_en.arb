@@ -55,5 +55,15 @@
 				"type": "String"
 			}
 		}
+	},
+	"mysteryWordText": "The mystery word is\n\n{word}",
+	"@mysteryWordText": {
+		"description": "Text where the mysterious word is indicated",
+		"placeholders": {
+			"word": {
+				"type": "String",
+				"example": "WORLD"
+			}
+		}
 	}
 }

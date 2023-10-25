@@ -9,14 +9,14 @@ import '../widgets/custom_scaffold.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/pill.dart';
 
-class InitGameScreen extends StatefulWidget {
-  const InitGameScreen({super.key});
+class GameStartScreen extends StatefulWidget {
+  const GameStartScreen({super.key});
 
   @override
-  State<InitGameScreen> createState() => _InitGameScreenState();
+  State<GameStartScreen> createState() => _GameStartScreenState();
 }
 
-class _InitGameScreenState extends State<InitGameScreen> {
+class _GameStartScreenState extends State<GameStartScreen> {
   late GameService _gameService;
 
   @override
@@ -35,7 +35,7 @@ class _InitGameScreenState extends State<InitGameScreen> {
           icon: Icons.casino_outlined,
           onPressed: () => Navigator.pushNamed(
             context,
-            '/team_selector',
+            '/game/progress',
           ),
         ),
         const CustomFloatingButton(size: 0),
@@ -54,7 +54,7 @@ class _InitGameScreenState extends State<InitGameScreen> {
             icon: Icons.disabled_visible_outlined,
             text: AppLocalizations.of(context)!.hideScreenText(
               _gameService.state.getCurrentPlayer().name.toUpperCase(),
-              _gameService.state.getCurrentPlayer().team.name,
+              _gameService.state.getCurrentPlayer().team.name, 
             ),
           ),
         ),

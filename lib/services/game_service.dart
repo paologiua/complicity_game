@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:complicity_game/services/player_manager_service.dart';
@@ -62,19 +63,25 @@ class GameState {
 }
 
 class GameService with ChangeNotifier, DiagnosticableTreeMixin {
-  GameService() {
-    rootBundle.loadString("assets/data/nouns_it.csv").then((String rawData) {
+  GameService(BuildContext context) {
+    _context = context;
+
+    String languageCode = Platform.localeName.split('_')[0];
+    rootBundle
+        .loadString("assets/data/nouns_$languageCode.csv")
+        .then((String rawData) {
       _words = rawData.split("\n");
     });
   }
 
+  late BuildContext _context;
+
   List<String> _words = [];
-  
   late GameState state;
 
-  void start(BuildContext context) {
+  void start() {
     PlayerManagerService playerManagerService =
-        context.read<PlayerManagerService>();
+        _context.read<PlayerManagerService>();
 
     state = GameState(
       players: playerManagerService.getPlayers(),

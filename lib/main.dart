@@ -16,7 +16,7 @@ void main() {
           lazy: false,
         ),
         ChangeNotifierProvider(
-          create: (_) => GameService(),
+          create: (BuildContext context) => GameService(context),
           lazy: false,
         ),
       ],

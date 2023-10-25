@@ -10,5 +10,6 @@
 	"playerNameHintText": "Nome del giocatore",
 	"greenTeamText": "Squadra verde",
 	"yellowTeamText": "Squadra gialla",
-	"hideScreenText": "{playerName}\n({team, select, green{SQUADRA VERDE} yellow{SQUADRA GIALLA} other{NULL}})\n\nnasconde lo schermo agli altri giocatori"
+	"hideScreenText": "{playerName}\n({team, select, green{SQUADRA VERDE} yellow{SQUADRA GIALLA} other{NULL}})\n\nnasconde lo schermo agli altri giocatori",
+	"mysteryWordText": "La parola misteriosa è\n\n{word}"
 }

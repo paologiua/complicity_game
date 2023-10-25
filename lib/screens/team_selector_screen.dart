@@ -60,9 +60,9 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                 heroTag: "right_button",
                 icon: IconsConstants.arrowForward,
                 onPressed: () {
-                  context.read<GameService>().start(context);
+                  context.read<GameService>().start();
 
-                  Navigator.pushNamed(context, '/game/init');
+                  Navigator.pushNamed(context, '/game/start');
                 },
               )
             : const CustomFloatingButton(heroTag: "right_button", size: 0),
