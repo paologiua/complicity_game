@@ -12,11 +12,11 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => PlayerManagerService(),
+          create: (context) => PlayerManagerService(),
           lazy: false,
         ),
         ChangeNotifierProvider(
-          create: (BuildContext context) => GameService(context),
+          create: (context) => GameService(context),
           lazy: false,
         ),
       ],
@@ -50,7 +50,7 @@ void main() {
 class ComplicityGame extends StatelessWidget {
   const ComplicityGame({super.key});
 
-  // This widget is the root of your application.
+  // This widget is the root of application
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,11 +63,11 @@ class ComplicityGame extends StatelessWidget {
         ),
         pageTransitionsTheme: PageTransitionsTheme(
           builders: {
-            TargetPlatform.android: NoTransitionPageTransitionsBuilder(),
-            TargetPlatform.iOS: NoTransitionPageTransitionsBuilder(),
-            TargetPlatform.linux: NoTransitionPageTransitionsBuilder(),
-            TargetPlatform.macOS: NoTransitionPageTransitionsBuilder(),
-            TargetPlatform.windows: NoTransitionPageTransitionsBuilder(),
+            TargetPlatform.android: NoneTransitionsBuilder(),
+            TargetPlatform.iOS: NoneTransitionsBuilder(),
+            TargetPlatform.linux: NoneTransitionsBuilder(),
+            TargetPlatform.macOS: NoneTransitionsBuilder(),
+            TargetPlatform.windows: NoneTransitionsBuilder(),
           },
         ),
       ),
@@ -79,7 +79,7 @@ class ComplicityGame extends StatelessWidget {
   }
 }
 
-class NoTransitionPageTransitionsBuilder extends PageTransitionsBuilder {
+class NoneTransitionsBuilder extends PageTransitionsBuilder {
   @override
   Widget buildTransitions<T>(
     PageRoute<T> route,
@@ -88,6 +88,7 @@ class NoTransitionPageTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return child; // Ritorna direttamente il widget child, evitando qualsiasi animazione
+    // Returns the child widget directly, avoiding any animation
+    return child;
   }
 }
