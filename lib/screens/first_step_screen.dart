@@ -23,10 +23,7 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
-          onPressed: () => Navigator.pushNamed(
-            context,
-            "/game_rules/2",
-          ),
+          onPressed: goToNextPage,
         ),
         const CustomFloatingButton(size: 0),
       ],
@@ -39,9 +36,17 @@ class _FirstStepScreenState extends State<FirstStepScreen> {
             borderColor: ThemeConstants.greenSecondaryColor,
             icon: IconsConstants.emojiObjects,
             text: AppLocalizations.of(context)!.gameRulesPart1,
+            onTap: goToNextPage,
           ),
         ),
       ],
+    );
+  }
+  
+  void goToNextPage() {
+    Navigator.pushNamed(
+      context,
+      "/game_rules/2",
     );
   }
 }

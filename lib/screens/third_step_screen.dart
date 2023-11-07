@@ -27,10 +27,7 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
-          onPressed: () => Navigator.pushNamed(
-            context,
-            '/team_selector',
-          ),
+          onPressed: goToNextPage,
         ),
       ],
       children: [
@@ -42,9 +39,17 @@ class _ThirdStepScreenState extends State<ThirdStepScreen> {
             borderColor: ThemeConstants.yellowSecondaryColor,
             icon: IconsConstants.socialLeaderboard,
             text: AppLocalizations.of(context)!.gameRulesPart3,
+            onTap: goToNextPage,
           ),
         ),
       ],
+    );
+  }
+
+  void goToNextPage() {
+    Navigator.pushNamed(
+      context,
+      '/team_selector',
     );
   }
 }
