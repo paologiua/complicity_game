@@ -65,5 +65,14 @@
 				"example": "WORLD"
 			}
 		}
+	},
+	"makeTeamWinButtonLabel": "{team, select, green{Green} yellow{Yellow} other{null}} team wins",
+	"@makeTeamWinButtonLabel": {
+		"description": "Text of the button to make a team win during the game",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
 	}
 }

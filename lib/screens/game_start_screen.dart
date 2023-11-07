@@ -33,10 +33,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: Icons.casino_outlined,
-          onPressed: () => Navigator.pushNamed(
-            context,
-            '/game/progress',
-          ),
+          onPressed: goToNextPage,
         ),
         const CustomFloatingButton(size: 0),
       ],
@@ -48,17 +45,26 @@ class _GameStartScreenState extends State<GameStartScreen> {
             color: _gameService.state.getCurrentPlayer().team == Team.green
                 ? ThemeConstants.greenPrimaryColor
                 : ThemeConstants.yellowPrimaryColor,
-            borderColor: _gameService.state.getCurrentPlayer().team == Team.green
-                ? ThemeConstants.greenSecondaryColor
-                : ThemeConstants.yellowSecondaryColor,
+            borderColor:
+                _gameService.state.getCurrentPlayer().team == Team.green
+                    ? ThemeConstants.greenSecondaryColor
+                    : ThemeConstants.yellowSecondaryColor,
             icon: Icons.disabled_visible_outlined,
             text: AppLocalizations.of(context)!.hideScreenText(
               _gameService.state.getCurrentPlayer().name.toUpperCase(),
-              _gameService.state.getCurrentPlayer().team.name, 
+              _gameService.state.getCurrentPlayer().team.name,
             ),
+            onTap: goToNextPage,
           ),
         ),
       ],
+    );
+  }
+
+  void goToNextPage() {
+    Navigator.pushNamed(
+      context,
+      '/game/progress',
     );
   }
 }

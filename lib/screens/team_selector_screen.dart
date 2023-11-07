@@ -24,19 +24,6 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   late PlayerManagerService _playerManagerService;
   double _popupHeight = 0.0;
 
-  Future<void> showEditorDialog({PlayerModel? player}) {
-    return showDialog<void>(
-      context: context,
-      barrierColor: Colors.black12,
-      barrierDismissible: false,
-      builder: (BuildContext context) => PlayerEditorDialog(
-        initialValue: player,
-        onInsert: _playerManagerService.insertPlayer,
-        onRemove: _playerManagerService.removePlayer,
-      ),
-    ).then((_) => setState(() {}));
-  }
-
   @override
   void initState() {
     _playerManagerService = context.read<PlayerManagerService>();
@@ -124,11 +111,25 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                 borderColor: ThemeConstants.greySecondaryColor,
                 icon: IconsConstants.groupAdd,
                 text: AppLocalizations.of(context)!.enterParticipantsNamesText,
+                onTap: showEditorDialog,
               ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  Future<void> showEditorDialog({PlayerModel? player}) {
+    return showDialog<void>(
+      context: context,
+      barrierColor: Colors.black12,
+      barrierDismissible: false,
+      builder: (BuildContext context) => PlayerEditorDialog(
+        initialValue: player,
+        onInsert: _playerManagerService.insertPlayer,
+        onRemove: _playerManagerService.removePlayer,
+      ),
+    ).then((_) => setState(() {}));
   }
 }
