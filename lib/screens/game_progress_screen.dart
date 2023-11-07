@@ -49,7 +49,9 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
                     color: ThemeConstants.greenPrimaryColor,
                     borderColor: ThemeConstants.greenSecondaryColor,
                     icon: IconsConstants.cognition,
-                    text: "La squadra verde vince",
+                    text: AppLocalizations.of(context)!.makeTeamWinButtonLabel(
+                      Team.green.name,
+                    ),
                     direction: Axis.horizontal,
                     onTap: () => win(Team.green),
                   ),
@@ -65,7 +67,9 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
                     color: ThemeConstants.yellowPrimaryColor,
                     borderColor: ThemeConstants.yellowSecondaryColor,
                     icon: IconsConstants.emojiObjects,
-                    text: "La squadra gialla vince",
+                    text: AppLocalizations.of(context)!.makeTeamWinButtonLabel(
+                      Team.yellow.name,
+                    ),
                     direction: Axis.horizontal,
                     onTap: () => win(Team.yellow),
                   ),
