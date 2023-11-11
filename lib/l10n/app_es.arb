@@ -1,7 +1,7 @@
 {
-	"gameRulesPart1": "El Juego de la Complicidad es un juego de grupo. Tienes que dividir a los participantes en dos equipos compuestos por personas con un gran sentido de la complicidad mutua.",
-	"gameRulesPart2": "En cada turno, el juego elige una palabra y un participante. Éste, mediante pistas, tendrá que conseguir que su equipo adivine la palabra y no el equipo contrario.",
-	"gameRulesPart3": "Gana el equipo que adivine más palabras.",
+	"gameRulesPart1": "El Juego de la Complicidad es un juego de grupo. Tienes que dividir a los participantes en dos equipos compuestos por personas con un gran sentido de la complicidad mutua",
+	"gameRulesPart2": "En cada turno, el juego elige una palabra y un participante. Éste, mediante pistas, tendrá que conseguir que su equipo adivine la palabra y no el equipo contrario",
+	"gameRulesPart3": "Gana el equipo que adivine primero cinco palabras",
 	"enterParticipantsNamesText": "Inscriba al menos a dos participantes por equipo",
 	"gameRulesButtonLabel": "Reglas del juego",
 	"startGameButtonLabel": "Iniciar una partida",
@@ -12,5 +12,6 @@
 	"yellowTeamText": "Equipo amarillo",
 	"hideScreenText": "{playerName}\n({team, select, green{EQUIPO VERDE} yellow{EQUIPO AMARILLO} other{NULL}})\n\noculta la pantalla a otros jugadores",
 	"mysteryWordText": "La palabra secreta es\n\n{word}",
-	"makeTeamWinButtonLabel": "Equipo {team, select, green{verde} yellow{amarillo} other{null}} gana"
+	"makeTeamWinButtonLabel": "Equipo {team, select, green{verde} yellow{amarillo} other{null}} gana",
+	"hiddenWordText": "Palabra oculta"
 }

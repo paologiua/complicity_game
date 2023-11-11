@@ -1,3 +1,4 @@
+import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/models/player_model.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
         const CustomFloatingButton(heroTag: "left_button", size: 0),
         CustomFloatingButton(
           heroTag: "right_button",
-          icon: Icons.casino_outlined,
+          icon: IconsConstants.arrowForward,
           onPressed: goToNextPage,
         ),
         const CustomFloatingButton(size: 0),
