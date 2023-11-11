@@ -11,6 +11,6 @@
 	"greenTeamText": "Equipo verde",
 	"yellowTeamText": "Equipo amarillo",
 	"hideScreenText": "{playerName}\n({team, select, green{EQUIPO VERDE} yellow{EQUIPO AMARILLO} other{NULL}})\n\noculta la pantalla a otros jugadores",
-	"mysteryWordText": "La palabra misteriosa es\n\n{word}",
+	"mysteryWordText": "La palabra secreta es\n\n{word}",
 	"makeTeamWinButtonLabel": "Equipo {team, select, green{verde} yellow{amarillo} other{null}} gana"
 }
