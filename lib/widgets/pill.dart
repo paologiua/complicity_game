@@ -9,6 +9,7 @@ class Pill extends StatefulWidget {
     this.direction = Axis.vertical,
     this.icon,
     this.text,
+    this.child,
     this.onTap,
     this.heroTag,
   });
@@ -17,6 +18,7 @@ class Pill extends StatefulWidget {
   final Color borderColor;
   final IconData? icon;
   final String? text;
+  final Widget? child;
   final Axis direction;
   final void Function()? onTap;
   final Object? heroTag;
@@ -100,6 +102,7 @@ class _PillState extends State<Pill> {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
+                if (widget.child != null) widget.child!
               ],
             ),
           ],

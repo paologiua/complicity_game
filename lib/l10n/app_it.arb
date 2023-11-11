@@ -1,7 +1,7 @@
 {
-  "gameRulesPart1": "Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco.",
-	"gameRulesPart2": "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la parola alla propria squadra piuttosto che a quella avversaria.",
-	"gameRulesPart3": "Vince la squadra che indovina più parole.",
+  "gameRulesPart1": "Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco",
+	"gameRulesPart2": "Ad ogni turno il gioco sceglie una parola e un partecipante. Quest’ultimo, tramite degli indizi, dovrà far indovinare la parola alla propria squadra piuttosto che a quella avversaria",
+	"gameRulesPart3": "Vince la squadra che indovina per prima 5 parole",
 	"enterParticipantsNamesText": "Inserisci almeno due partecipanti per squadra",
 	"gameRulesButtonLabel": "Regole del gioco",
 	"startGameButtonLabel": "Inizia una partita",
@@ -12,5 +12,6 @@
 	"yellowTeamText": "Squadra gialla",
 	"hideScreenText": "{playerName}\n({team, select, green{SQUADRA VERDE} yellow{SQUADRA GIALLA} other{NULL}})\n\nnasconde lo schermo agli altri giocatori",
 	"mysteryWordText": "La parola misteriosa è\n\n{word}",
-	"makeTeamWinButtonLabel": "Squadra {team, select, green{verde} yellow{gialla} other{null}} vince"
+	"makeTeamWinButtonLabel": "Squadra {team, select, green{verde} yellow{gialla} other{null}} vince",
+	"hiddenWordText": "Parola nascosta"
 }
