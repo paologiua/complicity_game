@@ -41,7 +41,7 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
             color: color,
           )
         : null;
-        
+
     final Text? text = widget.text != null
         ? Text(
             widget.text!,
@@ -64,7 +64,9 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
               highlightElevation: 0,
               focusElevation: 0,
               hoverElevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
               child: icon,
             )
           : FloatingActionButton.extended(
@@ -75,7 +77,9 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
               highlightElevation: 0,
               focusElevation: 0,
               hoverElevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
               icon: icon,
               label: text!,
             ),
