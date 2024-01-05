@@ -43,14 +43,25 @@ class GameState {
     _word = words.removeAt(Random().nextInt(words.length));
   }
 
-  void win(Team team) {
-    _scores[team.name] = (_scores[team.name] ?? 0) + 1;
+  void win(Team? team) {
+    if (team != null) {
+      _scores[team.name] = (_scores[team.name] ?? 0) + 1;
+    }
 
     _next();
   }
 
   PlayerModel getCurrentPlayer() {
     return (_players[_turn.name] ?? [])[_indexes[_turn.name] ?? 0];
+  }
+
+  List<PlayerModel> getSoothsayers() {
+    List<PlayerModel> soothsayers = _players.values.reduce(
+      (value, element) => [...value, ...element],
+    );
+    soothsayers.remove(getCurrentPlayer());
+    
+    return soothsayers;
   }
 
   int getScore(Team team) {

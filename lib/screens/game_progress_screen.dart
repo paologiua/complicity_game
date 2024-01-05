@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:complicity_game/constants/options.dart';
 import 'package:complicity_game/constants/theme.dart';
+import 'package:complicity_game/dialogs/player_selector_dialog.dart';
+import 'package:complicity_game/widgets/custom_floating_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +27,12 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
   bool _hiddenWord = false;
   double _popupHeight = 0.0;
 
+  late Timer _timer;
+
   @override
   void initState() {
     _gameService = context.read<GameService>();
+    initTimer();
     super.initState();
   }
 
@@ -34,130 +42,163 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
       children: [
         Align(
           alignment: Alignment.center,
-          child: Hero(
-            tag: "popup",
-            child: Container(
-              padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-              decoration: const BoxDecoration(
-                color: ThemeConstants.blueDarkColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(ThemeConstants.defaultBorderRadius * 3),
-                ),
+          child: Container(
+            padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
+            decoration: const BoxDecoration(
+              color: ThemeConstants.blueDarkColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(ThemeConstants.defaultBorderRadius * 3),
               ),
-              child: Wrap(
-                clipBehavior: Clip.hardEdge,
-                runSpacing: ThemeConstants.defaultPadding,
-                children: [
-                  Pill(
-                    color: ThemeConstants.greenPrimaryColor,
-                    borderColor: ThemeConstants.greenSecondaryColor,
-                    icon: IconsConstants.cognition,
-                    text: AppLocalizations.of(context)!.makeTeamWinButtonLabel(
-                      Team.green.name,
-                    ),
-                    direction: Axis.horizontal,
-                    onTap: () => win(Team.green),
+            ),
+            child: Wrap(
+              clipBehavior: Clip.hardEdge,
+              runSpacing: ThemeConstants.defaultPadding,
+              children: [
+                Center(
+                  child: CustomFloatingButton(
+                    onPressed: draw,
+                    icon: IconsConstants.close,
+                    text: AppLocalizations.of(context)!.drawButtonLabel,
+                    size: 64.0,
                   ),
-                  _hiddenWord
-                      ? Pill(
-                          color: ThemeConstants.defaultTextColor,
-                          borderColor: const Color(0xFF3F3C45),
-                          child: SizedBox(
-                            height: _popupHeight -
-                                2 * ThemeConstants.defaultBorder -
-                                2 * ThemeConstants.defaultPadding,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.hide_source_rounded,
-                                  size: ThemeConstants.defaultIconSize,
-                                  color: Color(0xFFFFFFFF),
-                                ),
-                                const SizedBox(
-                                  height: ThemeConstants.defaultPadding,
-                                  width: ThemeConstants.defaultPadding,
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.hiddenWordText,
-                                  textAlign: TextAlign.center,
+                ),
+                Stack(
+                  children: [
+                    _hiddenWord
+                        ? Pill(
+                            color: ThemeConstants.defaultTextColor,
+                            borderColor: const Color(0xFF3F3C45),
+                            child: SizedBox(
+                              height: _popupHeight -
+                                  2 * ThemeConstants.defaultBorder -
+                                  2 * ThemeConstants.defaultPadding,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.hide_source_rounded,
+                                    size: ThemeConstants.defaultIconSize,
+                                    color: ThemeConstants.greyPrimaryColor,
+                                  ),
+                                  const SizedBox(
+                                    height: ThemeConstants.defaultPadding,
+                                    width: ThemeConstants.defaultPadding,
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .hiddenWordText,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color:
+                                              ThemeConstants.greyPrimaryColor,
+                                        ),
+                                  ),
+                                  const SizedBox(
+                                    height: ThemeConstants.defaultPadding,
+                                    width: ThemeConstants.defaultPadding,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color: ThemeConstants
+                                                  .greyPrimaryColor,
+                                              fontSize: 23,
+                                            ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text:
+                                                "${_gameService.state.getScore(Team.yellow)}",
+                                            style: const TextStyle(
+                                              color: ThemeConstants
+                                                  .yellowSecondaryColor,
+                                            ),
+                                          ),
+                                          const TextSpan(
+                                            text: ' - ',
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                "${_gameService.state.getScore(Team.green)}",
+                                            style: const TextStyle(
+                                              color: ThemeConstants
+                                                  .greenSecondaryColor,
+                                            ),
+                                          ),
+                                        ]),
+                                  )
+                                ],
+                              ),
+                            ),
+                            onTap: () => setState(() {
+                              _hiddenWord = false;
+                              initTimer();
+                            }),
+                          )
+                        : SizeMeasurer(
+                            onChange: (Size size) => setState(() {
+                              _popupHeight = size.height;
+                            }),
+                            child: Pill(
+                              heroTag: "popup",
+                              color: ThemeConstants.greyPrimaryColor,
+                              borderColor: ThemeConstants.greySecondaryColor,
+                              icon: Icons.cookie_outlined,
+                              text:
+                                  AppLocalizations.of(context)!.mysteryWordText(
+                                _gameService.state.getWord().toUpperCase(),
+                              ),
+                              onTap: () => setState(() {
+                                _hiddenWord = true;
+                                deleteTimer();
+                              }),
+                            ),
+                          ),
+                    IgnorePointer(
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.transparent,
+                              width: ThemeConstants.defaultBorder,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(
+                            ThemeConstants.defaultPadding,
+                          ),
+                          child: _hiddenWord
+                              ? const Icon(
+                                  Icons.lock_open_rounded,
+                                  size: ThemeConstants.defaultFontSize,
+                                  color: ThemeConstants.greyPrimaryColor,
+                                )
+                              : Text(
+                                  "${OptionsConstants.wordVisibilitySeconds - _timer.tick}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
                                       ?.copyWith(
-                                        color: const Color(0xFFFFFFFF),
+                                        height: 1,
                                       ),
                                 ),
-                                const SizedBox(
-                                  height: ThemeConstants.defaultPadding,
-                                  width: ThemeConstants.defaultPadding,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color: const Color(0xFFFFFFFF),
-                                            fontSize: 23,
-                                          ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text:
-                                              "${_gameService.state.getScore(Team.yellow)}",
-                                          style: const TextStyle(
-                                            color: ThemeConstants
-                                                .yellowSecondaryColor,
-                                          ),
-                                        ),
-                                        const TextSpan(
-                                          text: ' - ',
-                                        ),
-                                        TextSpan(
-                                          text:
-                                              "${_gameService.state.getScore(Team.green)}",
-                                          style: const TextStyle(
-                                            color: ThemeConstants
-                                                .greenSecondaryColor,
-                                          ),
-                                        ),
-                                      ]),
-                                )
-                              ],
-                            ),
-                          ),
-                          onTap: () => setState(() {
-                            _hiddenWord = false;
-                          }),
-                        )
-                      : SizeMeasurer(
-                          onChange: (Size size) => setState(() {
-                            _popupHeight = size.height;
-                          }),
-                          child: Pill(
-                            color: ThemeConstants.greyPrimaryColor,
-                            borderColor: ThemeConstants.greySecondaryColor,
-                            icon: Icons.cookie_outlined,
-                            text: AppLocalizations.of(context)!.mysteryWordText(
-                              _gameService.state.getWord().toUpperCase(),
-                            ),
-                            onTap: () => setState(() {
-                              _hiddenWord = true;
-                            }),
-                          ),
                         ),
-                  Pill(
-                    color: ThemeConstants.yellowPrimaryColor,
-                    borderColor: ThemeConstants.yellowSecondaryColor,
-                    icon: IconsConstants.emojiObjects,
-                    text: AppLocalizations.of(context)!.makeTeamWinButtonLabel(
-                      Team.yellow.name,
+                      ),
                     ),
-                    direction: Axis.horizontal,
-                    onTap: () => win(Team.yellow),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                Pill(
+                  color: const Color(0xFFACC8A4),
+                  borderColor: const Color(0xFF5F9A93),
+                  text: AppLocalizations.of(context)!.wordFoundButtonLabel,
+                  onTap: () => showSelectorDialog(),
+                ),
+              ],
             ),
           ),
         ),
@@ -165,12 +206,44 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
     );
   }
 
-  void win(Team team) {
+  void initTimer() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) => setState(() {
+        if (_timer.tick >= OptionsConstants.wordVisibilitySeconds) {
+          _hiddenWord = true;
+          deleteTimer();
+        }
+      }),
+    );
+  }
+
+  void deleteTimer() {
+    _timer.cancel();
+  }
+
+  void win(Team? team) {
     _gameService.state.win(team);
 
     Navigator.pushNamed(
       context,
       "/game/start",
     );
+  }
+
+  void draw() {
+    win(null);
+  }
+
+  Future<void> showSelectorDialog() {
+    return showDialog<void>(
+      context: context,
+      barrierColor: Colors.black12,
+      barrierDismissible: false,
+      builder: (BuildContext context) => PlayerSelectorDialog(
+        players: _gameService.state.getSoothsayers(),
+        onSelect: (player) => print(player),
+      ),
+    ).then((_) => setState(() {}));
   }
 }

@@ -78,5 +78,13 @@
 	"hiddenWordText": "Hidden word",
 	"@hiddenWordText": {
     	"description": "Text indicating that the mysterious word was hidden"
+	},
+	"drawButtonLabel": "Draw",
+	"@drawButtonLabel": {
+    	"description": "Text of the button to skip the round"
+	},
+	"wordFoundButtonLabel": "Word found!",
+	"@wordFoundButtonLabel": {
+    	"description": "Text of the button to indicate that the word has been found"
 	}
 }
