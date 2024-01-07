@@ -17,10 +17,16 @@ class ThemeConstants {
   static const Color purplePrimaryColor = Color(0xFF606586);
   static const Color purpleSecondaryColor = Color(0xFF575978);
 
+  static const Color blackPrimaryColor = Color(0xFF1C1B1F);
+  static const Color blackSecondaryColor = Color(0xFF3F3C45);
+
+  static const Color limePrimaryColor = Color(0xFFACC8A4);
+  static const Color limeSecondaryColor = Color(0xFF5F9A93);
+
   static const FontWeight defaultFontWeight = FontWeight.w600;
   static const double defaultFontSize = 18.0;
-  static const Color defaultTextColor = Color(0xFF1C1B1F);
-  
+  static const Color defaultTextColor = ThemeConstants.blackPrimaryColor;
+
   static const TextStyle defaultTextStyle = TextStyle(
     fontWeight: defaultFontWeight,
     fontSize: defaultFontSize,
