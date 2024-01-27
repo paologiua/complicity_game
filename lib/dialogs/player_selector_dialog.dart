@@ -104,7 +104,6 @@ class _PlayerSelectorDialogState extends State<PlayerSelectorDialog> {
                         child: SizeMeasurer(
                           onChange: (Size size) => setState(() {
                             _popupHeight = size.height;
-                            print(_popupHeight);
                           }),
                           child: Wrap(
                             runSpacing: ThemeConstants.defaultPadding,
