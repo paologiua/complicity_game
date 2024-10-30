@@ -67,6 +67,7 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
                   children: [
                     _hiddenWord
                         ? HiddenWordPill(
+                            heroTag: "popup",
                             greenTeamScore:
                                 _gameService.state.getScore(Team.green),
                             yellowTeamScore:
@@ -130,7 +131,7 @@ class _GameProgressScreenState extends State<GameProgressScreen> {
                   ],
                 ),
                 Pill(
-                  color: ThemeConstants.limePrimaryColor,
+                                    color: ThemeConstants.limePrimaryColor,
                   borderColor: ThemeConstants.limeSecondaryColor,
                   text: AppLocalizations.of(context)!.wordFoundButtonLabel,
                   onTap: () => showSelectorDialog(),

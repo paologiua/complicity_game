@@ -8,11 +8,13 @@ class HiddenWordPill extends StatefulWidget {
       {super.key,
       required this.greenTeamScore,
       required this.yellowTeamScore,
+      this.heroTag,
       this.height,
       this.onTap});
 
   final int greenTeamScore;
   final int yellowTeamScore;
+  final Object? heroTag;
   final double? height;
   final void Function()? onTap;
 
@@ -34,6 +36,7 @@ class _HiddenWordPillState extends State<HiddenWordPill> {
   @override
   Widget build(BuildContext context) {
     return Pill(
+      heroTag: widget.heroTag,
       color: ThemeConstants.blackPrimaryColor,
       borderColor: ThemeConstants.blackSecondaryColor,
       onTap: widget.onTap,
