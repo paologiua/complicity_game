@@ -49,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Pill(
               heroTag: "popup",
-              color: ThemeConstants.yellowPrimaryColor,
-              borderColor: ThemeConstants.yellowSecondaryColor,
+              color: ThemeConstants.ctaPrimaryColor,
+              borderColor: ThemeConstants.ctaSecondaryColor,
               icon: IconsConstants.sportsKabaddi,
               text: AppLocalizations.of(context)!.startGameButtonLabel,
               onTap: () => Navigator.pushNamed(context, "/team_selector"),

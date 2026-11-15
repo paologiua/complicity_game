@@ -49,7 +49,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
-          backgroundColor: ThemeConstants.yellowPrimaryColor,
+         backgroundColor: ThemeConstants.ctaPrimaryColor,
           enabled: isReadyToPlay,
           onPressed: () => Navigator.pushNamed(context, '/game/setup'),
         ),
@@ -97,8 +97,8 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  ThemeConstants.bluePrimaryColor,
-                  ThemeConstants.bluePrimaryColor.withValues(alpha: 0.0),
+                  ThemeConstants.backgroundColor,
+                  ThemeConstants.backgroundColor.withValues(alpha: 0.0),
                 ],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(0.0, 1.0),
@@ -129,7 +129,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   Future<void> showEditorDialog({PlayerModel? player}) {
     return showDialog<void>(
       context: context,
-      barrierColor: Colors.black12,
+      barrierColor: ThemeConstants.scrimColor,
       barrierDismissible: false,
       builder: (BuildContext context) => PlayerEditorDialog(
         initialValue: player,

@@ -38,6 +38,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
+          backgroundColor: ThemeConstants.ctaPrimaryColor,
           onPressed: goToNextPage,
         ),
         const CustomFloatingButton(size: 0),

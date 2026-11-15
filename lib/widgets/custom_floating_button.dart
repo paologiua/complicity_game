@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/icons.dart';
 import '../constants/theme.dart';
 import 'bouncy.dart';
 
@@ -15,6 +16,7 @@ class CustomFloatingButton extends StatefulWidget {
     this.text,
     this.size = 56.0,
     this.enabled = true,
+    this.tooltip,
   });
 
   final Object? heroTag;
@@ -27,6 +29,9 @@ class CustomFloatingButton extends StatefulWidget {
 
   /// A disabled button stays visible, dimmed, and ignores taps.
   final bool enabled;
+
+  /// Spoken and long-press label of a button that only shows an icon.
+  final String? tooltip;
 
   @override
   State<CustomFloatingButton> createState() => _CustomFloatingButtonState();
@@ -69,7 +74,7 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
 
     final Color shade = widget.backgroundColor == null
         ? ThemeConstants.greySecondaryColor
-        : Color.lerp(backgroundColor, Colors.black, 0.35)!;
+        : Color.lerp(backgroundColor, Colors.black, 0.3)!;
 
     return IgnorePointer(
       ignoring: !widget.enabled,
@@ -82,7 +87,13 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: const StadiumBorder(),
-          shadows: [BoxShadow(color: shade, offset: const Offset(0.0, 4.0))],
+          shadows: [
+            BoxShadow(
+              color: shade.withValues(alpha: 0.38),
+              blurRadius: 10.0,
+              offset: const Offset(0.0, 5.0),
+            ),
+          ],
         ),
         child: SizedBox(
         height: widget.size,
@@ -90,14 +101,24 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
         child: widget.text == null
             ? FloatingActionButton(
                 heroTag: heroTag,
+                tooltip: widget.tooltip ??
+                    (widget.icon == IconsConstants.arrowBack
+                        ? MaterialLocalizations.of(context).backButtonTooltip
+                        : widget.icon == IconsConstants.arrowForward
+                            ? MaterialLocalizations.of(context)
+                                .nextPageTooltip
+                            : null),
                 onPressed: onPressed,
                 backgroundColor: backgroundColor,
                 elevation: 0,
                 highlightElevation: 0,
                 focusElevation: 0,
                 hoverElevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: shade,
+                    width: ThemeConstants.clayBorderWidth,
+                  ),
                 ),
                 child: icon,
               )
@@ -109,8 +130,11 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 highlightElevation: 0,
                 focusElevation: 0,
                 hoverElevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: shade,
+                    width: ThemeConstants.clayBorderWidth,
+                  ),
                 ),
                 icon: icon,
                 label: text!,

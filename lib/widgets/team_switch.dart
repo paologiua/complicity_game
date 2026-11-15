@@ -40,11 +40,9 @@ class _TeamSwitchState extends State<TeamSwitch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: ThemeConstants.greyPrimaryColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(ThemeConstants.defaultBorderRadius * 1.4),
-        ),
+      decoration: ThemeConstants.clay(
+        ThemeConstants.greyPrimaryColor,
+        ThemeConstants.greySecondaryColor,
       ),
       padding: const EdgeInsets.all(8.0),
       width: double.infinity,

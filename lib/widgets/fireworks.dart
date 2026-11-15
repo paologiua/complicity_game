@@ -163,7 +163,7 @@ class _FireworksPainter extends CustomPainter {
           center + direction * (reach * max(0.0, spread - 0.10)) + drop;
 
       paint
-        ..color = (i.isEven ? color : Colors.white).withValues(alpha: fade)
+        ..color = color.withValues(alpha: fade)
         ..strokeWidth = 2.0 + 2.5 * fade;
       canvas.drawLine(tail, head, paint);
     }

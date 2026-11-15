@@ -93,10 +93,25 @@ class _GameProgressScreenState extends State<GameProgressScreen>
               color: ThemeConstants.greyPrimaryColor,
               borderColor: ThemeConstants.greySecondaryColor,
               icon: Icons.cookie_outlined,
-              text: AppLocalizations.of(context)!.mysteryWordText(
-                _gameService.state.getWord().toUpperCase(),
-              ),
+              // The label comes from the same string as before, with the word
+              // taken out so it can be set much larger below it.
+              text: AppLocalizations.of(context)!.mysteryWordText('').trim(),
               onTap: _hideWord,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    _gameService.state.getWord().toUpperCase(),
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 34.0,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
+                  ),
+                ),
+              ),
             ),
           );
 
@@ -157,8 +172,8 @@ class _GameProgressScreenState extends State<GameProgressScreen>
               ),
             ),
             Pill(
-              color: ThemeConstants.limePrimaryColor,
-              borderColor: ThemeConstants.limeSecondaryColor,
+              color: ThemeConstants.ctaPrimaryColor,
+              borderColor: ThemeConstants.ctaSecondaryColor,
               icon: Icons.celebration_rounded,
               direction: Axis.horizontal,
               text: AppLocalizations.of(context)!.wordFoundButtonLabel,
@@ -195,7 +210,7 @@ class _GameProgressScreenState extends State<GameProgressScreen>
   Future<void> showSelectorDialog() {
     return showDialog<void>(
       context: context,
-      barrierColor: Colors.black12,
+      barrierColor: ThemeConstants.scrimColor,
       barrierDismissible: false,
       builder: (BuildContext context) => PlayerSelectorDialog(
         players: _gameService.state.getSoothsayers(),

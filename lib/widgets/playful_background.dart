@@ -38,7 +38,7 @@ class _Shape {
   final double spin;
   final double opacity;
 
-  /// Dark shapes use the frame colour, the others are white.
+  /// Dark shapes use the mode accent, the others its pastel card colour.
   final bool dark;
   final TextPainter? symbol;
 }
@@ -134,8 +134,8 @@ class _PlayfulBackgroundState extends State<PlayfulBackground>
                 fontFamily: icon.fontFamily,
                 package: icon.fontPackage,
                 fontSize: size,
-                color: (dark ? style.frameColor : Colors.white)
-                    .withValues(alpha: dark ? opacity * 3.2 : opacity),
+                color: (dark ? style.frameColor : style.cardColor)
+                    .withValues(alpha: dark ? opacity * 1.4 : opacity * 3.0),
               ),
             ),
           )..layout();
@@ -220,8 +220,8 @@ class _BackgroundPainter extends CustomPainter {
       );
 
       final Color color = shape.dark
-          ? style.frameColor.withValues(alpha: min(1.0, shape.opacity * 3.2))
-          : Colors.white.withValues(alpha: shape.opacity);
+          ? style.frameColor.withValues(alpha: shape.opacity * 1.4)
+          : style.cardColor.withValues(alpha: min(1.0, shape.opacity * 3.0));
 
       canvas.save();
       canvas.translate(center.dx, center.dy);

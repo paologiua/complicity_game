@@ -22,7 +22,7 @@ class _HiddenWordPillState extends State<HiddenWordPill> {
   double? _getInternalHeight() {
     if (widget.height != null) {
       // Same height as the pill that shows the word: the card does not jump.
-      return widget.height! - ThemeConstants.lipHeight - 2 * 28.0;
+      return widget.height! - 2 * 28.0;
     }
 
     return null;

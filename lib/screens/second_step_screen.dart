@@ -27,6 +27,7 @@ class _SecondStepScreenState extends State<SecondStepScreen> {
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
+          backgroundColor: ThemeConstants.ctaPrimaryColor,
           onPressed: goToNextPage,
         ),
       ],

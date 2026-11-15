@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../constants/theme.dart';
-import 'pill.dart';
 
 class PillInput extends StatefulWidget {
   const PillInput({
@@ -35,17 +34,7 @@ class _PillInputState extends State<PillInput> {
   @override
   Widget build(BuildContext context) {
     final Widget child = AnimatedContainer(
-      decoration: BoxDecoration(
-        color: widget.color,
-        borderRadius: Pill.borderRadius,
-        boxShadow: [
-          BoxShadow(
-            color: widget.borderColor,
-            offset: const Offset(0.0, ThemeConstants.lipHeight),
-          ),
-        ],
-      ),
-      margin: const EdgeInsets.only(bottom: ThemeConstants.lipHeight),
+      decoration: ThemeConstants.clay(widget.color, widget.borderColor),
       padding: const EdgeInsets.symmetric(
         horizontal: ThemeConstants.defaultPadding,
         vertical: 14.0,

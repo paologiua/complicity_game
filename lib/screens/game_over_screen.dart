@@ -128,8 +128,8 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 _entrance(
                   Pill(
                     direction: Axis.horizontal,
-                    color: ThemeConstants.greyPrimaryColor,
-                    borderColor: ThemeConstants.greySecondaryColor,
+                    color: ThemeConstants.ctaPrimaryColor,
+                    borderColor: ThemeConstants.ctaSecondaryColor,
                     icon: Icons.replay_rounded,
                     text: l10n.playAgainButtonLabel,
                     onTap: _playAgain,
@@ -156,10 +156,10 @@ class _GameOverScreenState extends State<GameOverScreen> {
         Positioned.fill(
           child: Fireworks(
             colors: [
-              ThemeConstants.lighten(_winner.color, 0.3),
+              _winner.color,
               _winner.borderColor,
-              ThemeConstants.lighten(style.cardColor, 0.2),
-              Colors.white,
+              style.cardBorderColor,
+              ThemeConstants.ctaPrimaryColor,
             ],
           ),
         ),

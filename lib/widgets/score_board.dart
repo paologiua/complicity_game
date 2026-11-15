@@ -25,8 +25,9 @@ class ScoreBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.24),
+      decoration: ThemeConstants.clay(
+        ThemeConstants.greyPrimaryColor,
+        ThemeConstants.greySecondaryColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(ThemeConstants.defaultBorderRadius),
         ),
@@ -75,7 +76,7 @@ class _TeamRow extends StatelessWidget {
       '$score',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: team.color,
+            fontSize: 15.0,
             fontWeight: FontWeight.w700,
             height: 1.0,
           ),
@@ -92,15 +93,25 @@ class _TeamRow extends StatelessWidget {
 
     return Row(
       children: [
-        SizedBox(width: 28.0, child: number),
-        const SizedBox(width: 6.0),
+        Container(
+          width: 26.0,
+          height: 26.0,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: team.color,
+            shape: BoxShape.circle,
+            border: Border.all(color: team.borderColor, width: 2.0),
+          ),
+          child: number,
+        ),
+        const SizedBox(width: 8.0),
         Expanded(
           child: Row(
             children: [
               for (int index = 0; index < targetScore; index++)
                 Expanded(
                   child: _Segment(
-                    color: team.color,
+                    color: team.borderColor,
                     filled: index < score,
                     animated: animate && index == score - 1,
                   ),
@@ -147,7 +158,7 @@ class _Segment extends StatelessWidget {
       height: 10.0,
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.22),
+        color: ThemeConstants.blackPrimaryColor.withValues(alpha: 0.10),
         borderRadius: const BorderRadius.all(Radius.circular(5.0)),
       ),
       child: filled ? fill : null,

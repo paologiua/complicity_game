@@ -26,7 +26,7 @@ class GameHeader extends StatelessWidget {
 
     final bool? confirmed = await showDialog<bool>(
       context: context,
-      barrierColor: Colors.black12,
+      barrierColor: ThemeConstants.scrimColor,
       barrierDismissible: false,
       builder: (BuildContext context) => ConfirmDialog(
         icon: Icons.logout_rounded,
@@ -60,9 +60,13 @@ class GameHeader extends StatelessWidget {
                   child: Container(
                     width: 48.0,
                     height: 48.0,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: ThemeConstants.greyPrimaryColor,
                       shape: BoxShape.circle,
+                      border: Border.all(
+                        color: ThemeConstants.greySecondaryColor,
+                        width: ThemeConstants.clayBorderWidth,
+                      ),
                     ),
                     child: const Icon(
                       IconsConstants.close,

@@ -5,8 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import 'bouncy.dart';
 
-/// Raised coloured card. [borderColor] is the darker shade of [color]: it
-/// draws the edge under the card, which sinks when the card is pressed.
+/// Soft clay card. [borderColor] is the darker shade of [color], used for
+/// the outline and the tinted shadow.
 class Pill extends StatefulWidget {
   const Pill({
     super.key,
@@ -29,9 +29,7 @@ class Pill extends StatefulWidget {
   final void Function()? onTap;
   final Object? heroTag;
 
-  static const BorderRadius borderRadius = BorderRadius.all(
-    Radius.circular(ThemeConstants.defaultBorderRadius * 1.4),
-  );
+  static const BorderRadius borderRadius = ThemeConstants.clayRadius;
 
   @override
   State<Pill> createState() => _PillState();
@@ -78,8 +76,6 @@ class _PillState extends State<Pill> {
   Widget build(BuildContext context) {
     final bool horizontal = widget.direction == Axis.horizontal;
     final bool tappable = widget.onTap != null;
-    const double lip = ThemeConstants.lipHeight;
-    final double sink = _pressed ? lip - 2.0 : 0.0;
 
     final Widget child = Bouncy(
       enabled: tappable,
@@ -90,30 +86,20 @@ class _PillState extends State<Pill> {
         onTapUp: tappable ? (_) => _setPressed(false) : null,
         onTapCancel: tappable ? () => _setPressed(false) : null,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 90),
+          duration: const Duration(milliseconds: 120),
           curve: Curves.easeOut,
-          margin: EdgeInsets.only(top: sink, bottom: lip - sink),
-          decoration: BoxDecoration(
-            gradient: ThemeConstants.surfaceGradient(widget.color),
-            borderRadius: Pill.borderRadius,
-            boxShadow: [
-              BoxShadow(
-                color: widget.borderColor,
-                offset: Offset(0.0, lip - sink),
-              ),
-            ],
+          decoration: ThemeConstants.clay(
+            widget.color,
+            widget.borderColor,
+            pressed: _pressed,
           ),
+          foregroundDecoration: ThemeConstants.clayGloss(),
           width: double.infinity,
-          child: ClipRRect(
-            borderRadius: Pill.borderRadius,
-            child: CustomPaint(
-              painter: const _DotsPainter(),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: ThemeConstants.defaultPadding,
-                  vertical: horizontal ? 16.0 : 28.0,
-                ),
-                child: Flex(
+          padding: EdgeInsets.symmetric(
+            horizontal: ThemeConstants.defaultPadding,
+            vertical: horizontal ? 16.0 : 28.0,
+          ),
+  child: Flex(
                   direction: widget.direction,
                   mainAxisSize:
                       horizontal ? MainAxisSize.max : MainAxisSize.min,
@@ -143,9 +129,6 @@ class _PillState extends State<Pill> {
                     if (widget.child != null) widget.child!
                   ],
                 ),
-              ),
-            ),
-          ),
         ),
       ),
     );
@@ -154,29 +137,4 @@ class _PillState extends State<Pill> {
         ? child
         : Hero(tag: widget.heroTag!, child: child);
   }
-}
-
-/// Faint polka dots that give the flat surfaces some texture.
-class _DotsPainter extends CustomPainter {
-  const _DotsPainter();
-
-  static const double _spacing = 22.0;
-  static const double _radius = 2.5;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()..color = Colors.white.withValues(alpha: 0.14);
-
-    int row = 0;
-    for (double y = _spacing / 2; y < size.height; y += _spacing) {
-      final double shift = row.isEven ? 0.0 : _spacing / 2;
-      for (double x = _spacing / 2 + shift; x < size.width; x += _spacing) {
-        canvas.drawCircle(Offset(x, y), _radius, paint);
-      }
-      row++;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DotsPainter oldDelegate) => false;
 }

@@ -12,7 +12,6 @@ import '../services/game_service.dart';
 import '../widgets/bouncy.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/custom_scaffold.dart';
-import '../widgets/pill.dart';
 
 /// Lets the players pick the game mode and how many words win the game.
 class GameSetupScreen extends StatefulWidget {
@@ -76,7 +75,7 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
           heroTag: "right_button",
           icon: Icons.play_arrow_rounded,
           text: l10n.playButtonLabel,
-          backgroundColor: ThemeConstants.yellowPrimaryColor,
+          backgroundColor: ThemeConstants.ctaPrimaryColor,
           onPressed: _startGame,
         ),
       ],
@@ -94,7 +93,6 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
                   l10n.chooseModeText,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: ThemeConstants.greyPrimaryColor,
                         fontSize: 26.0,
                         fontWeight: FontWeight.w700,
                       ),
@@ -146,7 +144,6 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: ThemeConstants.greyPrimaryColor,
                             fontSize: 15.0,
                             fontWeight: FontWeight.w500,
                           ),
@@ -212,7 +209,7 @@ class _ModeCard extends StatelessWidget {
     }
 
     return AnimatedScale(
-      scale: selected ? 1.0 : 0.93,
+      scale: selected ? 1.0 : 0.94,
       duration: ThemeConstants.entranceDuration,
       curve: ThemeConstants.bounceCurve,
       child: Bouncy(
@@ -223,25 +220,14 @@ class _ModeCard extends StatelessWidget {
             duration: ThemeConstants.defaultDuration,
             curve: ThemeConstants.defaultCurve,
             height: 132.0,
-            margin: const EdgeInsets.only(bottom: ThemeConstants.lipHeight),
-            decoration: BoxDecoration(
-              gradient: ThemeConstants.surfaceGradient(style.cardColor),
-              borderRadius: Pill.borderRadius,
-              // The chosen card gets a white ring; the others only their edge.
-              border: Border.all(
-                color: selected
-                    ? Colors.white
-                    : Colors.white.withValues(alpha: 0.0),
-                width: 4.0,
-                strokeAlign: BorderSide.strokeAlignOutside,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: style.cardBorderColor,
-                  offset: const Offset(0.0, ThemeConstants.lipHeight),
-                ),
-              ],
+            decoration: ThemeConstants.clay(
+              style.cardColor,
+              // The chosen card gets a dark outline; the others their own.
+              selected
+                  ? ThemeConstants.blackPrimaryColor
+                  : style.cardBorderColor,
             ),
+            foregroundDecoration: ThemeConstants.clayGloss(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -284,9 +270,9 @@ class _TargetScoreSelector extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.22),
-        borderRadius: Pill.borderRadius,
+      decoration: ThemeConstants.clay(
+        ThemeConstants.greyPrimaryColor,
+        ThemeConstants.greySecondaryColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -294,7 +280,7 @@ class _TargetScoreSelector extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: textStyle.copyWith(color: ThemeConstants.greyPrimaryColor),
+            style: textStyle,
           ),
           const SizedBox(height: 12.0),
           Row(
@@ -313,7 +299,7 @@ class _TargetScoreSelector extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: option == value
                               ? ThemeConstants.blackPrimaryColor
-                              : ThemeConstants.greyPrimaryColor,
+                              : ThemeConstants.backgroundColor,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(
                               ThemeConstants.defaultBorderRadius,
