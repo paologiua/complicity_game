@@ -81,8 +81,6 @@ class _GameProgressScreenState extends State<GameProgressScreen>
     final Widget wordPill = _hiddenWord
         ? HiddenWordPill(
             heroTag: "popup",
-            greenTeamScore: _gameService.state.getScore(Team.green),
-            yellowTeamScore: _gameService.state.getScore(Team.yellow),
             height: _popupHeight,
             onTap: _showWord,
           )
@@ -114,96 +112,66 @@ class _GameProgressScreenState extends State<GameProgressScreen>
                   padding: const EdgeInsets.symmetric(
                     vertical: ThemeConstants.defaultPadding,
                   ),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.all(ThemeConstants.defaultPadding),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.24),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          ThemeConstants.defaultBorderRadius * 3,
+                  child: Stack(
+                    children: [
+                      // Replayed every time the word is hidden or shown, so
+                      // the swap reads as a card flipping.
+                      MediaQuery.of(context).disableAnimations
+                          ? wordPill
+                          : Animate(
+                              key: ValueKey<bool>(_hiddenWord),
+                              effects: const [
+                                FlipEffect(
+                                  begin: 0.25,
+                                  end: 0.0,
+                                  direction: Axis.horizontal,
+                                  duration: Duration(milliseconds: 350),
+                                  curve: Curves.easeOutBack,
+                                ),
+                              ],
+                              child: wordPill,
+                            ),
+                      Positioned(
+                        top: 14.0,
+                        right: 14.0,
+                        child: IgnorePointer(
+                          child: _hiddenWord
+                              ? const Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: Icon(
+                                    Icons.lock_open_rounded,
+                                    size: ThemeConstants.defaultFontSize,
+                                    color: ThemeConstants.greyPrimaryColor,
+                                  ),
+                                )
+                              : CountdownRing(
+                                  animation: _countdown,
+                                  seconds:
+                                      OptionsConstants.wordVisibilitySeconds,
+                                ),
                         ),
                       ),
-                    ),
-                    child: Wrap(
-                      clipBehavior: Clip.hardEdge,
-                      runSpacing: ThemeConstants.defaultPadding,
-                      children: [
-                        Center(
-                          child: CustomFloatingButton(
-                            onPressed: draw,
-                            icon: IconsConstants.close,
-                            text:
-                                AppLocalizations.of(context)!.drawButtonLabel,
-                            size: 64.0,
-                          ),
-                        ),
-                        Stack(
-                          children: [
-                            // Replayed every time the word is hidden or
-                            // shown, so the swap reads as a card flipping.
-                            MediaQuery.of(context).disableAnimations
-                                ? wordPill
-                                : Animate(
-                                    key: ValueKey<bool>(_hiddenWord),
-                                    effects: const [
-                                      FlipEffect(
-                                        begin: 0.25,
-                                        end: 0.0,
-                                        direction: Axis.horizontal,
-                                        duration: Duration(milliseconds: 350),
-                                        curve: Curves.easeOutBack,
-                                      ),
-                                    ],
-                                    child: wordPill,
-                                  ),
-                            IgnorePointer(
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                      width: ThemeConstants.defaultBorder,
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: _hiddenWord
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(6.0),
-                                          child: Icon(
-                                            Icons.lock_open_rounded,
-                                            size:
-                                                ThemeConstants.defaultFontSize,
-                                            color:
-                                                ThemeConstants.greyPrimaryColor,
-                                          ),
-                                        )
-                                      : CountdownRing(
-                                          animation: _countdown,
-                                          seconds: OptionsConstants
-                                              .wordVisibilitySeconds,
-                                        ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Pill(
-                          color: ThemeConstants.limePrimaryColor,
-                          borderColor: ThemeConstants.limeSecondaryColor,
-                          icon: Icons.celebration_rounded,
-                          direction: Axis.horizontal,
-                          text: AppLocalizations.of(context)!
-                              .wordFoundButtonLabel,
-                          onTap: () => showSelectorDialog(),
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
             ),
+            Pill(
+              color: ThemeConstants.limePrimaryColor,
+              borderColor: ThemeConstants.limeSecondaryColor,
+              icon: Icons.celebration_rounded,
+              direction: Axis.horizontal,
+              text: AppLocalizations.of(context)!.wordFoundButtonLabel,
+              onTap: () => showSelectorDialog(),
+            ),
+            const SizedBox(height: 14.0),
+            CustomFloatingButton(
+              onPressed: draw,
+              icon: IconsConstants.close,
+              text: AppLocalizations.of(context)!.drawButtonLabel,
+              size: 52.0,
+            ),
+            const SizedBox(height: 24.0),
           ],
         ),
       ],

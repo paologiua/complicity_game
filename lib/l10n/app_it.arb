@@ -35,5 +35,7 @@
 	"playAgainButtonLabel": "Gioca ancora",
 	"homeButtonLabel": "Home",
 	"exitGameText": "Vuoi abbandonare la partita?",
-	"exitButtonLabel": "Esci"
+	"exitButtonLabel": "Esci",
+	"addPlayerButtonLabel": "Aggiungi",
+	"playButtonLabel": "Gioca"
 }

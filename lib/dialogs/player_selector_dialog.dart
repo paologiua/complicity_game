@@ -61,23 +61,16 @@ class _PlayerSelectorDialogState extends State<PlayerSelectorDialog> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: _popupHeight - 2 * ThemeConstants.defaultBorder >=
-                                0
-                            ? _popupHeight - 2 * ThemeConstants.defaultBorder
-                            : 0,
+                        top: _popupHeight + ThemeConstants.defaultPadding,
                       ),
                       child: ListView(
                         children: [
-                          const SizedBox(
-                            height: 2 *
-                                (ThemeConstants.defaultBorder +
-                                    ThemeConstants.defaultPadding),
-                          ),
+                          const SizedBox(height: 10.0),
                           ...widget.players
                               .map(
                                 (PlayerModel player) => Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
+                                      vertical: 6.0),
                                   child: Pill(
                                     direction: Axis.horizontal,
                                     text: player.name,
@@ -121,6 +114,7 @@ class _PlayerSelectorDialogState extends State<PlayerSelectorDialog> {
                                 heroTag: "popup",
                                 color: ThemeConstants.greyPrimaryColor,
                                 borderColor: ThemeConstants.greySecondaryColor,
+                                direction: Axis.horizontal,
                                 icon: IconsConstants.groupAdd,
                                 text: AppLocalizations.of(context)!
                                     .guessedByText,

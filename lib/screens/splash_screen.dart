@@ -26,43 +26,21 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
+        const Column(
           children: [
             Expanded(
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: ThemeConstants.yellowPrimaryColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: ThemeConstants.yellowSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                          right: BorderSide(
-                            color: ThemeConstants.yellowSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                        ),
-                      ),
+                    child: ColoredBox(
+                      color: ThemeConstants.yellowPrimaryColor,
+                      child: SizedBox.expand(),
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: ThemeConstants.greenPrimaryColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: ThemeConstants.greenSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                          left: BorderSide(
-                            color: ThemeConstants.greenSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                        ),
-                      ),
+                    child: ColoredBox(
+                      color: ThemeConstants.greenPrimaryColor,
+                      child: SizedBox.expand(),
                     ),
                   ),
                 ],
@@ -72,42 +50,20 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: ThemeConstants.bluePrimaryColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: ThemeConstants.blueSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                          right: BorderSide(
-                            color: ThemeConstants.blueSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                        ),
-                      ),
+                    child: ColoredBox(
+                      color: ThemeConstants.bluePrimaryColor,
+                      child: SizedBox.expand(),
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: ThemeConstants.purplePrimaryColor,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: ThemeConstants.purpleSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                          left: BorderSide(
-                            color: ThemeConstants.purpleSecondaryColor,
-                            width: ThemeConstants.defaultBorder,
-                          ),
-                        ),
-                      ),
+                    child: ColoredBox(
+                      color: ThemeConstants.purplePrimaryColor,
+                      child: SizedBox.expand(),
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
         Center(

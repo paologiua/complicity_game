@@ -31,32 +31,21 @@ class _CustomScaffoldState extends State<CustomScaffold> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        backgroundColor: style.frameColor,
-        body: AnimatedContainer(
-          duration: ThemeConstants.entranceDuration,
-          color: style.frameColor,
-          child: SafeArea(
-            child: AnimatedContainer(
-              duration: ThemeConstants.entranceDuration,
-              decoration: BoxDecoration(
-                color: style.backgroundColor,
-                border: Border.all(
-                  color: style.frameColor,
-                  style: BorderStyle.solid,
-                  width: ThemeConstants.defaultBorder,
+        backgroundColor: style.backgroundColor,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: AnimatedSwitcher(
+                duration: ThemeConstants.entranceDuration,
+                child: PlayfulBackground(
+                  key: ValueKey<GameMode>(widget.mode),
+                  mode: widget.mode,
                 ),
               ),
+            ),
+            SafeArea(
               child: Stack(
                 children: [
-                  Positioned.fill(
-                    child: AnimatedSwitcher(
-                      duration: ThemeConstants.entranceDuration,
-                      child: PlayfulBackground(
-                        key: ValueKey<GameMode>(widget.mode),
-                        mode: widget.mode,
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: ThemeConstants.defaultPadding,
@@ -94,8 +83,8 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                                           (CustomFloatingButton button) =>
                                               Padding(
                                             padding: const EdgeInsets.all(
-                                              ThemeConstants.defaultPadding,
-                                            ),
+                                              12.0,
+                                            ).copyWith(top: 28.0, bottom: 20.0),
                                             child: button,
                                           ),
                                         )
@@ -111,7 +100,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

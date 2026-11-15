@@ -41,12 +41,12 @@ class _TeamSwitchState extends State<TeamSwitch> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: ThemeConstants.greySecondaryColor,
+        color: ThemeConstants.greyPrimaryColor,
         borderRadius: BorderRadius.all(
-          Radius.circular(ThemeConstants.defaultBorderRadius * 2),
+          Radius.circular(ThemeConstants.defaultBorderRadius * 1.4),
         ),
       ),
-      padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
+      padding: const EdgeInsets.all(8.0),
       width: double.infinity,
       child: Row(
         children: [
@@ -58,7 +58,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                 decoration: BoxDecoration(
                   color: _team == Team.yellow
                       ? ThemeConstants.yellowPrimaryColor
-                      : ThemeConstants.greyPrimaryColor,
+                      : ThemeConstants.greyPrimaryColor.withValues(alpha: 0.0),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(ThemeConstants.defaultBorderRadius),
                   ),
@@ -83,9 +83,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
               ),
             ),
           ),
-          const SizedBox(
-            width: ThemeConstants.defaultPadding,
-          ),
+          const SizedBox(width: 8.0),
           Expanded(
             child: GestureDetector(
               onTap: () => onChange(Team.green),
@@ -94,7 +92,7 @@ class _TeamSwitchState extends State<TeamSwitch> {
                 decoration: BoxDecoration(
                   color: _team == Team.green
                       ? ThemeConstants.greenPrimaryColor
-                      : ThemeConstants.greyPrimaryColor,
+                      : ThemeConstants.greyPrimaryColor.withValues(alpha: 0.0),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(ThemeConstants.defaultBorderRadius),
                   ),

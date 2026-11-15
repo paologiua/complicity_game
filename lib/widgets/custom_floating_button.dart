@@ -14,6 +14,7 @@ class CustomFloatingButton extends StatefulWidget {
     this.color,
     this.text,
     this.size = 56.0,
+    this.enabled = true,
   });
 
   final Object? heroTag;
@@ -23,6 +24,9 @@ class CustomFloatingButton extends StatefulWidget {
   final Color? color;
   final String? text;
   final double size;
+
+  /// A disabled button stays visible, dimmed, and ignores taps.
+  final bool enabled;
 
   @override
   State<CustomFloatingButton> createState() => _CustomFloatingButtonState();
@@ -59,10 +63,28 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
           )
         : null;
 
-    return Bouncy(
+    if (widget.size == 0) {
+      return const SizedBox.shrink();
+    }
+
+    final Color shade = widget.backgroundColor == null
+        ? ThemeConstants.greySecondaryColor
+        : Color.lerp(backgroundColor, Colors.black, 0.35)!;
+
+    return IgnorePointer(
+      ignoring: !widget.enabled,
+      child: AnimatedOpacity(
+        opacity: widget.enabled ? 1.0 : 0.4,
+        duration: ThemeConstants.defaultDuration,
+        child: Bouncy(
       enabled: widget.onPressed != null,
       pressedScale: 0.9,
-      child: SizedBox(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: const StadiumBorder(),
+          shadows: [BoxShadow(color: shade, offset: const Offset(0.0, 4.0))],
+        ),
+        child: SizedBox(
         height: widget.size,
         width: widget.text == null ? widget.size : null,
         child: widget.text == null
@@ -93,6 +115,9 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 icon: icon,
                 label: text!,
               ),
+      ),
+      ),
+        ),
       ),
     );
   }

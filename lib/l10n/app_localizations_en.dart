@@ -242,4 +242,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exitButtonLabel => 'Quit';
+
+  @override
+  String get addPlayerButtonLabel => 'Add';
+
+  @override
+  String get playButtonLabel => 'Play';
 }

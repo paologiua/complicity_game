@@ -5,6 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import 'bouncy.dart';
 
+/// Raised coloured card. [borderColor] is the darker shade of [color]: it
+/// draws the edge under the card, which sinks when the card is pressed.
 class Pill extends StatefulWidget {
   const Pill({
     super.key,
@@ -27,6 +29,10 @@ class Pill extends StatefulWidget {
   final void Function()? onTap;
   final Object? heroTag;
 
+  static const BorderRadius borderRadius = BorderRadius.all(
+    Radius.circular(ThemeConstants.defaultBorderRadius * 1.4),
+  );
+
   @override
   State<Pill> createState() => _PillState();
 }
@@ -34,15 +40,9 @@ class Pill extends StatefulWidget {
 class _PillState extends State<Pill> {
   bool _pressed = false;
 
-  void _startPress() {
+  void _setPressed(bool pressed) {
     setState(() {
-      _pressed = true;
-    });
-  }
-
-  void _stopPress() {
-    setState(() {
-      _pressed = false;
+      _pressed = pressed;
     });
   }
 
@@ -52,15 +52,15 @@ class _PillState extends State<Pill> {
   }
 
   Widget _buildIcon(BuildContext context) {
+    final bool horizontal = widget.direction == Axis.horizontal;
     final Widget icon = Icon(
       widget.icon,
-      size: ThemeConstants.defaultIconSize,
+      size: horizontal ? 32.0 : ThemeConstants.defaultIconSize,
       color: ThemeConstants.defaultTextColor,
     );
 
     // Only the big icons of vertical pills bob: list rows stay still.
-    if (widget.direction == Axis.horizontal ||
-        MediaQuery.of(context).disableAnimations) {
+    if (horizontal || MediaQuery.of(context).disableAnimations) {
       return icon;
     }
 
@@ -76,75 +76,71 @@ class _PillState extends State<Pill> {
 
   @override
   Widget build(BuildContext context) {
+    final bool horizontal = widget.direction == Axis.horizontal;
+    final bool tappable = widget.onTap != null;
+    const double lip = ThemeConstants.lipHeight;
+    final double sink = _pressed ? lip - 2.0 : 0.0;
+
     final Widget child = Bouncy(
-      enabled: widget.onTap != null,
-      pressedScale: 0.96,
+      enabled: tappable,
+      pressedScale: 0.97,
       child: GestureDetector(
-        onTap: widget.onTap != null ? _onTap : null,
-        onTapDown: widget.onTap != null ? (_) => _startPress() : null,
-        onTapUp: widget.onTap != null ? (_) => _stopPress() : null,
-        onTapCancel: widget.onTap != null ? () => _stopPress() : null,
+        onTap: tappable ? _onTap : null,
+        onTapDown: tappable ? (_) => _setPressed(true) : null,
+        onTapUp: tappable ? (_) => _setPressed(false) : null,
+        onTapCancel: tappable ? () => _setPressed(false) : null,
         child: AnimatedContainer(
-          duration: ThemeConstants.defaultDuration,
-          curve: ThemeConstants.defaultCurve,
+          duration: const Duration(milliseconds: 90),
+          curve: Curves.easeOut,
+          margin: EdgeInsets.only(top: sink, bottom: lip - sink),
           decoration: BoxDecoration(
-            gradient: ThemeConstants.surfaceGradient(
-              !_pressed ? widget.color : widget.borderColor,
-            ),
-            border: Border.all(
-              color: widget.borderColor,
-              width: ThemeConstants.defaultBorder,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(
-                ThemeConstants.defaultBorderRadius * 2,
+            gradient: ThemeConstants.surfaceGradient(widget.color),
+            borderRadius: Pill.borderRadius,
+            boxShadow: [
+              BoxShadow(
+                color: widget.borderColor,
+                offset: Offset(0.0, lip - sink),
               ),
-            ),
+            ],
           ),
           width: double.infinity,
           child: ClipRRect(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(ThemeConstants.defaultBorderRadius),
-            ),
+            borderRadius: Pill.borderRadius,
             child: CustomPaint(
               painter: const _DotsPainter(),
               child: Padding(
-                padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                child: Wrap(
-                  clipBehavior: Clip.hardEdge,
-                  alignment: widget.direction == Axis.horizontal
-                      ? WrapAlignment.start
-                      : WrapAlignment.center,
-                  children: [
-                    Flex(
-                      direction: widget.direction,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        if (widget.icon != null) _buildIcon(context),
-                        if (widget.icon != null && widget.text != null)
-                          const SizedBox(
-                            height: ThemeConstants.defaultPadding,
-                            width: ThemeConstants.defaultPadding,
-                          ),
-                        if (widget.text != null)
-                          widget.direction == Axis.horizontal
-                              ? Flexible(
-                                  child: Text(
-                                    widget.text!,
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
-                                  ),
-                                )
-                              : Text(
-                                  widget.text!,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                        if (widget.child != null) widget.child!
-                      ],
-                    ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: ThemeConstants.defaultPadding,
+                  vertical: horizontal ? 16.0 : 28.0,
+                ),
+                child: Flex(
+                  direction: widget.direction,
+                  mainAxisSize:
+                      horizontal ? MainAxisSize.max : MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    if (widget.icon != null) _buildIcon(context),
+                    if (widget.icon != null && widget.text != null)
+                      SizedBox(
+                        height: ThemeConstants.defaultPadding,
+                        width: horizontal ? 12.0 : 0.0,
+                      ),
+                    if (widget.text != null)
+                      horizontal
+                          ? Flexible(
+                              child: Text(
+                                widget.text!,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            )
+                          : Text(
+                              widget.text!,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                    if (widget.child != null) widget.child!
                   ],
                 ),
               ),
@@ -169,7 +165,7 @@ class _DotsPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()..color = Colors.white.withValues(alpha: 0.16);
+    final Paint paint = Paint()..color = Colors.white.withValues(alpha: 0.14);
 
     int row = 0;
     for (double y = _spacing / 2; y < size.height; y += _spacing) {

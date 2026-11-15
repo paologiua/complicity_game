@@ -36,20 +36,23 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
 
     return CustomScaffold(
       floatingButtons: [
-        if (!isReadyToPlay) const CustomFloatingButton(size: 0),
         CustomFloatingButton(
           heroTag: "left_button",
+          icon: IconsConstants.arrowBack,
+          onPressed: () => Navigator.pop(context),
+        ),
+        CustomFloatingButton(
           icon: IconsConstants.add,
+          text: AppLocalizations.of(context)!.addPlayerButtonLabel,
           onPressed: showEditorDialog,
         ),
-        isReadyToPlay
-            ? CustomFloatingButton(
-                heroTag: "right_button",
-                icon: IconsConstants.arrowForward,
-                onPressed: () =>
-                    Navigator.pushNamed(context, '/game/setup'),
-              )
-            : const CustomFloatingButton(heroTag: "right_button", size: 0),
+        CustomFloatingButton(
+          heroTag: "right_button",
+          icon: IconsConstants.arrowForward,
+          backgroundColor: ThemeConstants.yellowPrimaryColor,
+          enabled: isReadyToPlay,
+          onPressed: () => Navigator.pushNamed(context, '/game/setup'),
+        ),
       ],
       children: [
         Padding(
@@ -62,7 +65,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                   .map(
                     (PlayerModel player) => Padding(
                       key: ValueKey<dynamic>(player.key),
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: Pill(
                         direction: Axis.horizontal,
                         text: player.name,
@@ -81,7 +84,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                     ),
                   )
                   .toList(),
-              const SizedBox(height: 96.0),
+              const SizedBox(height: 120.0),
             ],
           ),
         ),
@@ -111,6 +114,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                 heroTag: "popup",
                 color: ThemeConstants.greyPrimaryColor,
                 borderColor: ThemeConstants.greySecondaryColor,
+                direction: Axis.horizontal,
                 icon: IconsConstants.groupAdd,
                 text: AppLocalizations.of(context)!.enterParticipantsNamesText,
                 onTap: showEditorDialog,

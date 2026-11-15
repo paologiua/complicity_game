@@ -321,6 +321,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quit'**
   String get exitButtonLabel;
+
+  /// No description provided for @addPlayerButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addPlayerButtonLabel;
+
+  /// No description provided for @playButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playButtonLabel;
 }
 
 class _AppLocalizationsDelegate

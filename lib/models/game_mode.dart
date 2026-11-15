@@ -10,6 +10,7 @@ class GameModeStyle {
   const GameModeStyle({
     required this.icon,
     required this.backgroundColor,
+    required this.glowColor,
     required this.frameColor,
     required this.cardColor,
     required this.cardBorderColor,
@@ -21,7 +22,10 @@ class GameModeStyle {
   /// Colour of the screen surface.
   final Color backgroundColor;
 
-  /// Colour of the thick frame around the screen.
+  /// Brighter shade that lights up the middle of the screen.
+  final Color glowColor;
+
+  /// Darker shade, used for the status bar area and the dark shapes.
   final Color frameColor;
 
   /// Colours of the cards that belong to this mode.
@@ -36,6 +40,7 @@ extension GameModeStyles on GameMode {
   static const GameModeStyle _classic = GameModeStyle(
     icon: IconsConstants.cognition,
     backgroundColor: ThemeConstants.bluePrimaryColor,
+    glowColor: Color(0xFF5C86FF),
     frameColor: ThemeConstants.blueSecondaryColor,
     cardColor: ThemeConstants.greenPrimaryColor,
     cardBorderColor: ThemeConstants.greenSecondaryColor,
@@ -49,10 +54,11 @@ extension GameModeStyles on GameMode {
 
   static const GameModeStyle _drinking = GameModeStyle(
     icon: Icons.local_bar_rounded,
-    backgroundColor: Color(0xFFCB9A66),
-    frameColor: Color(0xFFB98451),
-    cardColor: Color(0xFFF2D49B),
-    cardBorderColor: Color(0xFFE6BF78),
+    backgroundColor: Color(0xFFFF7A1A),
+    glowColor: Color(0xFFFFA63D),
+    frameColor: Color(0xFFD95700),
+    cardColor: Color(0xFFFFE27A),
+    cardBorderColor: Color(0xFFE0A21A),
     symbols: [
       Icons.local_bar_rounded,
       Icons.sports_bar_rounded,
@@ -63,10 +69,11 @@ extension GameModeStyles on GameMode {
 
   static const GameModeStyle _dares = GameModeStyle(
     icon: Icons.theater_comedy_rounded,
-    backgroundColor: Color(0xFF8577AE),
-    frameColor: Color(0xFF70629A),
-    cardColor: Color(0xFFCFC2EA),
-    cardBorderColor: Color(0xFFB9A8DE),
+    backgroundColor: Color(0xFF8A3DF0),
+    glowColor: Color(0xFFB067FF),
+    frameColor: Color(0xFF6520C4),
+    cardColor: Color(0xFFE0C4FF),
+    cardBorderColor: Color(0xFFA772EC),
     symbols: [
       Icons.theater_comedy_rounded,
       Icons.casino_outlined,
@@ -77,10 +84,11 @@ extension GameModeStyles on GameMode {
 
   static const GameModeStyle _spicy = GameModeStyle(
     icon: Icons.local_fire_department_rounded,
-    backgroundColor: Color(0xFFC46A72),
-    frameColor: Color(0xFFAE565F),
-    cardColor: Color(0xFFF3B3AA),
-    cardBorderColor: Color(0xFFE89A90),
+    backgroundColor: Color(0xFFF0305C),
+    glowColor: Color(0xFFFF6A6A),
+    frameColor: Color(0xFFC0143F),
+    cardColor: Color(0xFFFFC2B5),
+    cardBorderColor: Color(0xFFEC7F6C),
     symbols: [
       Icons.local_fire_department_rounded,
       Icons.favorite_border_rounded,

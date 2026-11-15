@@ -233,5 +233,7 @@
 	"exitButtonLabel": "Quit",
 	"@exitButtonLabel": {
 		"description": "Text of the button that confirms quitting the game"
-	}
+	},
+	"addPlayerButtonLabel": "Add",
+	"playButtonLabel": "Play"
 }

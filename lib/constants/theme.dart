@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 import '../models/player_model.dart';
 
 class ThemeConstants {
-  static const Color greenPrimaryColor = Color(0xFFACC8A4);
-  static const Color greenSecondaryColor = Color(0xFF91B888);
+  static const Color greenPrimaryColor = Color(0xFF3EDC81);
+  static const Color greenSecondaryColor = Color(0xFF1FA85B);
 
-  static const Color yellowPrimaryColor = Color(0xFFE9DCAD);
-  static const Color yellowSecondaryColor = Color(0xFFE0CE95);
+  static const Color yellowPrimaryColor = Color(0xFFFFD23F);
+  static const Color yellowSecondaryColor = Color(0xFFE39B0B);
 
-  static const Color greyPrimaryColor = Color(0xFFF3F3F3);
-  static const Color greySecondaryColor = Color(0xFFCECECE);
+  static const Color greyPrimaryColor = Color(0xFFFBFAFF);
+  static const Color greySecondaryColor = Color(0xFFC3C6E4);
 
-  static const Color bluePrimaryColor = Color(0xFF7188A8);
-  static const Color blueSecondaryColor = Color(0xFF597597);
+  static const Color bluePrimaryColor = Color(0xFF3355E0);
+  static const Color blueSecondaryColor = Color(0xFF2440B8);
   static const Color blueDarkColor = Color(0xFF5D677C);
 
-  static const Color purplePrimaryColor = Color(0xFF606586);
-  static const Color purpleSecondaryColor = Color(0xFF575978);
+  static const Color purplePrimaryColor = Color(0xFF8A3DF0);
+  static const Color purpleSecondaryColor = Color(0xFF6520C4);
 
-  static const Color blackPrimaryColor = Color(0xFF1C1B1F);
-  static const Color blackSecondaryColor = Color(0xFF3F3C45);
+  static const Color blackPrimaryColor = Color(0xFF1B1830);
+  static const Color blackSecondaryColor = Color(0xFF0B0918);
 
-  static const Color limePrimaryColor = Color(0xFFACC8A4);
-  static const Color limeSecondaryColor = Color(0xFF5F9A93);
+  static const Color limePrimaryColor = Color(0xFF4FE3FF);
+  static const Color limeSecondaryColor = Color(0xFF159BC4);
 
   static const FontWeight defaultFontWeight = FontWeight.w600;
   static const double defaultFontSize = 18.0;
@@ -37,8 +37,11 @@ class ThemeConstants {
 
   static const double defaultMaxWidth = 350.0;
   static const double defaultPadding = 20.0;
-  static const double defaultBorder = 20.0;
   static const double defaultBorderRadius = 20.0;
+
+  /// Height of the darker edge under raised surfaces, which replaces the
+  /// thick borders: it reads as a button and sinks when pressed.
+  static const double lipHeight = 6.0;
 
   static const double defaultIconSize = 48.0;
 
@@ -58,7 +61,7 @@ class ThemeConstants {
     return LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [lighten(color, 0.28), color],
+      colors: [lighten(color, 0.16), color],
     );
   }
 }

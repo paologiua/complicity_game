@@ -6,14 +6,10 @@ import 'package:complicity_game/l10n/app_localizations.dart';
 class HiddenWordPill extends StatefulWidget {
   const HiddenWordPill(
       {super.key,
-      required this.greenTeamScore,
-      required this.yellowTeamScore,
       this.heroTag,
       this.height,
       this.onTap});
 
-  final int greenTeamScore;
-  final int yellowTeamScore;
   final Object? heroTag;
   final double? height;
   final void Function()? onTap;
@@ -25,9 +21,8 @@ class HiddenWordPill extends StatefulWidget {
 class _HiddenWordPillState extends State<HiddenWordPill> {
   double? _getInternalHeight() {
     if (widget.height != null) {
-      return widget.height! -
-            2 * ThemeConstants.defaultBorder -
-            2 * ThemeConstants.defaultPadding;
+      // Same height as the pill that shows the word: the card does not jump.
+      return widget.height! - ThemeConstants.lipHeight - 2 * 28.0;
     }
 
     return null;
@@ -61,35 +56,6 @@ class _HiddenWordPillState extends State<HiddenWordPill> {
                     color: ThemeConstants.greyPrimaryColor,
                   ),
             ),
-            const SizedBox(
-              height: ThemeConstants.defaultPadding,
-              width: ThemeConstants.defaultPadding,
-            ),
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: ThemeConstants.greyPrimaryColor,
-                      fontSize: 23,
-                    ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "${widget.yellowTeamScore}",
-                    style: const TextStyle(
-                      color: ThemeConstants.yellowSecondaryColor,
-                    ),
-                  ),
-                  const TextSpan(
-                    text: ' - ',
-                  ),
-                  TextSpan(
-                    text: "${widget.greenTeamScore}",
-                    style: const TextStyle(
-                      color: ThemeConstants.greenSecondaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

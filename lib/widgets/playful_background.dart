@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../constants/theme.dart';
 import '../models/game_mode.dart';
 
 /// One clock for every background, so the shapes keep their position when a
@@ -120,7 +119,7 @@ class _PlayfulBackgroundState extends State<PlayfulBackground>
             ? 26.0 + random.nextDouble() * 16.0
             : 12.0 + random.nextDouble() * 22.0;
         final bool dark = random.nextDouble() < 0.35;
-        final double opacity = 0.10 + random.nextDouble() * 0.10;
+        final double opacity = 0.12 + random.nextDouble() * 0.12;
 
         TextPainter? symbol;
         if (isSymbol) {
@@ -204,7 +203,7 @@ class _BackgroundPainter extends CustomPainter {
           end: Alignment.bottomCenter,
           colors: [
             style.backgroundColor,
-            ThemeConstants.lighten(style.backgroundColor, 0.14),
+            style.glowColor,
             style.backgroundColor,
           ],
           stops: const [0.08, 0.5, 0.92],
