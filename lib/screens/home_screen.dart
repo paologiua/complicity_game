@@ -1,8 +1,9 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/widgets/pill.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../constants/theme.dart';
 import '../widgets/custom_scaffold.dart';
@@ -32,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     padding:
                         const EdgeInsets.all(ThemeConstants.defaultPadding),
-                    decoration: const BoxDecoration(
-                      color: ThemeConstants.blueDarkColor,
-                      borderRadius: BorderRadius.all(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.24),
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(ThemeConstants.defaultBorderRadius * 3),
                       ),
                     ),
@@ -86,7 +87,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 200.0,
                   ),
                 ),
-              ),
+              )
+                  .animate(
+                    onPlay: (controller) => controller.repeat(reverse: true),
+                  )
+                  .scaleXY(
+                    begin: 1.0,
+                    end: 1.05,
+                    duration: const Duration(milliseconds: 1600),
+                    curve: Curves.easeInOut,
+                  ),
             ),
           ],
         ),

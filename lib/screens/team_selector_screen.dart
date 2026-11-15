@@ -1,11 +1,11 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
-import 'package:complicity_game/services/game_service.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:complicity_game/widgets/custom_floating_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
 import '../widgets/custom_scaffold.dart';
@@ -46,11 +46,8 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
             ? CustomFloatingButton(
                 heroTag: "right_button",
                 icon: IconsConstants.arrowForward,
-                onPressed: () {
-                  context.read<GameService>().start();
-
-                  Navigator.pushNamed(context, '/game/start');
-                },
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/game/setup'),
               )
             : const CustomFloatingButton(heroTag: "right_button", size: 0),
       ],
@@ -64,18 +61,23 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
                   .getPlayers()
                   .map(
                     (PlayerModel player) => Padding(
+                      key: ValueKey<dynamic>(player.key),
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Pill(
                         direction: Axis.horizontal,
                         text: player.name,
-                        color: player.team == Team.green
-                            ? ThemeConstants.greenPrimaryColor
-                            : ThemeConstants.yellowPrimaryColor,
-                        borderColor: player.team == Team.green
-                            ? ThemeConstants.greenSecondaryColor
-                            : ThemeConstants.yellowSecondaryColor,
+                        color: player.team.color,
+                        borderColor: player.team.borderColor,
                         onTap: () => showEditorDialog(player: player),
-                      ),
+                      )
+                          .animate()
+                          .fadeIn(duration: ThemeConstants.entranceDuration)
+                          .slideX(
+                            begin: player.team == Team.green ? 0.15 : -0.15,
+                            end: 0.0,
+                            duration: ThemeConstants.entranceDuration,
+                            curve: ThemeConstants.bounceCurve,
+                          ),
                     ),
                   )
                   .toList(),
@@ -93,7 +95,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
               gradient: LinearGradient(
                 colors: [
                   ThemeConstants.bluePrimaryColor,
-                  ThemeConstants.bluePrimaryColor.withOpacity(0.0),
+                  ThemeConstants.bluePrimaryColor.withValues(alpha: 0.0),
                 ],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(0.0, 1.0),

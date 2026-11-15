@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/player_model.dart';
+
 class ThemeConstants {
   static const Color greenPrimaryColor = Color(0xFFACC8A4);
   static const Color greenSecondaryColor = Color(0xFF91B888);
@@ -42,4 +44,33 @@ class ThemeConstants {
 
   static const Duration defaultDuration = Duration(milliseconds: 300);
   static const Curve defaultCurve = Curves.easeOutCirc;
+
+  static const Duration entranceDuration = Duration(milliseconds: 450);
+  static const Curve bounceCurve = Curves.easeOutBack;
+
+  /// Blends [color] with white to get a brighter shade of the same hue.
+  static Color lighten(Color color, [double amount = 0.2]) {
+    return Color.lerp(color, Colors.white, amount)!;
+  }
+
+  /// Soft diagonal gradient used on every coloured surface.
+  static LinearGradient surfaceGradient(Color color) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [lighten(color, 0.28), color],
+    );
+  }
+}
+
+extension TeamColors on Team {
+  Color get color => this == Team.green
+      ? ThemeConstants.greenPrimaryColor
+      : ThemeConstants.yellowPrimaryColor;
+
+  Color get borderColor => this == Team.green
+      ? ThemeConstants.greenSecondaryColor
+      : ThemeConstants.yellowSecondaryColor;
+
+  Team get opponent => this == Team.green ? Team.yellow : Team.green;
 }

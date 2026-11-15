@@ -1,7 +1,7 @@
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/widgets/pill.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 
 class HiddenWordPill extends StatefulWidget {
   const HiddenWordPill(

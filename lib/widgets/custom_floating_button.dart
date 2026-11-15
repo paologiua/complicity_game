@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constants/theme.dart';
+import 'bouncy.dart';
 
 class CustomFloatingButton extends StatefulWidget {
   const CustomFloatingButton({
@@ -30,7 +32,12 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
   @override
   Widget build(BuildContext context) {
     final Object heroTag = widget.heroTag ?? Object();
-    final void Function() onPressed = widget.onPressed ?? () {};
+    final void Function() onPressed = widget.onPressed == null
+        ? () {}
+        : () {
+            HapticFeedback.lightImpact();
+            widget.onPressed!();
+          };
     final Color backgroundColor =
         widget.backgroundColor ?? ThemeConstants.greyPrimaryColor;
     final Color color = widget.color ?? ThemeConstants.defaultTextColor;
@@ -52,37 +59,41 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
           )
         : null;
 
-    return SizedBox(
-      height: widget.size,
-      width: widget.text == null ? widget.size : null,
-      child: widget.text == null
-          ? FloatingActionButton(
-              heroTag: heroTag,
-              onPressed: onPressed,
-              backgroundColor: backgroundColor,
-              elevation: 0,
-              highlightElevation: 0,
-              focusElevation: 0,
-              hoverElevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
+    return Bouncy(
+      enabled: widget.onPressed != null,
+      pressedScale: 0.9,
+      child: SizedBox(
+        height: widget.size,
+        width: widget.text == null ? widget.size : null,
+        child: widget.text == null
+            ? FloatingActionButton(
+                heroTag: heroTag,
+                onPressed: onPressed,
+                backgroundColor: backgroundColor,
+                elevation: 0,
+                highlightElevation: 0,
+                focusElevation: 0,
+                hoverElevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: icon,
+              )
+            : FloatingActionButton.extended(
+                heroTag: heroTag,
+                onPressed: onPressed,
+                backgroundColor: backgroundColor,
+                elevation: 0,
+                highlightElevation: 0,
+                focusElevation: 0,
+                hoverElevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                icon: icon,
+                label: text!,
               ),
-              child: icon,
-            )
-          : FloatingActionButton.extended(
-              heroTag: heroTag,
-              onPressed: onPressed,
-              backgroundColor: backgroundColor,
-              elevation: 0,
-              highlightElevation: 0,
-              focusElevation: 0,
-              hoverElevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              icon: icon,
-              label: text!,
-            ),
+      ),
     );
   }
 }

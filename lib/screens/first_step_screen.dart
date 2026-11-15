@@ -1,7 +1,7 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../widgets/custom_scaffold.dart';
 import '../widgets/custom_floating_button.dart';

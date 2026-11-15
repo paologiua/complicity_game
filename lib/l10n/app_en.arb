@@ -7,41 +7,41 @@
 	"@gameRulesPart2": {
 		"description": "The second part of the game rules displayed to the user"
 	},
-	"gameRulesPart3": "The team that guesses five words first wins",
+	"gameRulesPart3": "The first team to guess the chosen number of words wins (usually five)",
 	"@gameRulesPart3": {
 		"description": "The third part of the game rules displayed to the user"
 	},
 	"enterParticipantsNamesText": "Enter at least two participants per team",
 	"@enterParticipantsNamesText": {
-    "description": "The text prompting the user to enter participants' names"
+		"description": "The text prompting the user to enter participants' names"
 	},
 	"gameRulesButtonLabel": "Game rules",
 	"@gameRulesButtonLabel": {
-    "description": "Text of the button to access the game rules screen"
+		"description": "Text of the button to access the game rules screen"
 	},
 	"startGameButtonLabel": "Start game",
 	"@startGameButtonLabel": {
-    "description": "Text of the button to start a game"
+		"description": "Text of the button to start a game"
 	},
 	"deleteButtonLabel": "Delete",
 	"@deleteButtonLabel": {
-    "description": "Text of the button to delete a player"
+		"description": "Text of the button to delete a player"
 	},
 	"cancelButtonLabel": "Cancel",
 	"@cancelButtonLabel": {
-    "description": "Text of the button to cancel the insertion of a player"
+		"description": "Text of the button to cancel the insertion of a player"
 	},
 	"playerNameHintText": "Player name",
 	"@playerNameHintText": {
-    "description": "HintText of the input to insert or edit a player"
+		"description": "HintText of the input to insert or edit a player"
 	},
 	"greenTeamText": "Green team",
 	"@greenTeamText": {
-    "description": "Green team name"
+		"description": "Green team name"
 	},
 	"yellowTeamText": "Yellow team",
 	"@yellowTeamText": {
-    "description": "Yellow team name"
+		"description": "Yellow team name"
 	},
 	"hideScreenText": "{playerName}\n({team, select, green{GREEN TEAM} yellow{YELLOW TEAM} other{NULL}})\n\nhides the screen from other players",
 	"@hideScreenText": {
@@ -77,14 +77,161 @@
 	},
 	"hiddenWordText": "Hidden word",
 	"@hiddenWordText": {
-    	"description": "Text indicating that the mysterious word was hidden"
+		"description": "Text indicating that the mysterious word was hidden"
 	},
 	"drawButtonLabel": "Draw",
 	"@drawButtonLabel": {
-    	"description": "Text of the button to skip the round"
+		"description": "Text of the button to skip the round"
 	},
 	"wordFoundButtonLabel": "Word found!",
 	"@wordFoundButtonLabel": {
-    	"description": "Text of the button to indicate that the word has been found"
+		"description": "Text of the button to indicate that the word has been found"
+	},
+	"guessedByText": "Word guessed by",
+	"@guessedByText": {
+		"description": "Title of the dialog used to pick who guessed the word"
+	},
+	"chooseModeText": "Choose how to play",
+	"@chooseModeText": {
+		"description": "Title of the game setup screen"
+	},
+	"modeName": "{mode, select, classic{Classic} drinking{Drinking} dares{Dares} spicy{Spicy} other{-}}",
+	"@modeName": {
+		"description": "Name of a game mode",
+		"placeholders": {
+			"mode": {
+				"type": "String"
+			}
+		}
+	},
+	"modeDescription": "{mode, select, classic{The original game: just clues and complicity} drinking{Word stolen or a draw? Drink up! In moderation} dares{Word stolen or a draw? Time for a dare} spicy{Cheeky dares, for adults only} other{-}}",
+	"@modeDescription": {
+		"description": "Short description of a game mode",
+		"placeholders": {
+			"mode": {
+				"type": "String"
+			}
+		}
+	},
+	"wordsToWinText": "Words to win",
+	"@wordsToWinText": {
+		"description": "Label of the target score selector"
+	},
+	"roundPointText": "Point for the {team, select, green{green} yellow{yellow} other{-}} team!",
+	"@roundPointText": {
+		"description": "The clue giver's team guessed the word",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
+	},
+	"roundStolenText": "Word stolen!\nPoint for the {team, select, green{green} yellow{yellow} other{-}} team",
+	"@roundStolenText": {
+		"description": "The opposing team guessed the word",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
+	},
+	"roundDrawText": "Draw!\nNobody scores",
+	"@roundDrawText": {
+		"description": "Nobody guessed the word"
+	},
+	"theWordWasText": "The word was {word}",
+	"@theWordWasText": {
+		"description": "Reveals the word of the turn that just ended",
+		"placeholders": {
+			"word": {
+				"type": "String",
+				"example": "WORLD"
+			}
+		}
+	},
+	"drinkPlayerText": "{playerName} takes a sip",
+	"@drinkPlayerText": {
+		"description": "Drinking mode: one player drinks",
+		"placeholders": {
+			"playerName": {
+				"type": "String",
+				"example": "Bob"
+			}
+		}
+	},
+	"drinkTeamText": "The whole {team, select, green{green} yellow{yellow} other{-}} team takes a sip",
+	"@drinkTeamText": {
+		"description": "Drinking mode: a whole team drinks",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
+	},
+	"sipsText": "{count, plural, =1{1 sip} other{{count} sips}}",
+	"@sipsText": {
+		"description": "A number of sips",
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"drinkFinalText": "The {team, select, green{green} yellow{yellow} other{-}} team drinks {sips} each",
+	"@drinkFinalText": {
+		"description": "Drinking mode: what the losing team drinks at the end",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			},
+			"sips": {
+				"type": "String",
+				"example": "2 sips"
+			}
+		}
+	},
+	"dareForPlayerText": "Dare for {playerName}",
+	"@dareForPlayerText": {
+		"description": "Title of the dare assigned to a player",
+		"placeholders": {
+			"playerName": {
+				"type": "String",
+				"example": "Bob"
+			}
+		}
+	},
+	"dareForTeamText": "Dare for the {team, select, green{green} yellow{yellow} other{-}} team\n(the winners choose who does it)",
+	"@dareForTeamText": {
+		"description": "Title of the dare assigned to the losing team",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
+	},
+	"teamWinsText": "THE {team, select, green{GREEN} yellow{YELLOW} other{-}} TEAM WINS!",
+	"@teamWinsText": {
+		"description": "Announces the winning team",
+		"placeholders": {
+			"team": {
+				"type": "String"
+			}
+		}
+	},
+	"playAgainButtonLabel": "Play again",
+	"@playAgainButtonLabel": {
+		"description": "Text of the button to play again with the same teams"
+	},
+	"homeButtonLabel": "Home",
+	"@homeButtonLabel": {
+		"description": "Text of the button to go back to the home screen"
+	},
+	"exitGameText": "Do you want to quit the game?",
+	"@exitGameText": {
+		"description": "Question asked before quitting a running game"
+	},
+	"exitButtonLabel": "Quit",
+	"@exitButtonLabel": {
+		"description": "Text of the button that confirms quitting the game"
 	}
 }

@@ -4,7 +4,7 @@ import 'package:complicity_game/services/game_service.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -61,13 +61,13 @@ class ComplicityGame extends StatelessWidget {
         textTheme: const TextTheme(
           bodyLarge: ThemeConstants.defaultTextStyle,
         ),
-        pageTransitionsTheme: PageTransitionsTheme(
+        pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
-            TargetPlatform.android: NoneTransitionsBuilder(),
-            TargetPlatform.iOS: NoneTransitionsBuilder(),
-            TargetPlatform.linux: NoneTransitionsBuilder(),
-            TargetPlatform.macOS: NoneTransitionsBuilder(),
-            TargetPlatform.windows: NoneTransitionsBuilder(),
+            TargetPlatform.android: PlayfulTransitionsBuilder(),
+            TargetPlatform.iOS: PlayfulTransitionsBuilder(),
+            TargetPlatform.linux: PlayfulTransitionsBuilder(),
+            TargetPlatform.macOS: PlayfulTransitionsBuilder(),
+            TargetPlatform.windows: PlayfulTransitionsBuilder(),
           },
         ),
       ),
@@ -79,7 +79,11 @@ class ComplicityGame extends StatelessWidget {
   }
 }
 
-class NoneTransitionsBuilder extends PageTransitionsBuilder {
+/// Fades and slightly grows the incoming screen. The shared pills and
+/// buttons still fly between screens through their [Hero] widgets.
+class PlayfulTransitionsBuilder extends PageTransitionsBuilder {
+  const PlayfulTransitionsBuilder();
+
   @override
   Widget buildTransitions<T>(
     PageRoute<T> route,
@@ -88,7 +92,22 @@ class NoneTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // Returns the child widget directly, avoiding any animation
-    return child;
+    if (MediaQuery.of(context).disableAnimations) {
+      return child;
+    }
+
+    final Animation<double> curved = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOutCubic,
+      reverseCurve: Curves.easeInCubic,
+    );
+
+    return FadeTransition(
+      opacity: curved,
+      child: ScaleTransition(
+        scale: Tween<double>(begin: 0.94, end: 1.0).animate(curved),
+        child: child,
+      ),
+    );
   }
 }

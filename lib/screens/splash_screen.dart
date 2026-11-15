@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -122,7 +123,15 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: double.infinity,
               ),
             ),
-          ),
+          )
+              .animate()
+              .fadeIn(duration: const Duration(milliseconds: 400))
+              .scaleXY(
+                begin: 0.6,
+                end: 1.0,
+                duration: const Duration(milliseconds: 900),
+                curve: Curves.elasticOut,
+              ),
         )
       ],
     );

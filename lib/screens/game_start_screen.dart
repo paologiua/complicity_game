@@ -1,13 +1,14 @@
 import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
-import 'package:complicity_game/models/player_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:complicity_game/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../models/player_model.dart';
 import '../services/game_service.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/custom_floating_button.dart';
+import '../widgets/game_header.dart';
 import '../widgets/pill.dart';
 
 class GameStartScreen extends StatefulWidget {
@@ -28,7 +29,10 @@ class _GameStartScreenState extends State<GameStartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final PlayerModel player = _gameService.state.getCurrentPlayer();
+
     return CustomScaffold(
+      mode: _gameService.mode,
       floatingButtons: [
         const CustomFloatingButton(heroTag: "left_button", size: 0),
         CustomFloatingButton(
@@ -39,21 +43,20 @@ class _GameStartScreenState extends State<GameStartScreen> {
         const CustomFloatingButton(size: 0),
       ],
       children: [
+        const Align(
+          alignment: Alignment.topCenter,
+          child: GameHeader(),
+        ),
         Align(
           alignment: Alignment.center,
           child: Pill(
             heroTag: "popup",
-            color: _gameService.state.getCurrentPlayer().team == Team.green
-                ? ThemeConstants.greenPrimaryColor
-                : ThemeConstants.yellowPrimaryColor,
-            borderColor:
-                _gameService.state.getCurrentPlayer().team == Team.green
-                    ? ThemeConstants.greenSecondaryColor
-                    : ThemeConstants.yellowSecondaryColor,
+            color: player.team.color,
+            borderColor: player.team.borderColor,
             icon: Icons.disabled_visible_outlined,
             text: AppLocalizations.of(context)!.hideScreenText(
-              _gameService.state.getCurrentPlayer().name.toUpperCase(),
-              _gameService.state.getCurrentPlayer().team.name,
+              player.name.toUpperCase(),
+              player.team.name,
             ),
             onTap: goToNextPage,
           ),
@@ -63,7 +66,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
   }
 
   void goToNextPage() {
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
       context,
       '/game/progress',
     );

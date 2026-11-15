@@ -1,5 +1,8 @@
 import 'package:complicity_game/screens/first_step_screen.dart';
+import 'package:complicity_game/screens/game_over_screen.dart';
 import 'package:complicity_game/screens/game_progress_screen.dart';
+import 'package:complicity_game/screens/game_result_screen.dart';
+import 'package:complicity_game/screens/game_setup_screen.dart';
 import 'package:complicity_game/screens/home_screen.dart';
 import 'package:complicity_game/screens/game_start_screen.dart';
 import 'package:complicity_game/screens/second_step_screen.dart';
@@ -15,6 +18,9 @@ final Map<String, WidgetBuilder> routes = {
   '/game_rules/2': (context) => const SecondStepScreen(),
   '/game_rules/3': (context) => const ThirdStepScreen(),
   '/team_selector': (context) => const TeamSelectorScreen(),
+  '/game/setup': (context) => const GameSetupScreen(),
   '/game/start': (context) => const GameStartScreen(),
   '/game/progress': (context) => const GameProgressScreen(),
+  '/game/result': (context) => const GameResultScreen(),
+  '/game/over': (context) => const GameOverScreen(),
 };

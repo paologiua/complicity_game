@@ -1,0 +1,156 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+
+import '../constants/theme.dart';
+import '../models/player_model.dart';
+
+/// Both teams' scores with a segmented bar that fills up to the target.
+class ScoreBoard extends StatelessWidget {
+  const ScoreBoard({
+    super.key,
+    required this.greenScore,
+    required this.yellowScore,
+    required this.targetScore,
+    this.highlight,
+  });
+
+  final int greenScore;
+  final int yellowScore;
+  final int targetScore;
+
+  /// The team that just scored: its number and newest segment pop in.
+  final Team? highlight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.24),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(ThemeConstants.defaultBorderRadius),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _TeamRow(
+            team: Team.yellow,
+            score: yellowScore,
+            targetScore: targetScore,
+            highlighted: highlight == Team.yellow,
+          ),
+          const SizedBox(height: 6.0),
+          _TeamRow(
+            team: Team.green,
+            score: greenScore,
+            targetScore: targetScore,
+            highlighted: highlight == Team.green,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TeamRow extends StatelessWidget {
+  const _TeamRow({
+    required this.team,
+    required this.score,
+    required this.targetScore,
+    required this.highlighted,
+  });
+
+  final Team team;
+  final int score;
+  final int targetScore;
+  final bool highlighted;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool animate =
+        highlighted && !MediaQuery.of(context).disableAnimations;
+
+    Widget number = Text(
+      '$score',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            color: team.color,
+            fontWeight: FontWeight.w700,
+            height: 1.0,
+          ),
+    );
+
+    if (animate) {
+      number = number.animate(delay: const Duration(milliseconds: 350)).scale(
+            begin: const Offset(2.2, 2.2),
+            end: const Offset(1.0, 1.0),
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.elasticOut,
+          );
+    }
+
+    return Row(
+      children: [
+        SizedBox(width: 28.0, child: number),
+        const SizedBox(width: 6.0),
+        Expanded(
+          child: Row(
+            children: [
+              for (int index = 0; index < targetScore; index++)
+                Expanded(
+                  child: _Segment(
+                    color: team.color,
+                    filled: index < score,
+                    animated: animate && index == score - 1,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Segment extends StatelessWidget {
+  const _Segment({
+    required this.color,
+    required this.filled,
+    required this.animated,
+  });
+
+  final Color color;
+  final bool filled;
+  final bool animated;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget fill = Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      ),
+    );
+
+    if (animated) {
+      fill = fill.animate(delay: const Duration(milliseconds: 350)).scaleX(
+            begin: 0.0,
+            end: 1.0,
+            alignment: Alignment.centerLeft,
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeOutBack,
+          );
+    }
+
+    return Container(
+      height: 10.0,
+      margin: const EdgeInsets.symmetric(horizontal: 2.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.22),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      ),
+      child: filled ? fill : null,
+    );
+  }
+}
