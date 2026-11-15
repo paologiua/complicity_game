@@ -1,6 +1,7 @@
 import 'package:complicity_game/constants/options.dart';
 import 'package:complicity_game/constants/theme.dart';
-import 'package:complicity_game/dialogs/player_selector_dialog.dart';
+import 'package:complicity_game/sheets/clay_sheet.dart';
+import 'package:complicity_game/sheets/player_selector_sheet.dart';
 import 'package:complicity_game/widgets/custom_floating_button.dart';
 import 'package:complicity_game/widgets/hidden_word_pill.dart';
 import 'package:flutter/material.dart';
@@ -208,11 +209,9 @@ class _GameProgressScreenState extends State<GameProgressScreen>
   }
 
   Future<void> showSelectorDialog() {
-    return showDialog<void>(
+    return showClaySheet<void>(
       context: context,
-      barrierColor: ThemeConstants.scrimColor,
-      barrierDismissible: false,
-      builder: (BuildContext context) => PlayerSelectorDialog(
+      builder: (BuildContext context) => PlayerSelectorSheet(
         players: _gameService.state.getSoothsayers(),
         onSelect: (PlayerModel player) => win(player.team),
       ),

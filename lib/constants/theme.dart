@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/player_model.dart';
+import 'icons.dart';
 
 class ThemeConstants {
   static const Color greenPrimaryColor = Color(0xFF8EE5A8);
@@ -41,6 +42,12 @@ class ThemeConstants {
 
   /// Warm cream behind every screen of the classic mode.
   static const Color backgroundColor = Color(0xFFFFF7ED);
+
+  /// Secondary text: 70% ink, still above 4.5:1 on the light surfaces.
+  static const Color mutedTextColor = Color(0xFF6A6272);
+
+  /// Destructive actions only.
+  static const Color dangerColor = Color(0xFFC81E1E);
 
   /// The one colour of primary actions, so it never reads as a team.
   static const Color ctaPrimaryColor = limePrimaryColor;
@@ -125,6 +132,10 @@ extension TeamColors on Team {
   Color get borderColor => this == Team.green
       ? ThemeConstants.greenSecondaryColor
       : ThemeConstants.yellowSecondaryColor;
+
+  IconData get icon => this == Team.green
+      ? IconsConstants.cognition
+      : IconsConstants.emojiObjects;
 
   Team get opponent => this == Team.green ? Team.yellow : Team.green;
 }

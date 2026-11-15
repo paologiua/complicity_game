@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
+import '../sheets/clay_sheet.dart';
+import '../sheets/player_editor_sheet.dart';
 import '../widgets/custom_scaffold.dart';
-import '../dialogs/player_editor_dialog.dart';
-import '../widgets/pill.dart';
-import '../widgets/size_measurer.dart';
+import '../widgets/name_chip.dart';
+import '../widgets/screen_title.dart';
 
+/// Lists the players of each team and lets them be added, edited or moved.
 class TeamSelectorScreen extends StatefulWidget {
   const TeamSelectorScreen({super.key});
 
@@ -22,7 +24,6 @@ class TeamSelectorScreen extends StatefulWidget {
 
 class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   late PlayerManagerService _playerManagerService;
-  double _popupHeight = 0.0;
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isReadyToPlay = _playerManagerService.isReadyToPlay();
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
 
     return CustomScaffold(
       floatingButtons: [
@@ -42,100 +43,163 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         CustomFloatingButton(
-          icon: IconsConstants.add,
-          text: AppLocalizations.of(context)!.addPlayerButtonLabel,
-          onPressed: showEditorDialog,
-        ),
-        CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
-         backgroundColor: ThemeConstants.ctaPrimaryColor,
-          enabled: isReadyToPlay,
+          text: l10n.nextButtonLabel,
+          backgroundColor: ThemeConstants.ctaPrimaryColor,
+          enabled: _playerManagerService.isReadyToPlay(),
           onPressed: () => Navigator.pushNamed(context, '/game/setup'),
         ),
       ],
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: ThemeConstants.defaultPadding),
-          child: ListView(
-            children: [
-              SizedBox(height: _popupHeight + ThemeConstants.defaultPadding),
-              ..._playerManagerService
-                  .getPlayers()
-                  .map(
-                    (PlayerModel player) => Padding(
-                      key: ValueKey<dynamic>(player.key),
-                      padding: const EdgeInsets.symmetric(vertical: 6.0),
-                      child: Pill(
-                        direction: Axis.horizontal,
-                        text: player.name,
-                        color: player.team.color,
-                        borderColor: player.team.borderColor,
-                        onTap: () => showEditorDialog(player: player),
-                      )
-                          .animate()
-                          .fadeIn(duration: ThemeConstants.entranceDuration)
-                          .slideX(
-                            begin: player.team == Team.green ? 0.15 : -0.15,
-                            end: 0.0,
-                            duration: ThemeConstants.entranceDuration,
-                            curve: ThemeConstants.bounceCurve,
-                          ),
-                    ),
-                  )
-                  .toList(),
-              const SizedBox(height: 120.0),
-            ],
-          ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: ThemeConstants.defaultPadding,
+        ListView(
+          padding: const EdgeInsets.only(bottom: 120.0),
+          children: [
+            ScreenTitle(
+              title: l10n.playersTitle,
+              subtitle: l10n.enterParticipantsNamesText,
             ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  ThemeConstants.backgroundColor,
-                  ThemeConstants.backgroundColor.withValues(alpha: 0.0),
-                ],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(0.0, 1.0),
-                stops: const [0.8, 1.0],
-                tileMode: TileMode.clamp,
+            for (final Team team in const [Team.yellow, Team.green])
+              _TeamPanel(
+                team: team,
+                players: _playerManagerService.getPlayersByTeam(team),
+                onAdd: () => _showEditor(team: team),
+                onEdit: (PlayerModel player) => _showEditor(player: player),
               ),
-            ),
-            child: SizeMeasurer(
-              onChange: (Size size) => setState(() {
-                _popupHeight = size.height;
-              }),
-              child: Pill(
-                heroTag: "popup",
-                color: ThemeConstants.greyPrimaryColor,
-                borderColor: ThemeConstants.greySecondaryColor,
-                direction: Axis.horizontal,
-                icon: IconsConstants.groupAdd,
-                text: AppLocalizations.of(context)!.enterParticipantsNamesText,
-                onTap: showEditorDialog,
-              ),
-            ),
-          ),
+          ],
         ),
       ],
     );
   }
 
-  Future<void> showEditorDialog({PlayerModel? player}) {
-    return showDialog<void>(
+  Future<void> _showEditor({PlayerModel? player, Team team = Team.yellow}) {
+    return showClaySheet<void>(
       context: context,
-      barrierColor: ThemeConstants.scrimColor,
-      barrierDismissible: false,
-      builder: (BuildContext context) => PlayerEditorDialog(
+      builder: (BuildContext context) => PlayerEditorSheet(
         initialValue: player,
+        initialTeam: team,
         onInsert: _playerManagerService.insertPlayer,
         onRemove: _playerManagerService.removePlayer,
       ),
-    ).then((_) => setState(() {}));
+    ).then((_) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+}
+
+class _TeamPanel extends StatelessWidget {
+  const _TeamPanel({
+    required this.team,
+    required this.players,
+    required this.onAdd,
+    required this.onEdit,
+  });
+
+  final Team team;
+  final List<PlayerModel> players;
+  final void Function() onAdd;
+  final void Function(PlayerModel) onEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final TextStyle textStyle = Theme.of(context).textTheme.bodyLarge!;
+    final bool reduceMotion = MediaQuery.of(context).disableAnimations;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: ThemeConstants.clay(
+        ThemeConstants.greyPrimaryColor,
+        ThemeConstants.greySecondaryColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 44.0,
+                height: 44.0,
+                decoration: BoxDecoration(
+                  color: team.color,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: team.borderColor, width: 2.5),
+                ),
+                child: Icon(
+                  team.icon,
+                  size: 24.0,
+                  color: ThemeConstants.defaultTextColor,
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              Expanded(
+                child: Text(
+                  team == Team.green ? l10n.greenTeamText : l10n.yellowTeamText,
+                  style: textStyle.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Text(
+                '${players.length}',
+                style: textStyle.copyWith(
+                  color: ThemeConstants.mutedTextColor,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14.0),
+          if (players.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Text(
+                l10n.emptyTeamText,
+                style: textStyle.copyWith(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w500,
+                  color: ThemeConstants.mutedTextColor,
+                ),
+              ),
+            ),
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 10.0,
+            children: [
+              for (final PlayerModel player in players)
+                reduceMotion
+                    ? NameChip(
+                        key: ValueKey<dynamic>(player.key),
+                        label: player.name,
+                        color: team.color,
+                        borderColor: team.borderColor,
+                        onTap: () => onEdit(player),
+                      )
+                    : NameChip(
+                        label: player.name,
+                        color: team.color,
+                        borderColor: team.borderColor,
+                        onTap: () => onEdit(player),
+                      )
+                        .animate(key: ValueKey<dynamic>(player.key))
+                        .fadeIn(duration: ThemeConstants.defaultDuration)
+                        .scaleXY(
+                          begin: 0.6,
+                          end: 1.0,
+                          duration: ThemeConstants.entranceDuration,
+                          curve: ThemeConstants.bounceCurve,
+                        ),
+              NameChip(
+                label: l10n.addPlayerButtonLabel,
+                icon: IconsConstants.add,
+                color: ThemeConstants.backgroundColor,
+                borderColor: ThemeConstants.greySecondaryColor,
+                onTap: onAdd,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

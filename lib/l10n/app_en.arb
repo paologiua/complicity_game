@@ -235,5 +235,14 @@
 		"description": "Text of the button that confirms quitting the game"
 	},
 	"addPlayerButtonLabel": "Add",
-	"playButtonLabel": "Play"
+	"playButtonLabel": "Play",
+	"playersTitle": "Players",
+	"saveButtonLabel": "Save",
+	"nextButtonLabel": "Next",
+	"showWordButtonLabel": "Show the word",
+	"emptyTeamText": "No players yet",
+	"newPlayerTitle": "New player",
+	"editPlayerTitle": "Edit player",
+	"teamLabel": "Team",
+	"nameLabel": "Name"
 }

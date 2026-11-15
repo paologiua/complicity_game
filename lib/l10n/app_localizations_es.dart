@@ -248,4 +248,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get playButtonLabel => 'Jugar';
+
+  @override
+  String get playersTitle => 'Jugadores';
+
+  @override
+  String get saveButtonLabel => 'Guardar';
+
+  @override
+  String get nextButtonLabel => 'Siguiente';
+
+  @override
+  String get showWordButtonLabel => 'Mostrar la palabra';
+
+  @override
+  String get emptyTeamText => 'Aún no hay jugadores';
+
+  @override
+  String get newPlayerTitle => 'Nuevo jugador';
+
+  @override
+  String get editPlayerTitle => 'Editar jugador';
+
+  @override
+  String get teamLabel => 'Equipo';
+
+  @override
+  String get nameLabel => 'Nombre';
 }

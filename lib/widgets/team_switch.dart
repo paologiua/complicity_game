@@ -1,119 +1,109 @@
-import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../models/player_model.dart';
 
-class TeamSwitch extends StatefulWidget {
+/// Two-way switch between the teams: a coloured thumb slides under the
+/// chosen one.
+class TeamSwitch extends StatelessWidget {
   const TeamSwitch({
     super.key,
-    required this.initialValue,
+    required this.value,
     required this.onChange,
   });
 
-  final Team initialValue;
+  final Team value;
   final void Function(Team team) onChange;
 
-  @override
-  State<TeamSwitch> createState() => _TeamSwitchState();
-}
-
-class _TeamSwitchState extends State<TeamSwitch> {
-  late Team _team;
-
-  void onChange(Team team) {
-    if (_team != team) {
-      setState(() {
-        _team = team;
-      });
-      widget.onChange(team);
-    }
-  }
-
-  @override
-  void initState() {
-    _team = widget.initialValue;
-    super.initState();
-  }
+  static const List<Team> _order = [Team.yellow, Team.green];
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final bool reduceMotion = MediaQuery.of(context).disableAnimations;
+
     return Container(
-      decoration: ThemeConstants.clay(
-        ThemeConstants.greyPrimaryColor,
-        ThemeConstants.greySecondaryColor,
+      height: 76.0,
+      padding: const EdgeInsets.all(4.0),
+      decoration: BoxDecoration(
+        color: ThemeConstants.backgroundColor,
+        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        border: Border.all(
+          color: ThemeConstants.greySecondaryColor,
+          width: 2.0,
+        ),
       ),
-      padding: const EdgeInsets.all(8.0),
-      width: double.infinity,
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () => onChange(Team.yellow),
+          AnimatedAlign(
+            alignment: value == Team.yellow
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            duration: reduceMotion
+                ? Duration.zero
+                : ThemeConstants.entranceDuration,
+            curve: ThemeConstants.bounceCurve,
+            child: FractionallySizedBox(
+              widthFactor: 0.5,
+              heightFactor: 1.0,
               child: AnimatedContainer(
-                padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                decoration: BoxDecoration(
-                  color: _team == Team.yellow
-                      ? ThemeConstants.yellowPrimaryColor
-                      : ThemeConstants.greyPrimaryColor.withValues(alpha: 0.0),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(ThemeConstants.defaultBorderRadius),
-                  ),
-                ),
                 duration: ThemeConstants.defaultDuration,
-                curve: ThemeConstants.defaultCurve,
-                child: Column(
-                  children: <Widget>[
-                    const Icon(
-                      IconsConstants.emojiObjects,
-                      size: ThemeConstants.defaultIconSize,
-                      color: ThemeConstants.defaultTextColor,
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text(
-                      AppLocalizations.of(context)!.yellowTeamText,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  gradient: ThemeConstants.surfaceGradient(value.color),
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  border: Border.all(color: value.borderColor, width: 2.5),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 8.0),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => onChange(Team.green),
-              child: AnimatedContainer(
-                padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-                decoration: BoxDecoration(
-                  color: _team == Team.green
-                      ? ThemeConstants.greenPrimaryColor
-                      : ThemeConstants.greyPrimaryColor.withValues(alpha: 0.0),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(ThemeConstants.defaultBorderRadius),
+          Row(
+            children: [
+              for (final Team team in _order)
+                Expanded(
+                  child: Semantics(
+                    button: true,
+                    selected: team == value,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (team != value) {
+                          HapticFeedback.selectionClick();
+                          onChange(team);
+                        }
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedScale(
+                            scale: team == value ? 1.15 : 1.0,
+                            duration: ThemeConstants.entranceDuration,
+                            curve: ThemeConstants.bounceCurve,
+                            child: Icon(
+                              team.icon,
+                              size: 24.0,
+                              color: ThemeConstants.defaultTextColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            team == Team.green
+                                ? l10n.greenTeamText
+                                : l10n.yellowTeamText,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontSize: 14.0),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                duration: ThemeConstants.defaultDuration,
-                curve: ThemeConstants.defaultCurve,
-                child: Column(
-                  children: <Widget>[
-                    const Icon(
-                      IconsConstants.cognition,
-                      size: ThemeConstants.defaultIconSize,
-                      color: ThemeConstants.defaultTextColor,
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text(
-                      AppLocalizations.of(context)!.greenTeamText,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],
           ),
         ],
       ),

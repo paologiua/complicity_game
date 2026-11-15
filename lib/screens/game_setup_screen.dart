@@ -12,6 +12,7 @@ import '../services/game_service.dart';
 import '../widgets/bouncy.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/custom_scaffold.dart';
+import '../widgets/screen_title.dart';
 
 /// Lets the players pick the game mode and how many words win the game.
 class GameSetupScreen extends StatefulWidget {
@@ -89,15 +90,10 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  l10n.chooseModeText,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.w700,
-                      ),
+                ScreenTitle(
+                  title: l10n.chooseModeText,
+                  padding: const EdgeInsets.only(bottom: 20.0),
                 ),
-                const SizedBox(height: 24.0),
                 for (int row = 0; row < 2; row++)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),

@@ -333,6 +333,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Play'**
   String get playButtonLabel;
+
+  /// No description provided for @playersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Players'**
+  String get playersTitle;
+
+  /// No description provided for @saveButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveButtonLabel;
+
+  /// No description provided for @nextButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextButtonLabel;
+
+  /// No description provided for @showWordButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the word'**
+  String get showWordButtonLabel;
+
+  /// No description provided for @emptyTeamText.
+  ///
+  /// In en, this message translates to:
+  /// **'No players yet'**
+  String get emptyTeamText;
+
+  /// No description provided for @newPlayerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New player'**
+  String get newPlayerTitle;
+
+  /// No description provided for @editPlayerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit player'**
+  String get editPlayerTitle;
+
+  /// No description provided for @teamLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Team'**
+  String get teamLabel;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
 }
 
 class _AppLocalizationsDelegate

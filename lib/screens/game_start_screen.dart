@@ -1,4 +1,3 @@
-import 'package:complicity_game/constants/icons.dart';
 import 'package:complicity_game/constants/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
@@ -34,14 +33,13 @@ class _GameStartScreenState extends State<GameStartScreen> {
     return CustomScaffold(
       mode: _gameService.mode,
       floatingButtons: [
-        const CustomFloatingButton(heroTag: "left_button", size: 0),
         CustomFloatingButton(
           heroTag: "right_button",
-          icon: IconsConstants.arrowForward,
+          icon: Icons.visibility_outlined,
+          text: AppLocalizations.of(context)!.showWordButtonLabel,
           backgroundColor: ThemeConstants.ctaPrimaryColor,
           onPressed: goToNextPage,
         ),
-        const CustomFloatingButton(size: 0),
       ],
       children: [
         const Align(
@@ -59,7 +57,6 @@ class _GameStartScreenState extends State<GameStartScreen> {
               player.name.toUpperCase(),
               player.team.name,
             ),
-            onTap: goToNextPage,
           ),
         ),
       ],

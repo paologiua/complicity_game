@@ -107,14 +107,13 @@ class _GameResultScreenState extends State<GameResultScreen> {
     return CustomScaffold(
       mode: _gameService.mode,
       floatingButtons: [
-        const CustomFloatingButton(heroTag: "left_button", size: 0),
         CustomFloatingButton(
           heroTag: "right_button",
           icon: IconsConstants.arrowForward,
+          text: l10n.nextButtonLabel,
           backgroundColor: ThemeConstants.ctaPrimaryColor,
           onPressed: goToNextPage,
         ),
-        const CustomFloatingButton(size: 0),
       ],
       children: [
         Column(
@@ -138,7 +137,6 @@ class _GameResultScreenState extends State<GameResultScreen> {
                         icon: _icon,
                         text: '${_headline(l10n)}\n\n'
                             '${l10n.theWordWasText(_outcome.word.toUpperCase())}',
-                        onTap: goToNextPage,
                       ),
                       if (consequence != null) ...[
                         const SizedBox(height: ThemeConstants.defaultPadding),
@@ -147,7 +145,6 @@ class _GameResultScreenState extends State<GameResultScreen> {
                           borderColor: style.cardBorderColor,
                           icon: style.icon,
                           text: consequence,
-                          onTap: goToNextPage,
                         )
                             .animate(delay: const Duration(milliseconds: 500))
                             .fadeIn(duration: ThemeConstants.entranceDuration)

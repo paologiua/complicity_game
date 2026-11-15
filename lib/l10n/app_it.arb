@@ -37,5 +37,14 @@
 	"exitGameText": "Vuoi abbandonare la partita?",
 	"exitButtonLabel": "Esci",
 	"addPlayerButtonLabel": "Aggiungi",
-	"playButtonLabel": "Gioca"
+	"playButtonLabel": "Gioca",
+	"playersTitle": "Giocatori",
+	"saveButtonLabel": "Salva",
+	"nextButtonLabel": "Avanti",
+	"showWordButtonLabel": "Mostra la parola",
+	"emptyTeamText": "Ancora nessun giocatore",
+	"newPlayerTitle": "Nuovo giocatore",
+	"editPlayerTitle": "Modifica giocatore",
+	"teamLabel": "Squadra",
+	"nameLabel": "Nome"
 }

@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: IconsConstants.rule,
               text: AppLocalizations.of(context)!.gameRulesButtonLabel,
               direction: Axis.horizontal,
-              onTap: () => Navigator.pushNamed(context, "/game_rules/1"),
+              onTap: () => Navigator.pushNamed(context, "/game_rules"),
             ),
             const SizedBox(height: 36.0),
           ],
