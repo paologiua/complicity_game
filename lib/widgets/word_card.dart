@@ -63,6 +63,23 @@ class WordCard extends StatefulWidget {
   State<WordCard> createState() => _WordCardState();
 }
 
+/// A long expression of several words ("distributore di benzina") goes on two
+/// lines, broken at the space closest to its middle, so it stays big.
+String _wrapped(String word) {
+  if (word.length <= 14 || !word.contains(' ')) return word;
+
+  int best = -1;
+  for (int i = 0; i < word.length; i++) {
+    if (word[i] == ' ' &&
+        (best == -1 ||
+            (i - word.length / 2).abs() < (best - word.length / 2).abs())) {
+      best = i;
+    }
+  }
+
+  return '${word.substring(0, best)}\n${word.substring(best + 1)}';
+}
+
 class _WordCardState extends State<WordCard>
     with SingleTickerProviderStateMixin {
   /// 0 shows the word, 1 the secret face.
@@ -218,8 +235,9 @@ class _WordCardState extends State<WordCard>
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.word.toUpperCase(),
-                  maxLines: 1,
+                  _wrapped(widget.word.toUpperCase()),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   style: textStyle.copyWith(
                     fontSize: 38.0,
                     fontWeight: FontWeight.w700,
