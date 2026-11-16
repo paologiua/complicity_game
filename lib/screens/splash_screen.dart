@@ -77,7 +77,7 @@ class _LoadingDots extends StatelessWidget {
   static const List<List<Color>> _colors = [
     [ThemeConstants.greenPrimaryColor, ThemeConstants.greenSecondaryColor],
     [ThemeConstants.yellowPrimaryColor, ThemeConstants.yellowSecondaryColor],
-    [ThemeConstants.purplePrimaryColor, ThemeConstants.purpleSecondaryColor],
+    [ThemeConstants.ctaPrimaryColor, ThemeConstants.ctaSecondaryColor],
   ];
 
   @override
