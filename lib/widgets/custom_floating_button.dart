@@ -40,7 +40,6 @@ class CustomFloatingButton extends StatefulWidget {
 class _CustomFloatingButtonState extends State<CustomFloatingButton> {
   @override
   Widget build(BuildContext context) {
-    final Object heroTag = widget.heroTag ?? Object();
     final void Function() onPressed = widget.onPressed == null
         ? () {}
         : () {
@@ -76,37 +75,30 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
         ? ThemeConstants.greySecondaryColor
         : Color.lerp(backgroundColor, Colors.black, 0.3)!;
 
-    return IgnorePointer(
-      ignoring: !widget.enabled,
-      child: AnimatedOpacity(
-        opacity: widget.enabled ? 1.0 : 0.4,
-        duration: ThemeConstants.defaultDuration,
-        child: Bouncy(
-      enabled: widget.onPressed != null,
-      pressedScale: 0.9,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          shape: const StadiumBorder(),
-          shadows: [
-            BoxShadow(
-              color: shade.withValues(alpha: 0.38),
-              blurRadius: 10.0,
-              offset: const Offset(0.0, 5.0),
-            ),
-          ],
-        ),
-        child: SizedBox(
+    // The shadow belongs to the Hero, so it flies with the button between
+    // screens instead of staying behind with the page.
+    final Widget button = DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: const StadiumBorder(),
+        shadows: [
+          BoxShadow(
+            color: shade.withValues(alpha: 0.38),
+            blurRadius: 10.0,
+            offset: const Offset(0.0, 5.0),
+          ),
+        ],
+      ),
+      child: SizedBox(
         height: widget.size,
         width: widget.text == null ? widget.size : null,
         child: widget.text == null
             ? FloatingActionButton(
-                heroTag: heroTag,
+                heroTag: null,
                 tooltip: widget.tooltip ??
                     (widget.icon == IconsConstants.arrowBack
                         ? MaterialLocalizations.of(context).backButtonTooltip
                         : widget.icon == IconsConstants.arrowForward
-                            ? MaterialLocalizations.of(context)
-                                .nextPageTooltip
+                            ? MaterialLocalizations.of(context).nextPageTooltip
                             : null),
                 onPressed: onPressed,
                 backgroundColor: backgroundColor,
@@ -123,7 +115,7 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 child: icon,
               )
             : FloatingActionButton.extended(
-                heroTag: heroTag,
+                heroTag: null,
                 onPressed: onPressed,
                 backgroundColor: backgroundColor,
                 elevation: 0,
@@ -140,8 +132,24 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 label: text!,
               ),
       ),
-      ),
-        ),
+    );
+
+    // Dimming is inside the Hero too: a disabled button is already dimmed
+    // while it flies in.
+    final Widget dimmed = AnimatedOpacity(
+      opacity: widget.enabled ? 1.0 : 0.4,
+      duration: ThemeConstants.defaultDuration,
+      child: button,
+    );
+
+    return IgnorePointer(
+      ignoring: !widget.enabled,
+      child: Bouncy(
+        enabled: widget.onPressed != null,
+        pressedScale: 0.9,
+        child: widget.heroTag == null
+            ? dimmed
+            : Hero(tag: widget.heroTag!, child: dimmed),
       ),
     );
   }
