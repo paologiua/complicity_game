@@ -62,7 +62,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
   }
 }
 
-/// Says whose turn it is, in the colour of their team. Same size as the word
+/// Says whose turn it is, with a badge in the colour of their team. Same size as the word
 /// card it turns into on the next screen.
 class _TurnCard extends StatelessWidget {
   const _TurnCard({required this.player});
@@ -81,7 +81,13 @@ class _TurnCard extends StatelessWidget {
         width: double.infinity,
         height: WordCard.height,
         padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-        decoration: ThemeConstants.clay(team.color, team.borderColor),
+        // White like every card that is only read: in this app a
+        // coloured surface means it can be tapped. The team shows in the
+        // badge.
+        decoration: ThemeConstants.clay(
+          ThemeConstants.greyPrimaryColor,
+          ThemeConstants.greySecondaryColor,
+        ),
         foregroundDecoration: ThemeConstants.clayGloss(),
         child: WordCard.unsqueezable(
           Column(
@@ -92,7 +98,8 @@ class _TurnCard extends StatelessWidget {
                   vertical: 6.0,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.6),
+                  // Flat, without outline or shadow: a label, not a button.
+                  color: team.color.withValues(alpha: 0.55),
                   borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 ),
                 child: Row(
@@ -122,6 +129,7 @@ class _TurnCard extends StatelessWidget {
                       style: textStyle.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
+                        color: ThemeConstants.mutedTextColor,
                       ),
                     ),
                     FittedBox(
