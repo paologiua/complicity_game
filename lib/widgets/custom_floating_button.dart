@@ -40,6 +40,86 @@ class CustomFloatingButton extends StatefulWidget {
 class _CustomFloatingButtonState extends State<CustomFloatingButton> {
   @override
   Widget build(BuildContext context) {
+    if (widget.size == 0) {
+      return const SizedBox.shrink();
+    }
+
+    final Widget body = _ButtonBody(button: widget);
+
+    return IgnorePointer(
+      ignoring: !widget.enabled,
+      child: Bouncy(
+        enabled: widget.onPressed != null,
+        pressedScale: 0.9,
+        child: widget.heroTag == null
+            ? body
+            : Hero(
+                tag: widget.heroTag!,
+                flightShuttleBuilder: _flightShuttle,
+                child: body,
+              ),
+      ),
+    );
+  }
+
+  /// While a button turns into the one of the next screen, the old one fades
+  /// away at once and the new label sits still at full size: the pill uncovers
+  /// it like a curtain as it widens.
+  static Widget _flightShuttle(
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection direction,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+  ) {
+    final CustomFloatingButton? from =
+        fromHeroContext.findAncestorWidgetOfExactType<CustomFloatingButton>();
+    final CustomFloatingButton? to =
+        toHeroContext.findAncestorWidgetOfExactType<CustomFloatingButton>();
+    if (from == null || to == null) {
+      return (toHeroContext.widget as Hero).child;
+    }
+
+    final Animation<double> progress = direction == HeroFlightDirection.push
+        ? animation
+        : ReverseAnimation(animation);
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        _ButtonBody(
+          button: to,
+          label: CurvedAnimation(
+            parent: progress,
+            curve: const Interval(0.05, 0.25, curve: Curves.easeOut),
+          ),
+        ),
+        FadeTransition(
+          opacity: Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: progress,
+              curve: const Interval(0.0, 0.2, curve: Curves.easeOut),
+            ),
+          ),
+          child: _ButtonBody(button: from),
+        ),
+      ],
+    );
+  }
+}
+
+class _ButtonBody extends StatelessWidget {
+  const _ButtonBody({required this.button, this.label});
+
+  final CustomFloatingButton button;
+
+  /// Opacity of the text during a flight; null when the button is at rest.
+  final Animation<double>? label;
+
+  CustomFloatingButton get widget => button;
+
+  @override
+  Widget build(BuildContext context) {
     final void Function() onPressed = widget.onPressed == null
         ? () {}
         : () {
@@ -66,10 +146,6 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 ),
           )
         : null;
-
-    if (widget.size == 0) {
-      return const SizedBox.shrink();
-    }
 
     final Color shade = widget.backgroundColor == null
         ? ThemeConstants.greySecondaryColor
@@ -114,22 +190,59 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
                 ),
                 child: icon,
               )
-            : FloatingActionButton.extended(
-                heroTag: null,
-                onPressed: onPressed,
-                backgroundColor: backgroundColor,
-                elevation: 0,
-                highlightElevation: 0,
-                focusElevation: 0,
-                hoverElevation: 0,
+            // Not a FloatingActionButton.extended: its label cannot shrink, so
+            // while the button grows out of a smaller one between two screens
+            // the text would spill over the pill. Here it is clipped by it.
+            : Material(
+                color: backgroundColor,
+                clipBehavior: Clip.antiAlias,
                 shape: StadiumBorder(
                   side: BorderSide(
                     color: shade,
                     width: ThemeConstants.clayBorderWidth,
                   ),
                 ),
-                icon: icon,
-                label: text!,
+                child: InkWell(
+                  onTap: onPressed,
+                  customBorder: const StadiumBorder(),
+                  child: Semantics(
+                    button: true,
+                    // Wider than its content (the first part of a flight
+                    // towards a smaller button), the pill keeps it centred.
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: Container(
+                          height: widget.size,
+                          constraints: BoxConstraints(
+                            minWidth: constraints.minWidth,
+                          ),
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              start: icon == null ? 20.0 : 16.0,
+                              end: 20.0,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (icon != null) ...[
+                                  icon,
+                                  const SizedBox(width: 8.0),
+                                ],
+                                label == null
+                                    ? text!
+                                    : FadeTransition(
+                                        opacity: label!, child: text),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
       ),
     );
@@ -142,15 +255,6 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
       child: button,
     );
 
-    return IgnorePointer(
-      ignoring: !widget.enabled,
-      child: Bouncy(
-        enabled: widget.onPressed != null,
-        pressedScale: 0.9,
-        child: widget.heroTag == null
-            ? dimmed
-            : Hero(tag: widget.heroTag!, child: dimmed),
-      ),
-    );
+    return dimmed;
   }
 }
