@@ -90,6 +90,9 @@ class _GameOverScreenState extends State<GameOverScreen> {
       children: [
         Center(
           child: SingleChildScrollView(
+            // Lets the content slide under the notch, where the scaffold
+            // fades it out, instead of being cut at the safe area.
+            clipBehavior: Clip.none,
             padding: const EdgeInsets.symmetric(
               vertical: ThemeConstants.defaultPadding,
             ),

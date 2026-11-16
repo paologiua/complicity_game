@@ -70,6 +70,9 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
       ],
       children: [
         ListView(
+          // Lets the content slide under the notch, where the scaffold
+          // fades it out, instead of being cut at the safe area.
+          clipBehavior: Clip.none,
           padding: const EdgeInsets.only(bottom: 120.0),
           children: [
             ScreenTitle(

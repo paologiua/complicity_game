@@ -43,6 +43,34 @@ class _CustomScaffoldState extends State<CustomScaffold> {
     );
   }
 
+  /// A veil of the background colour, solid at one edge of the screen and
+  /// clear at the other end. It follows the colour when the mode changes.
+  Widget _fade(GameModeStyle style, {required bool fromTop}) {
+    return IgnorePointer(
+      child: TweenAnimationBuilder<Color?>(
+        tween: ColorTween(end: style.backgroundColor),
+        duration: ThemeConstants.entranceDuration,
+        builder: (BuildContext context, Color? color, _) {
+          final Color base = color ?? style.backgroundColor;
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: fromTop ? Alignment.topCenter : Alignment.bottomCenter,
+                end: fromTop ? Alignment.bottomCenter : Alignment.topCenter,
+                colors: [
+                  base,
+                  base.withValues(alpha: fromTop ? 0.9 : 0.73),
+                  base.withValues(alpha: 0.0),
+                ],
+                stops: [0.0, fromTop ? 0.45 : 0.3, 1.0],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final GameModeStyle style = widget.mode.style;
@@ -62,6 +90,15 @@ class _CustomScaffoldState extends State<CustomScaffold> {
         body: Stack(
           children: [
             _column(Stack(children: widget.children)),
+            // Content scrolling up fades out under the notch instead of being
+            // cut off at the edge of the safe area.
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              top: 0.0,
+              height: MediaQuery.of(context).padding.top + 20.0,
+              child: _fade(style, fromTop: true),
+            ),
             if (widget.floatingButtons != null) ...[
               // Fades the content out under the buttons, across the whole
               // screen and in step with the background colour.
@@ -70,29 +107,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 right: 0.0,
                 bottom: 0.0,
                 height: 116.0 + MediaQuery.of(context).padding.bottom,
-                child: IgnorePointer(
-                  child: TweenAnimationBuilder<Color?>(
-                    tween: ColorTween(end: style.backgroundColor),
-                    duration: ThemeConstants.entranceDuration,
-                    builder: (BuildContext context, Color? color, _) {
-                      final Color base = color ?? style.backgroundColor;
-                      return DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                              base,
-                              base.withValues(alpha: 0.73),
-                              base.withValues(alpha: 0.0),
-                            ],
-                            stops: const [0.0, 0.3, 1.0],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                child: _fade(style, fromTop: false),
               ),
               _column(
                 Align(

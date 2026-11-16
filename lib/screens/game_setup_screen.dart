@@ -83,6 +83,9 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
       children: [
         Center(
           child: SingleChildScrollView(
+            // Lets the content slide under the notch, where the scaffold
+            // fades it out, instead of being cut at the safe area.
+            clipBehavior: Clip.none,
             padding: const EdgeInsets.only(
               top: ThemeConstants.defaultPadding,
               bottom: 110.0,
