@@ -38,18 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Center(
                 child: const GameLogo()
+                    // Starts from rest once the logo has landed from the
+                    // splash, so the flight does not end with a jump.
                     .animate(
+                      delay: const Duration(milliseconds: 700),
                       onPlay: (controller) => controller.repeat(reverse: true),
                     )
                     .moveY(
-                      begin: -6.0,
-                      end: 6.0,
+                      begin: 0.0,
+                      end: -10.0,
                       duration: const Duration(milliseconds: 2200),
                       curve: Curves.easeInOut,
                     )
                     .rotate(
-                      begin: -0.006,
-                      end: 0.006,
+                      begin: 0.0,
+                      end: 0.01,
                       duration: const Duration(milliseconds: 2200),
                       curve: Curves.easeInOut,
                     ),

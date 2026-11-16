@@ -134,7 +134,7 @@ class PlayfulTransitionsBuilder extends PageTransitionsBuilder {
     final Animation<double> enter = CurvedAnimation(
       parent: animation,
       curve: const Interval(0.2, 1.0, curve: Curves.easeOutBack),
-      reverseCurve: const Interval(0.4, 1.0, curve: Curves.easeInCubic),
+      reverseCurve: const Interval(0.3, 1.0, curve: Curves.easeInOutCubic),
     );
     final Animation<double> enterFade = CurvedAnimation(
       parent: animation,
@@ -144,7 +144,9 @@ class PlayfulTransitionsBuilder extends PageTransitionsBuilder {
     final Animation<double> leave = CurvedAnimation(
       parent: secondaryAnimation,
       curve: const Interval(0.0, 0.5, curve: Curves.easeInCubic),
-      reverseCurve: const Interval(0.0, 0.8, curve: Curves.easeOutCubic),
+      // Going back, the revealed screen must slow down into place: a curve
+      // that is flat near zero does that when the animation runs in reverse.
+      reverseCurve: const Interval(0.0, 0.85, curve: Curves.easeInOutCubic),
     );
 
     return SlideTransition(
