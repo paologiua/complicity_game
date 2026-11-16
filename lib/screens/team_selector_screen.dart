@@ -31,6 +31,23 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
     super.initState();
   }
 
+  /// Same staggered rise as the cards of the rules screen.
+  Widget _entrance({required int index, required Widget child}) {
+    if (MediaQuery.of(context).disableAnimations) {
+      return child;
+    }
+
+    return child
+        .animate(delay: Duration(milliseconds: 50 * index))
+        .fadeIn(duration: ThemeConstants.entranceDuration)
+        .slideY(
+          begin: 0.15,
+          end: 0.0,
+          duration: ThemeConstants.entranceDuration,
+          curve: ThemeConstants.bounceCurve,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context)!;
@@ -60,11 +77,14 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
               subtitle: l10n.enterParticipantsNamesText,
             ),
             for (final Team team in const [Team.yellow, Team.green])
-              _TeamPanel(
-                team: team,
-                players: _playerManagerService.getPlayersByTeam(team),
-                onAdd: () => _showEditor(team: team),
-                onEdit: (PlayerModel player) => _showEditor(player: player),
+              _entrance(
+                index: team == Team.yellow ? 0 : 1,
+                child: _TeamPanel(
+                  team: team,
+                  players: _playerManagerService.getPlayersByTeam(team),
+                  onAdd: () => _showEditor(team: team),
+                  onEdit: (PlayerModel player) => _showEditor(player: player),
+                ),
               ),
           ],
         ),
