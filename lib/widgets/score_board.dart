@@ -21,6 +21,11 @@ class ScoreBoard extends StatelessWidget {
   /// The team that just scored: its number and newest segment pop in.
   final Team? highlight;
 
+  /// Longer than the page transition. The board flies between screens as a
+  /// Hero, which shows a second copy of it during the flight: an animation
+  /// starting earlier would play once on that copy and again on the real one.
+  static const Duration highlightDelay = Duration(milliseconds: 650);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,10 +88,21 @@ class _TeamRow extends StatelessWidget {
     );
 
     if (animate) {
-      number = number.animate(delay: const Duration(milliseconds: 350)).scale(
-            begin: const Offset(2.2, 2.2),
-            end: const Offset(1.0, 1.0),
-            duration: const Duration(milliseconds: 700),
+      // Swells and springs back. It starts at rest, so nothing shows while
+      // the board is still flying in from the previous screen.
+      number = number
+          .animate(delay: ScoreBoard.highlightDelay)
+          .scaleXY(
+            begin: 1.0,
+            end: 2.2,
+            duration: const Duration(milliseconds: 160),
+            curve: Curves.easeOut,
+          )
+          .then()
+          .scaleXY(
+            begin: 1.0,
+            end: 1.0 / 2.2,
+            duration: const Duration(milliseconds: 650),
             curve: Curves.elasticOut,
           );
     }
@@ -145,7 +161,7 @@ class _Segment extends StatelessWidget {
     );
 
     if (animated) {
-      fill = fill.animate(delay: const Duration(milliseconds: 350)).scaleX(
+      fill = fill.animate(delay: ScoreBoard.highlightDelay).scaleX(
             begin: 0.0,
             end: 1.0,
             alignment: Alignment.centerLeft,
