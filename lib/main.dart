@@ -87,13 +87,7 @@ class ComplicityGame extends StatelessWidget {
               child: ValueListenableBuilder<GameMode>(
                 valueListenable: BackgroundMotion.mode,
                 builder: (BuildContext context, GameMode mode, _) {
-                  return AnimatedSwitcher(
-                    duration: ThemeConstants.entranceDuration,
-                    child: PlayfulBackground(
-                      key: ValueKey<GameMode>(mode),
-                      mode: mode,
-                    ),
-                  );
+                  return PlayfulBackground(mode: mode);
                 },
               ),
             ),

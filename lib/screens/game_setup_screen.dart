@@ -150,6 +150,7 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
                 _TargetScoreSelector(
                   label: l10n.wordsToWinText,
                   value: _targetScore,
+                  mode: _mode,
                   onChange: _selectTargetScore,
                 )
                     .animate(delay: const Duration(milliseconds: 120))
@@ -206,8 +207,8 @@ class _ModeCard extends StatelessWidget {
 
     return AnimatedScale(
       scale: selected ? 1.0 : 0.94,
-      duration: ThemeConstants.entranceDuration,
-      curve: ThemeConstants.bounceCurve,
+      duration: ThemeConstants.defaultDuration,
+      curve: Curves.easeOutCubic,
       child: Bouncy(
         pressedScale: 0.95,
         child: GestureDetector(
@@ -252,16 +253,23 @@ class _TargetScoreSelector extends StatelessWidget {
   const _TargetScoreSelector({
     required this.label,
     required this.value,
+    required this.mode,
     required this.onChange,
   });
 
   final String label;
   final int value;
+
+  /// Colours the thumb, so the choice reads as part of the chosen mode.
+  final GameMode mode;
   final void Function(int) onChange;
 
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.bodyLarge!;
+    final bool reduceMotion = MediaQuery.of(context).disableAnimations;
+    const List<int> options = OptionsConstants.targetScores;
+    final int index = options.indexOf(value).clamp(0, options.length - 1);
 
     return Container(
       width: double.infinity,
@@ -279,43 +287,84 @@ class _TargetScoreSelector extends StatelessWidget {
             style: textStyle,
           ),
           const SizedBox(height: 12.0),
-          Row(
-            children: [
-              for (int option in OptionsConstants.targetScores)
-                Expanded(
-                  child: Bouncy(
-                    pressedScale: 0.9,
-                    child: GestureDetector(
-                      onTap: () => onChange(option),
-                      child: AnimatedContainer(
-                        duration: ThemeConstants.defaultDuration,
-                        curve: ThemeConstants.defaultCurve,
-                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        decoration: BoxDecoration(
-                          color: option == value
-                              ? ThemeConstants.blackPrimaryColor
-                              : ThemeConstants.backgroundColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(
-                              ThemeConstants.defaultBorderRadius,
-                            ),
-                          ),
+          // Same track and sliding thumb as the team switch.
+          Container(
+            height: 60.0,
+            padding: const EdgeInsets.all(4.0),
+            decoration: BoxDecoration(
+              color: ThemeConstants.backgroundColor,
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              border: Border.all(
+                color: ThemeConstants.greySecondaryColor,
+                width: 2.0,
+              ),
+            ),
+            child: Stack(
+              children: [
+                AnimatedAlign(
+                  alignment: Alignment(
+                    options.length > 1
+                        ? -1.0 + 2.0 * index / (options.length - 1)
+                        : 0.0,
+                    0.0,
+                  ),
+                  duration: reduceMotion
+                      ? Duration.zero
+                      : ThemeConstants.entranceDuration,
+                  curve: ThemeConstants.bounceCurve,
+                  child: FractionallySizedBox(
+                    widthFactor: 1.0 / options.length,
+                    heightFactor: 1.0,
+                    child: AnimatedContainer(
+                      duration: ThemeConstants.defaultDuration,
+                      decoration: BoxDecoration(
+                        gradient: ThemeConstants.surfaceGradient(
+                          mode.style.cardColor,
                         ),
-                        child: Text(
-                          '$option',
-                          textAlign: TextAlign.center,
-                          style: textStyle.copyWith(
-                            color: option == value
-                                ? ThemeConstants.greyPrimaryColor
-                                : ThemeConstants.defaultTextColor,
-                          ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
+                        border: Border.all(
+                          color: mode.style.cardBorderColor,
+                          width: 2.5,
                         ),
                       ),
                     ),
                   ),
                 ),
-            ],
+                Row(
+                  children: [
+                    for (final int option in options)
+                      Expanded(
+                        child: Semantics(
+                          button: true,
+                          selected: option == value,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              if (option != value) onChange(option);
+                            },
+                            child: Center(
+                              child: AnimatedScale(
+                                scale: option == value ? 1.2 : 1.0,
+                                duration: ThemeConstants.entranceDuration,
+                                curve: ThemeConstants.bounceCurve,
+                                child: Text(
+                                  '$option',
+                                  style: textStyle.copyWith(
+                                    fontWeight: option == value
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

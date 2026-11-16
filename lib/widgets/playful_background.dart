@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../constants/theme.dart';
 import '../models/game_mode.dart';
 import 'background_motion.dart';
 
@@ -163,14 +164,44 @@ class _PlayfulBackgroundState extends State<PlayfulBackground>
 
   @override
   Widget build(BuildContext context) {
+    final GameModeStyle style = widget.mode.style;
+
     return RepaintBoundary(
-      child: CustomPaint(
-        painter: _BackgroundPainter(
-          shapes: _shapes,
-          style: widget.mode.style,
-          repaint: _ticker,
-        ),
-        size: Size.infinite,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // The colours blend from one mode to the next. Cross-fading two
+          // opaque backgrounds would let whatever is behind show through.
+          // Same colour at the top and bottom edges, so the fades that
+          // screens draw over their scrolling content blend in.
+          AnimatedContainer(
+            duration: ThemeConstants.entranceDuration,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  style.backgroundColor,
+                  style.glowColor,
+                  style.backgroundColor,
+                ],
+                stops: const [0.08, 0.5, 0.92],
+              ),
+            ),
+          ),
+          AnimatedSwitcher(
+            duration: ThemeConstants.entranceDuration,
+            child: CustomPaint(
+              key: ValueKey<GameMode>(widget.mode),
+              painter: _BackgroundPainter(
+                shapes: _shapes,
+                style: style,
+                repaint: _ticker,
+              ),
+              size: Size.infinite,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -188,25 +219,6 @@ class _BackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect rect = Offset.zero & size;
-
-    // Same colour at the top and bottom edges, so the fades that screens draw
-    // over their scrolling content blend in.
-    canvas.drawRect(
-      rect,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            style.backgroundColor,
-            style.glowColor,
-            style.backgroundColor,
-          ],
-          stops: const [0.08, 0.5, 0.92],
-        ).createShader(rect),
-    );
-
     final double time = BackgroundMotion.clock.elapsedMicroseconds / 1e6;
     final double travel = BackgroundMotion.travelAt(time);
 
