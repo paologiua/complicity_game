@@ -1,4 +1,4 @@
-package com.example.complicity_game
+package com.paologiua.complicitygame
 
 import io.flutter.embedding.android.FlutterActivity
 

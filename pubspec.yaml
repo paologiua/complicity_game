@@ -1,5 +1,5 @@
 name: complicity_game
-description: A new Flutter project.
+description: The party game of secret words, for two teams on one phone.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -43,6 +43,7 @@ dependencies:
   intl: any
   csv: ^5.1.0
   flutter_animate: ^4.5.0
+  shared_preferences: ^2.5.6
 
 dev_dependencies:
   flutter_test:

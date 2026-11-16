@@ -15,7 +15,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => PlayerManagerService(),
+          create: (context) => PlayerManagerService()..restore(),
           lazy: false,
         ),
         ChangeNotifierProvider(

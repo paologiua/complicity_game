@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.complicity_game">
+    package="com.paologiua.complicitygame">
    <application
         android:label="Complicity Game"
         android:name="${applicationName}"

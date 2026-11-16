@@ -1,11 +1,11 @@
 {
-    "name": "complicity_game",
-    "short_name": "complicity_game",
+    "name": "Complicity Game",
+    "short_name": "Complicity",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#FFF7ED",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "theme_color": "#FFF7ED",
+    "description": "The party game of secret words: give clues, guess together, beat the other team.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
