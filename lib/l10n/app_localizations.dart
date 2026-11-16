@@ -166,11 +166,17 @@ abstract class AppLocalizations {
   /// **'Yellow team'**
   String get yellowTeamText;
 
-  /// Text telling players to hide the screen
+  /// No description provided for @turnOfText.
   ///
   /// In en, this message translates to:
-  /// **'{playerName}\n({team, select, green{GREEN TEAM} yellow{YELLOW TEAM} other{NULL}})\n\nhides the screen from other players'**
-  String hideScreenText(String playerName, String team);
+  /// **'Up next'**
+  String get turnOfText;
+
+  /// No description provided for @hideScreenHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the screen hidden from the others'**
+  String get hideScreenHintText;
 
   /// Text where the mysterious word is indicated
   ///

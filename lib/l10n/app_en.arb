@@ -43,19 +43,8 @@
 	"@yellowTeamText": {
 		"description": "Yellow team name"
 	},
-	"hideScreenText": "{playerName}\n({team, select, green{GREEN TEAM} yellow{YELLOW TEAM} other{NULL}})\n\nhides the screen from other players",
-	"@hideScreenText": {
-		"description": "Text telling players to hide the screen",
-		"placeholders": {
-			"playerName": {
-				"type": "String",
-				"example": "Bob"
-			},
-			"team": {
-				"type": "String"
-			}
-		}
-	},
+	"turnOfText": "Up next",
+	"hideScreenHintText": "Keep the screen hidden from the others",
 	"mysteryWordText": "The mystery word is\n\n{word}",
 	"@mysteryWordText": {
 		"description": "Text where the mysterious word is indicated",

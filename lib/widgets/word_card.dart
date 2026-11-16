@@ -45,6 +45,20 @@ class WordCard extends StatefulWidget {
 
   static const double height = 264.0;
 
+  /// Keeps [child] laid out at the full card size even while a Hero flight
+  /// squeezes the card, so it is clipped instead of overflowing.
+  static Widget unsqueezable(Widget child) {
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: SizedBox(
+        height: height -
+            2 * ThemeConstants.defaultPadding -
+            2 * ThemeConstants.clayBorderWidth,
+        child: child,
+      ),
+    );
+  }
+
   @override
   State<WordCard> createState() => _WordCardState();
 }
@@ -156,7 +170,7 @@ class _WordCardState extends State<WordCard>
       padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
       decoration: ThemeConstants.clay(color, shade),
       foregroundDecoration: ThemeConstants.clayGloss(),
-      child: child,
+      child: WordCard.unsqueezable(child),
     );
   }
 

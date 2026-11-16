@@ -46,17 +46,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get yellowTeamText => 'Equipo amarillo';
 
   @override
-  String hideScreenText(String playerName, String team) {
-    String _temp0 = intl.Intl.selectLogic(
-      team,
-      {
-        'green': 'EQUIPO VERDE',
-        'yellow': 'EQUIPO AMARILLO',
-        'other': 'NULL',
-      },
-    );
-    return '$playerName\n($_temp0)\n\noculta la pantalla a otros jugadores';
-  }
+  String get turnOfText => 'Le toca a';
+
+  @override
+  String get hideScreenHintText => 'Que los demás no vean la pantalla';
 
   @override
   String mysteryWordText(String word) {

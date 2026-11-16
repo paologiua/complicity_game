@@ -77,6 +77,36 @@ class _PillState extends State<Pill> {
     final bool horizontal = widget.direction == Axis.horizontal;
     final bool tappable = widget.onTap != null;
 
+    final Widget content = Flex(
+      direction: widget.direction,
+      mainAxisSize: horizontal ? MainAxisSize.max : MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        if (widget.icon != null) _buildIcon(context),
+        if (widget.icon != null && widget.text != null)
+          SizedBox(
+            height: ThemeConstants.defaultPadding,
+            width: horizontal ? 12.0 : 0.0,
+          ),
+        if (widget.text != null)
+          horizontal
+              ? Flexible(
+                  child: Text(
+                    widget.text!,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                )
+              : Text(
+                  widget.text!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+        if (widget.child != null) widget.child!
+      ],
+    );
+
     final Widget child = Bouncy(
       enabled: tappable,
       pressedScale: 0.97,
@@ -99,35 +129,13 @@ class _PillState extends State<Pill> {
             horizontal: ThemeConstants.defaultPadding,
             vertical: horizontal ? 16.0 : 28.0,
           ),
-  child: Flex(
-                  direction: widget.direction,
-                  mainAxisSize:
-                      horizontal ? MainAxisSize.max : MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    if (widget.icon != null) _buildIcon(context),
-                    if (widget.icon != null && widget.text != null)
-                      SizedBox(
-                        height: ThemeConstants.defaultPadding,
-                        width: horizontal ? 12.0 : 0.0,
-                      ),
-                    if (widget.text != null)
-                      horizontal
-                          ? Flexible(
-                              child: Text(
-                                widget.text!,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                            )
-                          : Text(
-                              widget.text!,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                    if (widget.child != null) widget.child!
-                  ],
+          child: horizontal
+              ? content
+              // Never scrolls: it only lets the content be clipped, instead
+              // of overflowing, while a Hero flight squeezes the card.
+              : SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: content,
                 ),
         ),
       ),
