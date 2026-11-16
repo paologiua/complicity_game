@@ -105,7 +105,6 @@ class _LoadingDots extends StatelessWidget {
                     if (!reduceMotion) controller.repeat(reverse: true);
                   },
                 )
-                .fadeIn(duration: const Duration(milliseconds: 200))
                 .moveY(
                   begin: 0.0,
                   end: -14.0,
