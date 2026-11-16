@@ -3,10 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/game_mode.dart';
-
-/// One clock for every background, so the shapes keep their position when a
-/// new screen fades in over the previous one.
-final Stopwatch _clock = Stopwatch()..start();
+import 'background_motion.dart';
 
 enum _ShapeKind { dot, ring, zigzag, wave, star, plus, symbol }
 
@@ -210,12 +207,23 @@ class _BackgroundPainter extends CustomPainter {
         ).createShader(rect),
     );
 
-    final double time = _clock.elapsedMicroseconds / 1e6;
+    final double time = BackgroundMotion.clock.elapsedMicroseconds / 1e6;
+    final double travel = BackgroundMotion.travelAt(time);
+
+    // Shapes leaving one side come back from the other.
+    const double margin = 48.0;
+    final double span = size.width + margin * 2;
 
     for (final _Shape shape in shapes) {
       final double angle = 2 * pi * time / shape.period + shape.phase;
+
+      // Bigger shapes feel closer, so navigation sweeps them further.
+      final double depth = 0.25 + (shape.size - 12.0) / 30.0 * 0.45;
+      final double x = shape.x * size.width +
+          cos(angle) * shape.drift * 0.6 -
+          travel * size.width * depth;
       final Offset center = Offset(
-        shape.x * size.width + cos(angle) * shape.drift * 0.6,
+        (x + margin) % span - margin,
         shape.y * size.height + sin(angle) * shape.drift,
       );
 
@@ -225,7 +233,9 @@ class _BackgroundPainter extends CustomPainter {
 
       canvas.save();
       canvas.translate(center.dx, center.dy);
-      canvas.rotate(shape.phase + time * shape.spin);
+      canvas.rotate(
+        shape.phase + time * shape.spin + travel * shape.spin.sign * 1.2,
+      );
       _paintShape(canvas, shape, color);
       canvas.restore();
     }

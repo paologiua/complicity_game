@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:complicity_game/constants/theme.dart';
+import 'package:complicity_game/widgets/background_motion.dart';
+import 'package:complicity_game/widgets/game_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,82 +14,105 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
+
   @override
   void initState() {
-    Timer(
-      const Duration(seconds: 3),
-      () => Navigator.pushReplacementNamed(context, '/'),
-    );
     super.initState();
+    _timer = Timer(const Duration(milliseconds: 2400), () {
+      if (!mounted) return;
+      // A longer sweep than a normal page change: the game is opening.
+      BackgroundMotion.sweep(1.0);
+      Navigator.pushReplacementNamed(context, '/');
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const Column(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ThemeConstants.defaultPadding,
+        ),
+        child: Stack(
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ColoredBox(
-                      color: ThemeConstants.yellowPrimaryColor,
-                      child: SizedBox.expand(),
-                    ),
+            Center(
+              child: const GameLogo()
+                  .animate()
+                  .fadeIn(duration: const Duration(milliseconds: 300))
+                  .scaleXY(
+                    begin: 0.5,
+                    end: 1.0,
+                    duration: const Duration(milliseconds: 1000),
+                    curve: Curves.elasticOut,
+                  )
+                  .rotate(
+                    begin: -0.03,
+                    end: 0.0,
+                    duration: const Duration(milliseconds: 1000),
+                    curve: Curves.elasticOut,
                   ),
-                  Expanded(
-                    child: ColoredBox(
-                      color: ThemeConstants.greenPrimaryColor,
-                      child: SizedBox.expand(),
-                    ),
-                  ),
-                ],
-              ),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ColoredBox(
-                      color: ThemeConstants.bluePrimaryColor,
-                      child: SizedBox.expand(),
-                    ),
-                  ),
-                  Expanded(
-                    child: ColoredBox(
-                      color: ThemeConstants.purplePrimaryColor,
-                      child: SizedBox.expand(),
-                    ),
-                  ),
-                ],
-              ),
+            const Align(
+              alignment: Alignment(0.0, 0.72),
+              child: _LoadingDots(),
             ),
           ],
         ),
-        Center(
-          child: Hero(
-            tag: "logo",
+      ),
+    );
+  }
+}
+
+/// Three clay dots in the game colours, hopping one after the other.
+class _LoadingDots extends StatelessWidget {
+  const _LoadingDots();
+
+  static const List<List<Color>> _colors = [
+    [ThemeConstants.greenPrimaryColor, ThemeConstants.greenSecondaryColor],
+    [ThemeConstants.yellowPrimaryColor, ThemeConstants.yellowSecondaryColor],
+    [ThemeConstants.purplePrimaryColor, ThemeConstants.purpleSecondaryColor],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final bool reduceMotion = MediaQuery.of(context).disableAnimations;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (int i = 0; i < _colors.length; i++)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 7.0),
             child: Container(
-              padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
-              constraints: const BoxConstraints(
-                maxWidth: ThemeConstants.defaultMaxWidth,
+              width: 18.0,
+              height: 18.0,
+              decoration: ThemeConstants.clay(
+                _colors[i][0],
+                _colors[i][1],
+                borderRadius: BorderRadius.circular(9.0),
               ),
-              child: SvgPicture.asset(
-                'assets/images/splash-icon.svg',
-                width: double.infinity,
-              ),
-            ),
-          )
-              .animate()
-              .fadeIn(duration: const Duration(milliseconds: 400))
-              .scaleXY(
-                begin: 0.6,
-                end: 1.0,
-                duration: const Duration(milliseconds: 900),
-                curve: Curves.elasticOut,
-              ),
-        )
+            )
+                .animate(
+                  delay: Duration(milliseconds: 500 + i * 140),
+                  onPlay: (controller) {
+                    if (!reduceMotion) controller.repeat(reverse: true);
+                  },
+                )
+                .fadeIn(duration: const Duration(milliseconds: 200))
+                .moveY(
+                  begin: 0.0,
+                  end: -14.0,
+                  duration: const Duration(milliseconds: 420),
+                  curve: Curves.easeOutQuad,
+                ),
+          ),
       ],
     );
   }
