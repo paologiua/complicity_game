@@ -75,6 +75,8 @@
 			}
 		}
 	},
+	"tapToRevealText": "Tap to reveal it",
+	"tapToHideText": "Tap to hide it",
 	"hiddenWordText": "Hidden word",
 	"@hiddenWordText": {
 		"description": "Text indicating that the mysterious word was hidden"

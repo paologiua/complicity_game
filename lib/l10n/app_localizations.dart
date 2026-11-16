@@ -184,6 +184,18 @@ abstract class AppLocalizations {
   /// **'{team, select, green{Green} yellow{Yellow} other{null}} team wins'**
   String makeTeamWinButtonLabel(String team);
 
+  /// No description provided for @tapToRevealText.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to reveal it'**
+  String get tapToRevealText;
+
+  /// No description provided for @tapToHideText.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to hide it'**
+  String get tapToHideText;
+
   /// Text indicating that the mysterious word was hidden
   ///
   /// In en, this message translates to:

@@ -3,21 +3,18 @@ import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/sheets/clay_sheet.dart';
 import 'package:complicity_game/sheets/player_selector_sheet.dart';
 import 'package:complicity_game/widgets/custom_floating_button.dart';
-import 'package:complicity_game/widgets/hidden_word_pill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/icons.dart';
 import '../models/player_model.dart';
 import '../services/game_service.dart';
-import '../widgets/countdown_ring.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/game_header.dart';
 import '../widgets/pill.dart';
-import '../widgets/size_measurer.dart';
+import '../widgets/word_card.dart';
 
 class GameProgressScreen extends StatefulWidget {
   const GameProgressScreen({super.key});
@@ -32,7 +29,6 @@ class _GameProgressScreenState extends State<GameProgressScreen>
   late AnimationController _countdown;
 
   bool _hiddenWord = false;
-  double _popupHeight = 0.0;
 
   @override
   void initState() {
@@ -79,42 +75,7 @@ class _GameProgressScreenState extends State<GameProgressScreen>
 
   @override
   Widget build(BuildContext context) {
-    final Widget wordPill = _hiddenWord
-        ? HiddenWordPill(
-            heroTag: "popup",
-            height: _popupHeight,
-            onTap: _showWord,
-          )
-        : SizeMeasurer(
-            onChange: (Size size) => setState(() {
-              _popupHeight = size.height;
-            }),
-            child: Pill(
-              heroTag: "popup",
-              color: ThemeConstants.greyPrimaryColor,
-              borderColor: ThemeConstants.greySecondaryColor,
-              icon: Icons.cookie_outlined,
-              // The label comes from the same string as before, with the word
-              // taken out so it can be set much larger below it.
-              text: AppLocalizations.of(context)!.mysteryWordText('').trim(),
-              onTap: _hideWord,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    _gameService.state.getWord().toUpperCase(),
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 34.0,
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                        ),
-                  ),
-                ),
-              ),
-            ),
-          );
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
 
     return CustomScaffold(
       mode: _gameService.mode,
@@ -128,46 +89,20 @@ class _GameProgressScreenState extends State<GameProgressScreen>
                   padding: const EdgeInsets.symmetric(
                     vertical: ThemeConstants.defaultPadding,
                   ),
-                  child: Stack(
-                    children: [
-                      // Replayed every time the word is hidden or shown, so
-                      // the swap reads as a card flipping.
-                      MediaQuery.of(context).disableAnimations
-                          ? wordPill
-                          : Animate(
-                              key: ValueKey<bool>(_hiddenWord),
-                              effects: const [
-                                FlipEffect(
-                                  begin: 0.25,
-                                  end: 0.0,
-                                  direction: Axis.horizontal,
-                                  duration: Duration(milliseconds: 350),
-                                  curve: Curves.easeOutBack,
-                                ),
-                              ],
-                              child: wordPill,
-                            ),
-                      Positioned(
-                        top: 14.0,
-                        right: 14.0,
-                        child: IgnorePointer(
-                          child: _hiddenWord
-                              ? const Padding(
-                                  padding: EdgeInsets.all(6.0),
-                                  child: Icon(
-                                    Icons.lock_open_rounded,
-                                    size: ThemeConstants.defaultFontSize,
-                                    color: ThemeConstants.greyPrimaryColor,
-                                  ),
-                                )
-                              : CountdownRing(
-                                  animation: _countdown,
-                                  seconds:
-                                      OptionsConstants.wordVisibilitySeconds,
-                                ),
-                        ),
-                      ),
-                    ],
+                  child: WordCard(
+                    heroTag: "popup",
+                    // The label comes from the string that used to hold the
+                    // word too, so the word can be set much larger.
+                    label: l10n.mysteryWordText('').trim(),
+                    word: _gameService.state.getWord(),
+                    hidden: _hiddenWord,
+                    countdown: _countdown,
+                    seconds: OptionsConstants.wordVisibilitySeconds,
+                    mode: _gameService.mode,
+                    hiddenLabel: l10n.hiddenWordText,
+                    hideHint: l10n.tapToHideText,
+                    revealHint: l10n.tapToRevealText,
+                    onTap: _hiddenWord ? _showWord : _hideWord,
                   ),
                 ),
               ),
@@ -177,14 +112,14 @@ class _GameProgressScreenState extends State<GameProgressScreen>
               borderColor: ThemeConstants.ctaSecondaryColor,
               icon: Icons.celebration_rounded,
               direction: Axis.horizontal,
-              text: AppLocalizations.of(context)!.wordFoundButtonLabel,
+              text: l10n.wordFoundButtonLabel,
               onTap: () => showSelectorDialog(),
             ),
             const SizedBox(height: 14.0),
             CustomFloatingButton(
               onPressed: draw,
               icon: IconsConstants.close,
-              text: AppLocalizations.of(context)!.drawButtonLabel,
+              text: l10n.drawButtonLabel,
               size: 52.0,
             ),
             const SizedBox(height: 24.0),

@@ -77,6 +77,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tapToRevealText => 'Tap to reveal it';
+
+  @override
+  String get tapToHideText => 'Tap to hide it';
+
+  @override
   String get hiddenWordText => 'Hidden word';
 
   @override

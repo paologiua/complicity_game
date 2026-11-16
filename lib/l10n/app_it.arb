@@ -13,6 +13,8 @@
 	"hideScreenText": "{playerName}\n({team, select, green{SQUADRA VERDE} yellow{SQUADRA GIALLA} other{NULL}})\n\nnasconde lo schermo agli altri giocatori",
 	"mysteryWordText": "La parola segreta è\n\n{word}",
 	"makeTeamWinButtonLabel": "Squadra {team, select, green{verde} yellow{gialla} other{null}} vince",
+	"tapToRevealText": "Tocca per scoprirla",
+	"tapToHideText": "Tocca per nasconderla",
 	"hiddenWordText": "Parola nascosta",
 	"drawButtonLabel": "Patta",
 	"wordFoundButtonLabel": "Parola trovata!",
