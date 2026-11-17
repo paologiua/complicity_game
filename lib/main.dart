@@ -51,7 +51,20 @@ void main() {
 }
 
 class ComplicityGame extends StatelessWidget {
-  const ComplicityGame({super.key});
+  const ComplicityGame({
+    super.key,
+    this.initialRoute = '/splash',
+    this.navigatorKey,
+    this.locale,
+  });
+
+  /// Where the app opens. Only the tool that takes the store screenshots
+  /// starts anywhere else than the splash screen.
+  final String initialRoute;
+  final GlobalKey<NavigatorState>? navigatorKey;
+
+  /// Language of the app; the one of the device when null.
+  final Locale? locale;
 
   // This widget is the root of application
   @override
@@ -95,7 +108,9 @@ class ComplicityGame extends StatelessWidget {
           ],
         );
       },
-      initialRoute: '/splash',
+      initialRoute: initialRoute,
+      navigatorKey: navigatorKey,
+      locale: locale,
     );
   }
 }

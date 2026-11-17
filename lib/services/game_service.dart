@@ -251,11 +251,16 @@ extension on Team {
 }
 
 class GameService with ChangeNotifier, DiagnosticableTreeMixin {
-  GameService(BuildContext context) : _context = context {
+  GameService(BuildContext context, {String? languageCode})
+      : _context = context,
+        _languageCode = languageCode {
     _load();
   }
 
   final BuildContext _context;
+
+  /// Language of the words and dares; the one of the device when null.
+  final String? _languageCode;
 
   List<String> _words = [];
   List<String> _spicyWords = [];
@@ -267,7 +272,8 @@ class GameService with ChangeNotifier, DiagnosticableTreeMixin {
   late GameState state;
 
   Future<void> _load() async {
-    final String languageCode = PlatformDispatcher.instance.locale.languageCode;
+    final String languageCode =
+        _languageCode ?? PlatformDispatcher.instance.locale.languageCode;
 
     _words = await _loadLines('assets/data/nouns', languageCode, 'csv');
     _spicyWords =

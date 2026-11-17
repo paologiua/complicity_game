@@ -49,3 +49,6 @@ app.*.map.json
 /.agents/
 /.claude/
 /skills-lock.json
+
+# Regenerated with tool/store_screenshots.mjs
+/store/screenshots/
