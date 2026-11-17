@@ -32,23 +32,23 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  //Setting SysemUIOverlay
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemStatusBarContrastEnforced: true,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
-
-  //Setting SystmeUIMode
-  SystemChrome.setEnabledSystemUIMode(
-    SystemUiMode.edgeToEdge,
-    overlays: [SystemUiOverlay.top],
-  );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 }
+
+/// The cream background runs under transparent system bars, with dark icons
+/// on top. Android would otherwise lay a grey scrim or a black bar over them.
+/// It is applied through an [AnnotatedRegion] over the whole app, so Flutter
+/// keeps both bars in this style on every frame.
+const SystemUiOverlayStyle _systemBars = SystemUiOverlayStyle(
+  statusBarColor: Colors.transparent,
+  statusBarIconBrightness: Brightness.dark,
+  statusBarBrightness: Brightness.light,
+  systemStatusBarContrastEnforced: false,
+  systemNavigationBarColor: Colors.transparent,
+  systemNavigationBarDividerColor: Colors.transparent,
+  systemNavigationBarIconBrightness: Brightness.dark,
+  systemNavigationBarContrastEnforced: false,
+);
 
 class ComplicityGame extends StatelessWidget {
   const ComplicityGame({
@@ -94,18 +94,21 @@ class ComplicityGame extends StatelessWidget {
       // One background behind every screen: pages slide over it instead of
       // each bringing its own.
       builder: (BuildContext context, Widget? child) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: ValueListenableBuilder<GameMode>(
-                valueListenable: BackgroundMotion.mode,
-                builder: (BuildContext context, GameMode mode, _) {
-                  return PlayfulBackground(mode: mode);
-                },
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: _systemBars,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: ValueListenableBuilder<GameMode>(
+                  valueListenable: BackgroundMotion.mode,
+                  builder: (BuildContext context, GameMode mode, _) {
+                    return PlayfulBackground(mode: mode);
+                  },
+                ),
               ),
-            ),
-            if (child != null) child,
-          ],
+              if (child != null) child,
+            ],
+          ),
         );
       },
       initialRoute: initialRoute,
