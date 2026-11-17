@@ -56,7 +56,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-  flutter_launcher_icons: "^0.11.0"
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -105,15 +105,21 @@ flutter:
       fonts:
         - asset: fonts/icomoon/icomoon.ttf
 
-flutter_icons:
+flutter_launcher_icons:
+  # Sources are the SVG files next to these images; see the README.
   android: true
-  image_path_android: "assets/images/android-icon.png"
-  adaptive_icon_background: '#000000'
+  image_path_android: "design/icon/app-icon.png"
+  adaptive_icon_background: "design/icon/app-icon-background.png"
+  adaptive_icon_foreground: "design/icon/app-icon-foreground.png"
+  adaptive_icon_monochrome: "design/icon/app-icon-monochrome.png"
   min_sdk_android: 21
 
   ios: true
-  image_path_ios: "assets/images/ios-icon.png"
+  image_path_ios: "design/icon/app-icon.png"
+  remove_alpha_ios: true
 
   web:
     generate: true
-    image_path: "assets/images/web-icon.png"
+    image_path: "design/icon/app-icon.png"
+    background_color: "#FFF7ED"
+    theme_color: "#FFF7ED"

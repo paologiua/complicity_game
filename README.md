@@ -21,4 +21,5 @@ flutter run
 - `lib/services` – game state and the saved list of players
 - `lib/l10n` – translations (run `flutter gen-l10n` after editing the `.arb` files)
 - `assets/data` – word lists and dares, one file per language
+- `design/icon` – sources of the app icon (run `dart run flutter_launcher_icons` after changing them)
 - `word_sources` – the larger word lists the game lists were picked from; not shipped with the app
