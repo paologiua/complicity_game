@@ -274,4 +274,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nameLabel => 'Nombre';
+
+  @override
+  String get adultDrinkingText =>
+      'Solo para mayores de edad.\n\nBebed con moderación y nunca antes de conducir.';
+
+  @override
+  String get adultSpicyText =>
+      'Solo para mayores de edad.\n\nLas palabras y las penitencias son pícaras: jugad solo si todos están de acuerdo.';
+
+  @override
+  String get adultConfirmButtonLabel => 'Tengo 18 años o más';
 }

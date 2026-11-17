@@ -235,5 +235,8 @@
 	"newPlayerTitle": "New player",
 	"editPlayerTitle": "Edit player",
 	"teamLabel": "Team",
-	"nameLabel": "Name"
+	"nameLabel": "Name",
+	"adultDrinkingText": "Adults only.\n\nDrink in moderation and never before driving.",
+	"adultSpicyText": "Adults only.\n\nWords and dares are cheeky: play only if everyone is comfortable.",
+	"adultConfirmButtonLabel": "I am 18 or older"
 }

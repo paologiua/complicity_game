@@ -405,6 +405,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get nameLabel;
+
+  /// No description provided for @adultDrinkingText.
+  ///
+  /// In en, this message translates to:
+  /// **'Adults only.\n\nDrink in moderation and never before driving.'**
+  String get adultDrinkingText;
+
+  /// No description provided for @adultSpicyText.
+  ///
+  /// In en, this message translates to:
+  /// **'Adults only.\n\nWords and dares are cheeky: play only if everyone is comfortable.'**
+  String get adultSpicyText;
+
+  /// No description provided for @adultConfirmButtonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'I am 18 or older'**
+  String get adultConfirmButtonLabel;
 }
 
 class _AppLocalizationsDelegate

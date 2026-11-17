@@ -49,5 +49,8 @@
 	"newPlayerTitle": "Nuevo jugador",
 	"editPlayerTitle": "Editar jugador",
 	"teamLabel": "Equipo",
-	"nameLabel": "Nombre"
+	"nameLabel": "Nombre",
+	"adultDrinkingText": "Solo para mayores de edad.\n\nBebed con moderación y nunca antes de conducir.",
+	"adultSpicyText": "Solo para mayores de edad.\n\nLas palabras y las penitencias son pícaras: jugad solo si todos están de acuerdo.",
+	"adultConfirmButtonLabel": "Tengo 18 años o más"
 }

@@ -114,6 +114,9 @@ extension GameModeStyles on GameMode {
   /// drinking mode the dares are drinking rules.
   bool get hasDares => this != GameMode.classic;
 
+  /// Modes with alcohol or cheeky content, to be played by adults only.
+  bool get isForAdults => this == GameMode.drinking || this == GameMode.spicy;
+
   /// Whether the losing team picks one last dare. The drinking mode ends with
   /// a sip per point of difference instead.
   bool get hasFinalDare => this == GameMode.dares || this == GameMode.spicy;

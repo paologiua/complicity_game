@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/icons.dart';
 import '../constants/options.dart';
 import '../constants/theme.dart';
+import '../dialogs/confirm_dialog.dart';
 import '../models/game_mode.dart';
 import '../services/game_service.dart';
 import '../widgets/bouncy.dart';
@@ -34,16 +36,78 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
     _mode = _gameService.mode;
     _targetScore = _gameService.targetScore;
     super.initState();
+    _restoreAcknowledged();
   }
 
+  /// Modes for adults that the players have already agreed to on this device.
+  final Set<GameMode> _acknowledged = {};
+  SharedPreferences? _storage;
 
-  void _selectMode(GameMode mode) {
-    if (_mode != mode) {
-      HapticFeedback.selectionClick();
-      setState(() {
-        _mode = mode;
-      });
+  static String _storageKey(GameMode mode) => 'adult_mode_${mode.name}';
+
+  Future<void> _restoreAcknowledged() async {
+    try {
+      final SharedPreferences storage = await SharedPreferences.getInstance();
+      _storage = storage;
+
+      for (final GameMode mode in GameMode.values) {
+        if (storage.getBool(_storageKey(mode)) ?? false) {
+          _acknowledged.add(mode);
+        }
+      }
+    } catch (_) {
+      // Without storage the warning simply comes back at every launch.
     }
+  }
+
+  /// The drinking and spicy modes ask once, the first time they are chosen,
+  /// that everyone playing is an adult.
+  Future<bool> _confirmAdults(GameMode mode) async {
+    if (!mode.isForAdults || _acknowledged.contains(mode)) {
+      return true;
+    }
+
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+
+    final bool? confirmed = await showDialog<bool>(
+      context: context,
+      barrierColor: ThemeConstants.scrimColor,
+      barrierDismissible: false,
+      builder: (BuildContext context) => ConfirmDialog(
+        icon: mode.style.icon,
+        text: mode == GameMode.drinking
+            ? l10n.adultDrinkingText
+            : l10n.adultSpicyText,
+        confirmLabel: l10n.adultConfirmButtonLabel,
+        cancelLabel: l10n.cancelButtonLabel,
+        confirmIcon: Icons.check_rounded,
+      ),
+    );
+
+    if (confirmed != true) {
+      return false;
+    }
+
+    _acknowledged.add(mode);
+    _storage?.setBool(_storageKey(mode), true);
+
+    return true;
+  }
+
+  Future<void> _selectMode(GameMode mode) async {
+    if (_mode == mode) {
+      return;
+    }
+
+    HapticFeedback.selectionClick();
+
+    if (!await _confirmAdults(mode) || !mounted) {
+      return;
+    }
+
+    setState(() {
+      _mode = mode;
+    });
   }
 
   void _selectTargetScore(int targetScore) {
