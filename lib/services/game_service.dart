@@ -50,7 +50,13 @@ class GameState {
         _allWords = words.where((String word) => word.isNotEmpty).toList(),
         _allThemedWords =
             themedWords.where((String word) => word.isNotEmpty).toList(),
-        _allDares = dares.where((String dare) => dare.isNotEmpty).toList() {
+        _allDares = dares
+            .where((String dare) => dare.isNotEmpty)
+            .map(_dareText)
+            .toList(),
+        _endDares = dares
+            .where((String dare) => dare.isNotEmpty && !_lastsATurn(dare))
+            .toList() {
     for (Team team in Team.values) {
       _players[team] = [];
     }
@@ -69,6 +75,17 @@ class GameState {
   final Random _random;
   final List<String> _allWords;
   final List<String> _allDares;
+
+  /// The dares that still make sense once the game is over.
+  final List<String> _endDares;
+
+  /// Marks, in the dare lists, a dare that lasts until the next turn.
+  static const String turnMarker = '~';
+
+  static bool _lastsATurn(String dare) => dare.startsWith(turnMarker);
+
+  static String _dareText(String dare) =>
+      _lastsATurn(dare) ? dare.substring(turnMarker.length).trim() : dare;
 
   /// Words in the tone of the mode, mixed with the ordinary ones.
   final List<String> _allThemedWords;
@@ -123,6 +140,19 @@ class GameState {
     return _darePool.removeAt(_random.nextInt(_darePool.length));
   }
 
+  /// Picks the dare for the losing team, leaving out the ones that last
+  /// until a next turn that will never come. One not played yet is preferred.
+  String? _drawEndDare() {
+    if (_endDares.isEmpty) {
+      return null;
+    }
+
+    final List<String> fresh = _endDares.where(_darePool.contains).toList();
+    final List<String> choices = fresh.isNotEmpty ? fresh : _endDares;
+
+    return choices[_random.nextInt(choices.length)];
+  }
+
   /// Closes the current turn: [team] scores a point, or nobody does when it
   /// is null. The turn does not advance until [nextTurn] is called.
   void resolve(Team? team) {
@@ -146,7 +176,7 @@ class GameState {
     );
 
     if (isOver && mode.hasFinalDare) {
-      _finalDare = _drawDare();
+      _finalDare = _drawEndDare();
     }
   }
 

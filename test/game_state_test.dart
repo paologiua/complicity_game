@@ -212,5 +212,34 @@ void main() {
       expect(state.isOver, isTrue);
       expect(dares, contains(state.finalDare));
     });
+
+    test('a dare that lasts a turn is shown without its mark', () {
+      final GameState state = buildState(
+        mode: GameMode.dares,
+        dares: const ['~ parla in rima fino al tuo prossimo turno'],
+      );
+
+      state.resolve(null);
+
+      expect(
+          state.lastOutcome!.dare, 'parla in rima fino al tuo prossimo turno');
+    });
+
+    test('the final dare never lasts until a next turn', () {
+      for (int seed = 0; seed < 50; seed++) {
+        final GameState state = GameState(
+          players: buildPlayers(),
+          words: const ['casa'],
+          mode: GameMode.dares,
+          targetScore: 1,
+          dares: const ['~ parla in rima', '~ cammina all\'indietro', 'balla'],
+          random: Random(seed),
+        );
+
+        state.resolve(Team.green);
+
+        expect(state.finalDare, 'balla');
+      }
+    });
   });
 }

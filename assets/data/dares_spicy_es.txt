@@ -14,7 +14,7 @@ Lanza un beso a cada jugador, uno por uno
 Revela lo más romántico que has hecho por alguien
 Lee el último mensaje que enviaste con voz sensual
 Revela en qué te fijas primero en alguien que te gusta
-Dale la mano a quien está a tu derecha hasta tu próximo turno
+~ Dale la mano a quien está a tu derecha hasta tu próximo turno
 Dedica una canción de amor a un jugador y canta un verso
 Revela cuál fue tu mejor beso
 Haz una declaración de amor teatral a un objeto de la habitación

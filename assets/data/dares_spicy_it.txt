@@ -14,7 +14,7 @@ Manda un bacio volante a ogni giocatore, uno per uno
 Rivela la cosa più romantica che hai fatto per qualcuno
 Leggi l'ultimo messaggio che hai inviato con voce sensuale
 Rivela cosa noti per prima in una persona che ti piace
-Tieni per mano chi sta alla tua destra fino al tuo prossimo turno
+~ Tieni per mano chi sta alla tua destra fino al tuo prossimo turno
 Dedica una canzone d'amore a un giocatore e cantane un verso
 Rivela qual è stato il tuo bacio più bello
 Fai una dichiarazione d'amore teatrale a un oggetto nella stanza
