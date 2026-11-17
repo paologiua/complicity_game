@@ -52,3 +52,6 @@ app.*.map.json
 
 # Regenerated with tool/store_screenshots.mjs
 /store/screenshots/
+
+# Gradle writes a cache here besides the root build folder
+/android/build/
