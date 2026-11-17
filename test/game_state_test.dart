@@ -131,6 +131,30 @@ void main() {
     expect(guessers, isNot(contains(same(cluePlayer))));
   });
 
+  test('themed words are mixed with the ordinary ones', () {
+    const List<String> themed = ['bacio', 'flirt'];
+    final GameState state = GameState(
+      players: [
+        PlayerModel(key: 0, name: 'Anna', team: Team.green),
+        PlayerModel(key: 1, name: 'Luca', team: Team.yellow),
+      ],
+      words: const ['casa', 'mare', 'sole', 'luna'],
+      themedWords: themed,
+      random: Random(7),
+    );
+
+    int themedCount = 0;
+    const int turns = 300;
+    for (int i = 0; i < turns; i++) {
+      if (themed.contains(state.getWord())) themedCount++;
+      state.resolve(null);
+      state.nextTurn();
+    }
+
+    // About one word out of three, never all of them and never none.
+    expect(themedCount, inInclusiveRange(70, 130));
+  });
+
   group('dares', () {
     const List<String> dares = ['balla', 'canta'];
 
@@ -150,14 +174,29 @@ void main() {
       expect(state.lastOutcome!.dare, isNull);
     });
 
-    test('other modes never give dares', () {
-      for (final GameMode mode in [GameMode.classic, GameMode.drinking]) {
-        final GameState state = buildState(mode: mode, dares: dares);
+    test('the classic mode never gives dares', () {
+      final GameState state = buildState(mode: GameMode.classic, dares: dares);
 
-        state.resolve(null);
+      state.resolve(null);
 
-        expect(state.lastOutcome!.dare, isNull);
-      }
+      expect(state.lastOutcome!.dare, isNull);
+    });
+
+    test('the drinking mode draws a rule for a penalty, none at the end', () {
+      final GameState state = buildState(
+        mode: GameMode.drinking,
+        targetScore: 1,
+        dares: dares,
+      );
+      final Team opponents = Team.values.firstWhere(
+        (Team team) => team != state.getCurrentPlayer().team,
+      );
+
+      state.resolve(opponents);
+
+      expect(dares, contains(state.lastOutcome!.dare));
+      expect(state.isOver, isTrue);
+      expect(state.finalDare, isNull);
     });
 
     test('the losing team gets a final dare', () {

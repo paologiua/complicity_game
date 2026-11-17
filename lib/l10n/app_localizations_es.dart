@@ -113,7 +113,7 @@ class AppLocalizationsEs extends AppLocalizations {
         'classic': 'El juego original: solo pistas y complicidad',
         'drinking': '¿Palabra robada o empate? ¡A beber! Con moderación',
         'dares': '¿Palabra robada o empate? Toca penitencia',
-        'spicy': 'Penitencias pícaras, solo para adultos',
+        'spicy': 'Palabras y penitencias pícaras, solo para adultos',
         'other': '-',
       },
     );

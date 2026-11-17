@@ -22,7 +22,7 @@
 	"guessedByText": "Palabra adivinada por",
 	"chooseModeText": "Elige cómo jugar",
 	"modeName": "{mode, select, classic{Clásica} drinking{Alcohólica} dares{Penitencias} spicy{Picante} other{-}}",
-	"modeDescription": "{mode, select, classic{El juego original: solo pistas y complicidad} drinking{¿Palabra robada o empate? ¡A beber! Con moderación} dares{¿Palabra robada o empate? Toca penitencia} spicy{Penitencias pícaras, solo para adultos} other{-}}",
+	"modeDescription": "{mode, select, classic{El juego original: solo pistas y complicidad} drinking{¿Palabra robada o empate? ¡A beber! Con moderación} dares{¿Palabra robada o empate? Toca penitencia} spicy{Palabras y penitencias pícaras, solo para adultos} other{-}}",
 	"wordsToWinText": "Palabras para ganar",
 	"roundPointText": "¡Punto para el equipo {team, select, green{verde} yellow{amarillo} other{-}}!",
 	"roundStolenText": "¡Palabra robada!\nPunto para el equipo {team, select, green{verde} yellow{amarillo} other{-}}",

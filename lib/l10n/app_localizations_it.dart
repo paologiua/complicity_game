@@ -113,7 +113,7 @@ class AppLocalizationsIt extends AppLocalizations {
         'classic': 'Il gioco originale: solo indizi e complicità',
         'drinking': 'Parola rubata o patta? Si beve! Con moderazione',
         'dares': 'Parola rubata o patta? Scatta la penitenza',
-        'spicy': 'Penitenze maliziose, solo per adulti',
+        'spicy': 'Parole e penitenze maliziose, solo per adulti',
         'other': '-',
       },
     );

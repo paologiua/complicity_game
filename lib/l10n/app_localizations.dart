@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// Short description of a game mode
   ///
   /// In en, this message translates to:
-  /// **'{mode, select, classic{The original game: just clues and complicity} drinking{Word stolen or a draw? Drink up! In moderation} dares{Word stolen or a draw? Time for a dare} spicy{Cheeky dares, for adults only} other{-}}'**
+  /// **'{mode, select, classic{The original game: just clues and complicity} drinking{Word stolen or a draw? Drink up! In moderation} dares{Word stolen or a draw? Time for a dare} spicy{Cheeky words and dares, for adults only} other{-}}'**
   String modeDescription(String mode);
 
   /// Label of the target score selector

@@ -110,6 +110,11 @@ extension GameModeStyles on GameMode {
     }
   }
 
-  /// Whether a stolen word or a draw makes the clue giver pick a dare.
-  bool get hasDares => this == GameMode.dares || this == GameMode.spicy;
+  /// Whether a stolen word or a draw makes the clue giver pick a dare. In the
+  /// drinking mode the dares are drinking rules.
+  bool get hasDares => this != GameMode.classic;
+
+  /// Whether the losing team picks one last dare. The drinking mode ends with
+  /// a sip per point of difference instead.
+  bool get hasFinalDare => this == GameMode.dares || this == GameMode.spicy;
 }

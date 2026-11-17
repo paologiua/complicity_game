@@ -113,7 +113,7 @@ class AppLocalizationsEn extends AppLocalizations {
         'classic': 'The original game: just clues and complicity',
         'drinking': 'Word stolen or a draw? Drink up! In moderation',
         'dares': 'Word stolen or a draw? Time for a dare',
-        'spicy': 'Cheeky dares, for adults only',
+        'spicy': 'Cheeky words and dares, for adults only',
         'other': '-',
       },
     );

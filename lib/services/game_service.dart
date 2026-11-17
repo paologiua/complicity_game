@@ -44,9 +44,12 @@ class GameState {
     this.mode = GameMode.classic,
     this.targetScore = OptionsConstants.defaultTargetScore,
     List<String> dares = const [],
+    List<String> themedWords = const [],
     Random? random,
   })  : _random = random ?? Random(),
         _allWords = words.where((String word) => word.isNotEmpty).toList(),
+        _allThemedWords =
+            themedWords.where((String word) => word.isNotEmpty).toList(),
         _allDares = dares.where((String dare) => dare.isNotEmpty).toList() {
     for (Team team in Team.values) {
       _players[team] = [];
@@ -66,6 +69,14 @@ class GameState {
   final Random _random;
   final List<String> _allWords;
   final List<String> _allDares;
+
+  /// Words in the tone of the mode, mixed with the ordinary ones.
+  final List<String> _allThemedWords;
+  List<String> _themedWordPool = [];
+
+  /// One word out of this many comes from the themed list, when there is one.
+  static const int themedWordEvery = 3;
+
   List<String> _wordPool = [];
   List<String> _darePool = [];
 
@@ -83,6 +94,14 @@ class GameState {
   /// Picks a random word that has not been used yet. When every word has
   /// been played the pool is refilled, so a long game never runs dry.
   String _drawWord() {
+    if (_allThemedWords.isNotEmpty && _random.nextInt(themedWordEvery) == 0) {
+      if (_themedWordPool.isEmpty) {
+        _themedWordPool = List.of(_allThemedWords);
+      }
+
+      return _themedWordPool.removeAt(_random.nextInt(_themedWordPool.length));
+    }
+
     if (_wordPool.isEmpty) {
       _wordPool = List.of(_allWords);
     }
@@ -126,7 +145,7 @@ class GameState {
       dare: mode.hasDares && hasPenalty ? _drawDare() : null,
     );
 
-    if (isOver && mode.hasDares) {
+    if (isOver && mode.hasFinalDare) {
       _finalDare = _drawDare();
     }
   }
@@ -209,6 +228,7 @@ class GameService with ChangeNotifier, DiagnosticableTreeMixin {
   final BuildContext _context;
 
   List<String> _words = [];
+  List<String> _spicyWords = [];
   final Map<GameMode, List<String>> _dares = {};
 
   GameMode mode = GameMode.classic;
@@ -217,10 +237,13 @@ class GameService with ChangeNotifier, DiagnosticableTreeMixin {
   late GameState state;
 
   Future<void> _load() async {
-    final String languageCode =
-        PlatformDispatcher.instance.locale.languageCode;
+    final String languageCode = PlatformDispatcher.instance.locale.languageCode;
 
     _words = await _loadLines('assets/data/nouns', languageCode, 'csv');
+    _spicyWords =
+        await _loadLines('assets/data/nouns_spicy', languageCode, 'csv');
+    _dares[GameMode.drinking] =
+        await _loadLines('assets/data/dares_drinking', languageCode, 'txt');
     _dares[GameMode.dares] =
         await _loadLines('assets/data/dares_dares', languageCode, 'txt');
     _dares[GameMode.spicy] =
@@ -268,6 +291,7 @@ class GameService with ChangeNotifier, DiagnosticableTreeMixin {
       mode: mode,
       targetScore: targetScore,
       dares: _dares[mode] ?? const [],
+      themedWords: mode == GameMode.spicy ? _spicyWords : const [],
     );
     notifyListeners();
   }

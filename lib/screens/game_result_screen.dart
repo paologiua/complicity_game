@@ -67,9 +67,7 @@ class _GameResultScreenState extends State<GameResultScreen> {
       return Icons.sentiment_neutral_rounded;
     }
 
-    return _outcome.isStolen
-        ? Icons.bolt_rounded
-        : Icons.celebration_rounded;
+    return _outcome.isStolen ? Icons.bolt_rounded : Icons.celebration_rounded;
   }
 
   /// The text of the penalty card, or null when the turn has no penalty.
@@ -84,9 +82,17 @@ class _GameResultScreenState extends State<GameResultScreen> {
       case GameMode.classic:
         return null;
       case GameMode.drinking:
-        return _outcome.isDraw
-            ? l10n.drinkPlayerText(cluePlayer.name)
-            : l10n.drinkTeamText(cluePlayer.team.name);
+        final String? rule = _outcome.dare;
+
+        // Without a list of drinking rules, the plain sip of the first
+        // versions of the game.
+        if (rule == null) {
+          return _outcome.isDraw
+              ? l10n.drinkPlayerText(cluePlayer.name)
+              : l10n.drinkTeamText(cluePlayer.team.name);
+        }
+
+        return '${l10n.dareForPlayerText(cluePlayer.name)}\n\n$rule';
       case GameMode.dares:
       case GameMode.spicy:
         final String? dare = _outcome.dare;
