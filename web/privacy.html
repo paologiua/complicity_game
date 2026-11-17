@@ -4,212 +4,493 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Privacy policy of Complicity Game: the game collects no personal data.">
+  <meta name="theme-color" content="#FFF7ED">
   <title>Privacy · Complicity Game</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <style>
     /* Poppins comes from the fonts the web build already ships, so this page
        makes no request to third parties. */
-    @font-face { font-family: Poppins; font-weight: 400; src: url(assets/fonts/Poppins/Poppins-Regular.ttf); }
-    @font-face { font-family: Poppins; font-weight: 600; src: url(assets/fonts/Poppins/Poppins-SemiBold.ttf); }
-    @font-face { font-family: Poppins; font-weight: 700; src: url(assets/fonts/Poppins/Poppins-Bold.ttf); }
+    @font-face { font-family: Poppins; font-weight: 400; font-display: swap; src: url(assets/fonts/Poppins/Poppins-Regular.ttf); }
+    @font-face { font-family: Poppins; font-weight: 500; font-display: swap; src: url(assets/fonts/Poppins/Poppins-Medium.ttf); }
+    @font-face { font-family: Poppins; font-weight: 600; font-display: swap; src: url(assets/fonts/Poppins/Poppins-SemiBold.ttf); }
+    @font-face { font-family: Poppins; font-weight: 700; font-display: swap; src: url(assets/fonts/Poppins/Poppins-Bold.ttf); }
 
+    /* The same tokens as lib/constants/theme.dart. */
     :root {
       --bg: #FFF7ED;
-      --card: #FFFFFF;
       --ink: #2B2233;
       --muted: #6A6272;
-      --edge: #EBC6A0;
-      --accent: #8B62E0;
-      --accent-soft: #CDB5FF;
+      --white: #FFFFFF;
+      --sand: #EBC6A0;
+      --blue: #A9C8FF;
+      --blue-edge: #5B8DEF;
+      --purple: #CDB5FF;
+      --purple-edge: #8B62E0;
+      --green: #8EE5A8;
+      --green-edge: #3FAE66;
+      --yellow: #FFDB6E;
+      --yellow-edge: #DFA11C;
+      --cta: #FDA65A;
+      --cta-edge: #D9661A;
+      --radius: 24px;
+      --edge: 3px;
+      --bounce: cubic-bezier(.34, 1.56, .64, 1);
     }
 
     * { box-sizing: border-box; }
 
+    html { -webkit-text-size-adjust: 100%; }
+
     body {
       margin: 0;
-      background: var(--bg);
+      min-height: 100vh;
+      background: radial-gradient(120% 70% at 50% 0%, #FFFDF8 0%, var(--bg) 60%) fixed, var(--bg);
       color: var(--ink);
       font: 400 16px/1.65 Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+      overflow-x: hidden;
     }
 
-    main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px; }
+    /* Floating shapes, like the playful background of the app. */
+    .shapes { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .shapes svg {
+      position: absolute;
+      color: var(--blue);
+      opacity: .55;
+      animation: float 9s ease-in-out infinite;
+    }
+    .shapes svg:nth-child(2n) { animation-duration: 12s; animation-direction: reverse; }
+    .shapes svg:nth-child(3n) { animation-duration: 15s; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(10px, -14px) rotate(14deg); }
+    }
 
-    header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
-    header img { width: 52px; height: 52px; border-radius: 14px; }
-    header p { margin: 0; color: var(--muted); font-size: 14px; }
-    header strong { display: block; font-weight: 700; font-size: 18px; }
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 28px 16px 56px;
+    }
 
-    nav { display: flex; gap: 8px; margin-bottom: 20px; }
-    nav a {
-      padding: 6px 14px;
+    /* Clay surface: gradient fill, thick tinted edge, soft tinted shadow and
+       a gloss from the top. */
+    .clay {
+      position: relative;
+      border: var(--edge) solid var(--shade);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0) 50%, rgba(0,0,0,.04)),
+        linear-gradient(180deg, color-mix(in srgb, var(--fill) 78%, #fff), var(--fill));
+      box-shadow: 0 8px 14px color-mix(in srgb, var(--shade) 38%, transparent);
+    }
+    .clay.white { --fill: var(--white); --shade: var(--sand); background: var(--white); }
+    .clay.blue { --fill: var(--blue); --shade: var(--blue-edge); }
+    .clay.purple { --fill: var(--purple); --shade: var(--purple-edge); }
+    .clay.green { --fill: var(--green); --shade: var(--green-edge); }
+    .clay.yellow { --fill: var(--yellow); --shade: var(--yellow-edge); }
+    .clay.cta { --fill: var(--cta); --shade: var(--cta-edge); }
+
+    .icon { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Brand */
+    .brand { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .brand img {
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      border: var(--edge) solid var(--sand);
+      box-shadow: 0 8px 14px rgba(235, 198, 160, .45);
+    }
+    .brand span { font-weight: 700; font-size: 18px; }
+
+    h1 {
+      margin: 28px 0 6px;
+      text-align: center;
+      font-size: clamp(28px, 7vw, 36px);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    .updated { margin: 0 0 22px; text-align: center; color: var(--muted); font-size: 14px; font-weight: 500; }
+
+    /* Language switch, like the "words to win" selector. */
+    .segmented {
+      display: flex;
+      gap: 4px;
+      max-width: 360px;
+      margin: 24px auto 0;
+      padding: 5px;
+      border: var(--edge) solid var(--sand);
       border-radius: 999px;
-      border: 2px solid var(--edge);
+      background: var(--white);
+      box-shadow: 0 8px 14px rgba(235, 198, 160, .38);
+    }
+    .segmented a {
+      flex: 1;
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border: var(--edge) solid transparent;
+      border-radius: 999px;
+      color: var(--ink);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background-color .2s ease-out, border-color .2s ease-out, transform .2s var(--bounce);
+    }
+    .segmented a:hover { background: #FFF3E4; }
+    .segmented a[aria-current="true"] {
+      background: linear-gradient(180deg, #C4DAFF, var(--blue));
+      border-color: var(--blue-edge);
+      font-weight: 700;
+    }
+    .segmented a:active { transform: scale(.96); }
+
+    article[hidden] { display: none; }
+    article { animation: enter .45s var(--bounce) both; }
+    @keyframes enter { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+
+    /* The key message, as a big mode card. */
+    .summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+    .summary .badge {
+      width: 56px; height: 56px;
+      display: grid; place-items: center;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .6);
+      flex: none;
+    }
+    .summary .badge .icon { width: 30px; height: 30px; }
+    .summary p { margin: 0; font-size: 18px; line-height: 1.4; font-weight: 600; }
+
+    /* Three quick facts, as small mode cards. */
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 0 0 22px;
+      padding: 0;
+      list-style: none;
+    }
+    .facts li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 8px 14px;
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+    .facts .icon { width: 28px; height: 28px; }
+
+    /* The text of the policy, in the white card. */
+    .policy { padding: 6px 22px 10px; }
+    .policy section { padding: 18px 0; }
+    .policy section + section { border-top: 2px dashed #F3E2CF; }
+    .policy h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+    .policy h2 .dot {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: #FFF3E4;
+      border: 2px solid var(--sand);
+      flex: none;
+    }
+    .policy h2 .icon { width: 20px; height: 20px; }
+    .policy p, .policy ul { margin: 0 0 8px; color: #3C3346; }
+    .policy p:last-child, .policy ul:last-child { margin-bottom: 0; }
+    .policy ul { padding-left: 20px; }
+    .policy li { margin: 4px 0; }
+    .policy li::marker { color: var(--blue-edge); }
+    .policy a { color: #4A6FD1; font-weight: 600; text-underline-offset: 3px; word-break: break-word; }
+
+    /* Bottom button, like "Play" in the app. */
+    .actions { display: flex; justify-content: center; margin-top: 32px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 60px;
+      padding: 0 30px;
+      border-radius: 999px;
       color: var(--ink);
       font-weight: 600;
-      font-size: 14px;
+      font-size: 20px;
       text-decoration: none;
+      transition: transform .2s var(--bounce), box-shadow .2s ease-out;
     }
-    nav a[aria-current="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+    .button:hover { transform: translateY(-2px); }
+    .button:active { transform: translateY(2px) scale(.98); box-shadow: 0 2px 4px color-mix(in srgb, var(--shade) 38%, transparent); }
+    .button .icon { fill: currentColor; stroke: none; width: 20px; height: 20px; }
 
-    article {
-      background: var(--card);
-      border-radius: 28px;
-      padding: 28px 24px;
-      box-shadow: 0 10px 0 var(--edge), 0 18px 40px rgba(43, 34, 51, .08);
-    }
-    article[hidden] { display: none; }
+    a:focus-visible { outline: 3px solid var(--blue-edge); outline-offset: 3px; }
 
-    h1 { font-size: 28px; line-height: 1.2; margin: 0 0 4px; }
-    h2 { font-size: 18px; margin: 28px 0 6px; }
-    p, ul { margin: 0 0 12px; }
-    ul { padding-left: 20px; }
-    .updated { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
-    .summary {
-      background: var(--accent-soft);
-      border-radius: 18px;
-      padding: 14px 18px;
-      font-weight: 600;
+    @media (max-width: 420px) {
+      .summary { padding: 18px; gap: 14px; }
+      .summary p { font-size: 16px; }
+      .policy { padding: 4px 18px 8px; }
+      .facts { gap: 8px; }
+      .facts li { font-size: 11px; padding: 14px 4px 12px; }
     }
-    a { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
-<main>
-  <header>
-    <img src="icons/Icon-192.png" alt="">
-    <div><strong>Complicity Game</strong><p>Privacy</p></div>
-  </header>
 
-  <nav>
-    <a href="#it" data-lang="it">Italiano</a>
-    <a href="#en" data-lang="en">English</a>
-    <a href="#es" data-lang="es">Español</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.3-4.6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/><path d="M4 4l16 16"/></symbol>
+  <symbol id="i-ads" viewBox="0 0 24 24"><path d="M4 10v4l3 .5L15 19V5L7 9.5 4 10Z"/><path d="M18 9.5c1 1.5 1 3.5 0 5"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-offline" viewBox="0 0 24 24"><path d="M2.5 8.8A14 14 0 0 1 8 6"/><path d="M14.5 5.7a14 14 0 0 1 7 3.1"/><path d="M5.6 12.2a9 9 0 0 1 4-2"/><path d="M15 10.8a9 9 0 0 1 3.4 1.6"/><path d="M9 15.6a4.5 4.5 0 0 1 6 0"/><circle cx="12" cy="19" r=".9"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-hello" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.8 14.2a4 4 0 0 0 6.4 0"/><path d="M9 9.8h.01M15 9.8h.01"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.8" width="11" height="18.4" rx="2.6"/><path d="M10.5 18h3"/></symbol>
+  <symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5S9.6 5.9 12 3.5Z"/></symbol>
+  <symbol id="i-adult" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 9.5l1.5-1v7"/><path d="M14.5 12a1.8 1.8 0 1 0 0-3.5 1.8 1.8 0 0 0 0 3.5Zm0 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.9l12-7.5a1 1 0 0 0 0-1.8l-12-7.5A1 1 0 0 0 7 4.5Z"/></symbol>
+</svg>
+
+<div class="shapes" aria-hidden="true">
+  <svg style="left:6%;top:6%" width="34" height="34" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+  <svg style="right:8%;top:12%" width="30" height="30" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+  <svg style="left:3%;top:42%" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2.5l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 16.9 6.3 20l1.2-6.4L2.8 9.2l6.4-.8L12 2.5Z" fill="currentColor"/></svg>
+  <svg style="right:4%;top:48%" width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/></svg>
+  <svg style="left:8%;top:78%" width="40" height="22" viewBox="0 0 40 22"><path d="M3 15 10 6l7 9 7-9 7 9 6-8" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg style="right:10%;top:84%" width="30" height="30" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+  <svg style="left:14%;top:30%" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3.6"/></svg>
+</div>
+
+<main>
+  <div class="brand">
+    <img src="icons/Icon-192.png" alt="">
+    <span>Complicity Game</span>
+  </div>
+
+  <nav class="segmented" aria-label="Lingua · Language · Idioma">
+    <a href="#it" data-lang="it" hreflang="it">Italiano</a>
+    <a href="#en" data-lang="en" hreflang="en">English</a>
+    <a href="#es" data-lang="es" hreflang="es">Español</a>
   </nav>
 
-  <article id="it" lang="it">
+  <!-- ITALIANO -->
+  <article id="lang-it" lang="it">
     <h1>Informativa sulla privacy</h1>
     <p class="updated">Ultimo aggiornamento: 17 novembre 2026</p>
 
-    <p class="summary">Complicity Game non raccoglie, non invia e non condivide alcun dato personale.</p>
+    <div class="clay blue summary">
+      <span class="badge"><svg class="icon"><use href="#i-shield"/></svg></span>
+      <p>Complicity Game non raccoglie, non invia e non condivide alcun dato personale.</p>
+    </div>
 
-    <h2>Chi siamo</h2>
-    <p>Complicity Game è un gioco sviluppato da Paolo Giua, che è il titolare di questa informativa. Vale per l'app per Android e iOS e per la versione web.</p>
-
-    <h2>Cosa resta sul tuo dispositivo</h2>
-    <p>Per farti ritrovare tutto alla partita successiva, il gioco salva solo sul tuo dispositivo:</p>
-    <ul>
-      <li>i nomi dei giocatori che inserisci e la squadra di ciascuno;</li>
-      <li>se avete già confermato di essere maggiorenni per le modalità Alcolica e Piccante.</li>
-    </ul>
-    <p>Questi dati non lasciano mai il dispositivo e noi non possiamo vederli. Per cancellarli basta eliminare i giocatori nel gioco, disinstallare l'app o, sul web, cancellare i dati del sito dal browser.</p>
-
-    <h2>Cosa non facciamo</h2>
-    <ul>
-      <li>Nessun account o registrazione.</li>
-      <li>Nessuna pubblicità.</li>
-      <li>Nessuno strumento di analisi o di tracciamento e nessun cookie di profilazione.</li>
-      <li>Il gioco non usa internet: tutte le parole e le penitenze sono già nell'app.</li>
+    <ul class="facts">
+      <li class="clay purple"><svg class="icon"><use href="#i-user"/></svg>Nessun account</li>
+      <li class="clay green"><svg class="icon"><use href="#i-ads"/></svg>Niente pubblicità</li>
+      <li class="clay yellow"><svg class="icon"><use href="#i-offline"/></svg>Gioca offline</li>
     </ul>
 
-    <h2>Versione web</h2>
-    <p>Come ogni sito, il servizio che ospita la versione web può registrare dati tecnici delle visite (per esempio l'indirizzo IP e il tipo di browser) per farla funzionare e proteggerla. Noi non usiamo questi dati per altri scopi.</p>
+    <div class="clay white policy">
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-hello"/></svg></span>Chi siamo</h2>
+        <p>Complicity Game è un gioco sviluppato da Paolo Giua, che è il titolare di questa informativa. Vale per l'app per Android e iOS e per la versione web.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-phone"/></svg></span>Cosa resta sul tuo dispositivo</h2>
+        <p>Per farti ritrovare tutto alla partita successiva, il gioco salva solo sul tuo dispositivo:</p>
+        <ul>
+          <li>i nomi dei giocatori che inserisci e la squadra di ciascuno;</li>
+          <li>se avete già confermato di essere maggiorenni per le modalità Alcolica e Piccante.</li>
+        </ul>
+        <p>Questi dati non lasciano mai il dispositivo e noi non possiamo vederli. Per cancellarli basta eliminare i giocatori nel gioco, disinstallare l'app o, sul web, cancellare i dati del sito dal browser.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-no"/></svg></span>Cosa non facciamo</h2>
+        <ul>
+          <li>Nessun account o registrazione.</li>
+          <li>Nessuna pubblicità.</li>
+          <li>Nessuno strumento di analisi o di tracciamento e nessun cookie di profilazione.</li>
+          <li>Il gioco non usa internet: tutte le parole e le penitenze sono già nell'app.</li>
+        </ul>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-globe"/></svg></span>Versione web</h2>
+        <p>Come ogni sito, il servizio che ospita la versione web può registrare dati tecnici delle visite (per esempio l'indirizzo IP e il tipo di browser) per farla funzionare e proteggerla. Noi non usiamo questi dati per altri scopi.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-adult"/></svg></span>Minori</h2>
+        <p>Il gioco non raccoglie dati di nessuno, minori compresi. Le modalità Alcolica e Piccante sono riservate ai maggiorenni.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-pen"/></svg></span>Modifiche</h2>
+        <p>Se questa informativa cambia, la nuova versione sarà pubblicata su questa pagina con la data aggiornata.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-mail"/></svg></span>Contatti</h2>
+        <p>Per qualsiasi domanda scrivi a <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+      </section>
+    </div>
 
-    <h2>Minori</h2>
-    <p>Il gioco non raccoglie dati di nessuno, minori compresi. Le modalità Alcolica e Piccante sono riservate ai maggiorenni.</p>
-
-    <h2>Modifiche</h2>
-    <p>Se questa informativa cambia, la nuova versione sarà pubblicata su questa pagina con la data aggiornata.</p>
-
-    <h2>Contatti</h2>
-    <p>Per qualsiasi domanda scrivi a <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+    <div class="actions">
+      <a class="clay cta button" href="./"><svg class="icon"><use href="#i-play"/></svg>Gioca</a>
+    </div>
   </article>
 
-  <article id="en" lang="en" hidden>
+  <!-- ENGLISH -->
+  <article id="lang-en" lang="en" hidden>
     <h1>Privacy policy</h1>
     <p class="updated">Last updated: 17 November 2026</p>
 
-    <p class="summary">Complicity Game does not collect, send or share any personal data.</p>
+    <div class="clay blue summary">
+      <span class="badge"><svg class="icon"><use href="#i-shield"/></svg></span>
+      <p>Complicity Game does not collect, send or share any personal data.</p>
+    </div>
 
-    <h2>Who we are</h2>
-    <p>Complicity Game is a game developed by Paolo Giua, who is responsible for this policy. It covers the Android and iOS app and the web version.</p>
-
-    <h2>What stays on your device</h2>
-    <p>So that everything is ready for the next game, the game saves only on your device:</p>
-    <ul>
-      <li>the names of the players you enter and the team of each one;</li>
-      <li>whether you have already confirmed being adults for the Drinking and Spicy modes.</li>
-    </ul>
-    <p>This data never leaves the device and we cannot see it. To delete it, remove the players in the game, uninstall the app or, on the web, clear the site data in your browser.</p>
-
-    <h2>What we don't do</h2>
-    <ul>
-      <li>No account or sign-up.</li>
-      <li>No advertising.</li>
-      <li>No analytics, no tracking and no profiling cookies.</li>
-      <li>The game does not use the internet: all words and dares are already in the app.</li>
+    <ul class="facts">
+      <li class="clay purple"><svg class="icon"><use href="#i-user"/></svg>No account</li>
+      <li class="clay green"><svg class="icon"><use href="#i-ads"/></svg>No ads</li>
+      <li class="clay yellow"><svg class="icon"><use href="#i-offline"/></svg>Plays offline</li>
     </ul>
 
-    <h2>Web version</h2>
-    <p>Like any website, the service hosting the web version may log technical data about visits (such as the IP address and browser type) to run and protect it. We do not use this data for anything else.</p>
+    <div class="clay white policy">
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-hello"/></svg></span>Who we are</h2>
+        <p>Complicity Game is a game developed by Paolo Giua, who is responsible for this policy. It covers the Android and iOS app and the web version.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-phone"/></svg></span>What stays on your device</h2>
+        <p>So that everything is ready for the next game, the game saves only on your device:</p>
+        <ul>
+          <li>the names of the players you enter and the team of each one;</li>
+          <li>whether you have already confirmed being adults for the Drinking and Spicy modes.</li>
+        </ul>
+        <p>This data never leaves the device and we cannot see it. To delete it, remove the players in the game, uninstall the app or, on the web, clear the site data in your browser.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-no"/></svg></span>What we don't do</h2>
+        <ul>
+          <li>No account or sign-up.</li>
+          <li>No advertising.</li>
+          <li>No analytics, no tracking and no profiling cookies.</li>
+          <li>The game does not use the internet: all words and dares are already in the app.</li>
+        </ul>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-globe"/></svg></span>Web version</h2>
+        <p>Like any website, the service hosting the web version may log technical data about visits (such as the IP address and browser type) to run and protect it. We do not use this data for anything else.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-adult"/></svg></span>Children</h2>
+        <p>The game collects no data from anyone, children included. The Drinking and Spicy modes are for adults only.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-pen"/></svg></span>Changes</h2>
+        <p>If this policy changes, the new version will be published on this page with an updated date.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-mail"/></svg></span>Contact</h2>
+        <p>For any question write to <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+      </section>
+    </div>
 
-    <h2>Children</h2>
-    <p>The game collects no data from anyone, children included. The Drinking and Spicy modes are for adults only.</p>
-
-    <h2>Changes</h2>
-    <p>If this policy changes, the new version will be published on this page with an updated date.</p>
-
-    <h2>Contact</h2>
-    <p>For any question write to <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+    <div class="actions">
+      <a class="clay cta button" href="./"><svg class="icon"><use href="#i-play"/></svg>Play</a>
+    </div>
   </article>
 
-  <article id="es" lang="es" hidden>
+  <!-- ESPAÑOL -->
+  <article id="lang-es" lang="es" hidden>
     <h1>Política de privacidad</h1>
     <p class="updated">Última actualización: 17 de noviembre de 2026</p>
 
-    <p class="summary">Complicity Game no recopila, no envía y no comparte ningún dato personal.</p>
+    <div class="clay blue summary">
+      <span class="badge"><svg class="icon"><use href="#i-shield"/></svg></span>
+      <p>Complicity Game no recopila, no envía y no comparte ningún dato personal.</p>
+    </div>
 
-    <h2>Quiénes somos</h2>
-    <p>Complicity Game es un juego desarrollado por Paolo Giua, responsable de esta política. Se aplica a la app para Android e iOS y a la versión web.</p>
-
-    <h2>Lo que queda en tu dispositivo</h2>
-    <p>Para que todo esté listo en la siguiente partida, el juego guarda solo en tu dispositivo:</p>
-    <ul>
-      <li>los nombres de los jugadores que introduces y el equipo de cada uno;</li>
-      <li>si ya habéis confirmado ser mayores de edad para los modos Alcohólica y Picante.</li>
-    </ul>
-    <p>Estos datos nunca salen del dispositivo y nosotros no podemos verlos. Para borrarlos, elimina los jugadores en el juego, desinstala la app o, en la web, borra los datos del sitio en tu navegador.</p>
-
-    <h2>Lo que no hacemos</h2>
-    <ul>
-      <li>Sin cuentas ni registro.</li>
-      <li>Sin publicidad.</li>
-      <li>Sin herramientas de análisis, sin seguimiento y sin cookies de perfilado.</li>
-      <li>El juego no usa internet: todas las palabras y los retos ya están en la app.</li>
+    <ul class="facts">
+      <li class="clay purple"><svg class="icon"><use href="#i-user"/></svg>Sin cuentas</li>
+      <li class="clay green"><svg class="icon"><use href="#i-ads"/></svg>Sin anuncios</li>
+      <li class="clay yellow"><svg class="icon"><use href="#i-offline"/></svg>Sin conexión</li>
     </ul>
 
-    <h2>Versión web</h2>
-    <p>Como cualquier sitio, el servicio que aloja la versión web puede registrar datos técnicos de las visitas (por ejemplo la dirección IP y el tipo de navegador) para funcionar y protegerla. No usamos estos datos para nada más.</p>
+    <div class="clay white policy">
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-hello"/></svg></span>Quiénes somos</h2>
+        <p>Complicity Game es un juego desarrollado por Paolo Giua, responsable de esta política. Se aplica a la app para Android e iOS y a la versión web.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-phone"/></svg></span>Lo que queda en tu dispositivo</h2>
+        <p>Para que todo esté listo en la siguiente partida, el juego guarda solo en tu dispositivo:</p>
+        <ul>
+          <li>los nombres de los jugadores que introduces y el equipo de cada uno;</li>
+          <li>si ya habéis confirmado ser mayores de edad para los modos Alcohólica y Picante.</li>
+        </ul>
+        <p>Estos datos nunca salen del dispositivo y nosotros no podemos verlos. Para borrarlos, elimina los jugadores en el juego, desinstala la app o, en la web, borra los datos del sitio en tu navegador.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-no"/></svg></span>Lo que no hacemos</h2>
+        <ul>
+          <li>Sin cuentas ni registro.</li>
+          <li>Sin publicidad.</li>
+          <li>Sin herramientas de análisis, sin seguimiento y sin cookies de perfilado.</li>
+          <li>El juego no usa internet: todas las palabras y los retos ya están en la app.</li>
+        </ul>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-globe"/></svg></span>Versión web</h2>
+        <p>Como cualquier sitio, el servicio que aloja la versión web puede registrar datos técnicos de las visitas (por ejemplo la dirección IP y el tipo de navegador) para funcionar y protegerla. No usamos estos datos para nada más.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-adult"/></svg></span>Menores</h2>
+        <p>El juego no recopila datos de nadie, menores incluidos. Los modos Alcohólica y Picante son solo para mayores de edad.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-pen"/></svg></span>Cambios</h2>
+        <p>Si esta política cambia, la nueva versión se publicará en esta página con la fecha actualizada.</p>
+      </section>
+      <section>
+        <h2><span class="dot"><svg class="icon"><use href="#i-mail"/></svg></span>Contacto</h2>
+        <p>Para cualquier pregunta escribe a <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+      </section>
+    </div>
 
-    <h2>Menores</h2>
-    <p>El juego no recopila datos de nadie, menores incluidos. Los modos Alcohólica y Picante son solo para mayores de edad.</p>
-
-    <h2>Cambios</h2>
-    <p>Si esta política cambia, la nueva versión se publicará en esta página con la fecha actualizada.</p>
-
-    <h2>Contacto</h2>
-    <p>Para cualquier pregunta escribe a <a href="mailto:paolo.giuaa@gmail.com">paolo.giuaa@gmail.com</a>.</p>
+    <div class="actions">
+      <a class="clay cta button" href="./"><svg class="icon"><use href="#i-play"/></svg>Jugar</a>
+    </div>
   </article>
 </main>
 
 <script>
   // The language comes from the link (privacy.html#en), otherwise from the
-  // browser, otherwise English.
+  // browser, otherwise English. The articles are not named after the hash,
+  // so the link does not jump past the header.
   var langs = ['it', 'en', 'es'];
 
   function show(lang) {
     langs.forEach(function (l) {
-      document.getElementById(l).hidden = l !== lang;
-      document.querySelector('nav a[data-lang="' + l + '"]')
+      document.getElementById('lang-' + l).hidden = l !== lang;
+      document.querySelector('.segmented a[data-lang="' + l + '"]')
         .setAttribute('aria-current', String(l === lang));
     });
     document.documentElement.lang = lang;
