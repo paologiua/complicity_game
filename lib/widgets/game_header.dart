@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:complicity_game/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/icons.dart';
 import '../constants/theme.dart';
-import '../dialogs/confirm_dialog.dart';
 import '../models/player_model.dart';
+import '../router.dart';
 import '../services/game_service.dart';
 import 'bouncy.dart';
 import 'score_board.dart';
@@ -18,27 +17,10 @@ class GameHeader extends StatelessWidget {
   /// The team that just scored, if any.
   final Team? highlight;
 
-  Future<void> _confirmExit(BuildContext context) async {
-    HapticFeedback.lightImpact();
-
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
-    final NavigatorState navigator = Navigator.of(context);
-
-    final bool? confirmed = await showDialog<bool>(
-      context: context,
-      barrierColor: ThemeConstants.scrimColor,
-      barrierDismissible: false,
-      builder: (BuildContext context) => ConfirmDialog(
-        icon: Icons.logout_rounded,
-        text: l10n.exitGameText,
-        confirmLabel: l10n.exitButtonLabel,
-        cancelLabel: l10n.cancelButtonLabel,
-      ),
-    );
-
-    if (confirmed == true) {
-      navigator.popUntil(ModalRoute.withName('/'));
-    }
+  /// Heads home: the screens of a game in progress ask first, see
+  /// [GameExit], so the X, the back button and the back gesture behave alike.
+  void _confirmExit(BuildContext context) {
+    context.go(Paths.home);
   }
 
   @override
@@ -49,6 +31,7 @@ class GameHeader extends StatelessWidget {
       padding: const EdgeInsets.only(top: ThemeConstants.defaultPadding),
       child: Hero(
         tag: "game_header",
+        createRectTween: ThemeConstants.heroRectTween,
         child: Material(
           type: MaterialType.transparency,
           child: Row(

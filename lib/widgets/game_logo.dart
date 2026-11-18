@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../constants/theme.dart';
+
 /// The wordmark, shared by the splash and the home so it flies between them.
 class GameLogo extends StatelessWidget {
   const GameLogo({super.key});
@@ -16,6 +18,7 @@ class GameLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: "logo",
+      createRectTween: ThemeConstants.heroRectTween,
       // Fly the logo that is already on screen, not the one of the screen
       // being opened, which may not have loaded its picture yet.
       flightShuttleBuilder: (

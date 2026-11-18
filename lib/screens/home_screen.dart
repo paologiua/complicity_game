@@ -7,6 +7,8 @@ import 'package:complicity_game/l10n/app_localizations.dart';
 
 import '../constants/theme.dart';
 import '../widgets/custom_scaffold.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,13 +62,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             _entrance(
               delay: 150,
-              child: Pill(
-                heroTag: "popup",
-                color: ThemeConstants.ctaPrimaryColor,
-                borderColor: ThemeConstants.ctaSecondaryColor,
-                icon: IconsConstants.sportsKabaddi,
-                text: AppLocalizations.of(context)!.startGameButtonLabel,
-                onTap: () => Navigator.pushNamed(context, "/team_selector"),
+              child: ValueListenableBuilder<bool>(
+                valueListenable: GameExit.walkingOut,
+                builder: (BuildContext context, bool walkingOut, Widget? pill) {
+                  return HeroMode(enabled: !walkingOut, child: pill!);
+                },
+                child: Pill(
+                  heroTag: "popup",
+                  color: ThemeConstants.ctaPrimaryColor,
+                  borderColor: ThemeConstants.ctaSecondaryColor,
+                  icon: IconsConstants.sportsKabaddi,
+                  text: AppLocalizations.of(context)!.startGameButtonLabel,
+                  onTap: () => context.push(Paths.players),
+                ),
               ),
             ),
             const SizedBox(height: 14.0),
@@ -78,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: IconsConstants.rule,
                 text: AppLocalizations.of(context)!.gameRulesButtonLabel,
                 direction: Axis.horizontal,
-                onTap: () => Navigator.pushNamed(context, "/game_rules"),
+                onTap: () => context.push(Paths.rules),
               ),
             ),
             const SizedBox(height: 36.0),

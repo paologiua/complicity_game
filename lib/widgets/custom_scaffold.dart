@@ -83,52 +83,51 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       );
     }
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            _column(Stack(children: widget.children)),
-            // Content scrolling up fades out under the notch instead of being
-            // cut off at the edge of the safe area.
+    // The back button and gesture go back a screen, like the arrows do. The
+    // screens of a game in progress ask first: see GameExit in router.dart.
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          _column(Stack(children: widget.children)),
+          // Content scrolling up fades out under the notch instead of being
+          // cut off at the edge of the safe area.
+          Positioned(
+            left: 0.0,
+            right: 0.0,
+            top: 0.0,
+            height: MediaQuery.of(context).padding.top + 20.0,
+            child: _fade(style, fromTop: true),
+          ),
+          if (widget.floatingButtons != null) ...[
+            // Fades the content out under the buttons, across the whole
+            // screen and in step with the background colour.
             Positioned(
               left: 0.0,
               right: 0.0,
-              top: 0.0,
-              height: MediaQuery.of(context).padding.top + 20.0,
-              child: _fade(style, fromTop: true),
+              bottom: 0.0,
+              height: 116.0 + MediaQuery.of(context).padding.bottom,
+              child: _fade(style, fromTop: false),
             ),
-            if (widget.floatingButtons != null) ...[
-              // Fades the content out under the buttons, across the whole
-              // screen and in step with the background colour.
-              Positioned(
-                left: 0.0,
-                right: 0.0,
-                bottom: 0.0,
-                height: 116.0 + MediaQuery.of(context).padding.bottom,
-                child: _fade(style, fromTop: false),
-              ),
-              _column(
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: widget.floatingButtons!
-                        .map(
-                          (CustomFloatingButton button) => Padding(
-                            padding: const EdgeInsets.all(12.0)
-                                .copyWith(top: 28.0, bottom: 20.0),
-                            child: button,
-                          ),
-                        )
-                        .toList(),
-                  ),
+            _column(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: widget.floatingButtons!
+                      .map(
+                        (CustomFloatingButton button) => Padding(
+                          padding: const EdgeInsets.all(12.0)
+                              .copyWith(top: 28.0, bottom: 20.0),
+                          child: button,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
-            ],
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

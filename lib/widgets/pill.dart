@@ -143,6 +143,10 @@ class _PillState extends State<Pill> {
 
     return widget.heroTag == null
         ? child
-        : Hero(tag: widget.heroTag!, child: child);
+        : Hero(
+            tag: widget.heroTag!,
+            createRectTween: ThemeConstants.heroRectTween,
+            child: child,
+          );
   }
 }

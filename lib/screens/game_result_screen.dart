@@ -13,6 +13,8 @@ import '../widgets/custom_floating_button.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/game_header.dart';
 import '../widgets/pill.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 /// Shows who scored in the turn that just ended and what it costs the
 /// clue giver in the themed modes.
@@ -42,12 +44,12 @@ class _GameResultScreenState extends State<GameResultScreen> {
 
   void goToNextPage() {
     if (_gameService.state.isOver) {
-      Navigator.pushReplacementNamed(context, '/game/over');
+      GameExit.allow(() => context.pushReplacement(Paths.over));
       return;
     }
 
     _gameService.state.nextTurn();
-    Navigator.pushReplacementNamed(context, '/game/start');
+    GameExit.allow(() => context.pushReplacement(Paths.turn));
   }
 
   String _headline(AppLocalizations l10n) {

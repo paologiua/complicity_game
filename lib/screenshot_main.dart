@@ -7,17 +7,20 @@
 // The screen and the language are chosen with the `shot` and `lang` query
 // parameters of the page.
 import 'package:complicity_game/main.dart';
+import 'package:complicity_game/router.dart';
 import 'package:complicity_game/models/game_mode.dart';
 import 'package:complicity_game/models/player_model.dart';
 import 'package:complicity_game/services/game_service.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
+final GoRouter _router = buildRouter(initialLocation: Paths.home);
 
 void main() {
+  AppStart.done = true;
   final String shot = Uri.base.queryParameters['shot'] ?? 'home';
   final String lang = Uri.base.queryParameters['lang'] ?? 'en';
 
@@ -41,11 +44,7 @@ void main() {
           lazy: false,
         ),
       ],
-      child: ComplicityGame(
-        initialRoute: '/',
-        navigatorKey: _navigator,
-        locale: Locale(lang),
-      ),
+      child: ComplicityGame(router: _router, locale: Locale(lang)),
     ),
   );
 
@@ -68,24 +67,24 @@ void _play(GameService game, List<Team?> rounds) {
 }
 
 void _open(String shot) {
-  final NavigatorState navigator = _navigator.currentState!;
-  final GameService game = navigator.context.read<GameService>();
+  final GameService game =
+      _router.routerDelegate.navigatorKey.currentContext!.read<GameService>();
 
   switch (shot) {
     case 'players':
-      navigator.pushNamed('/team_selector');
+      _router.push(Paths.players);
     case 'setup':
-      navigator.pushNamed('/game/setup');
+      _router.push(Paths.setup);
     case 'turn':
       game.configure(mode: GameMode.classic, targetScore: 5);
       game.start();
       _play(game, [Team.green, Team.yellow, Team.green]);
-      navigator.pushNamed('/game/start');
+      _router.push(Paths.turn);
     case 'word':
       game.configure(mode: GameMode.classic, targetScore: 5);
       game.start();
       _play(game, [Team.green, Team.yellow, Team.green]);
-      navigator.pushNamed('/game/progress');
+      _router.push(Paths.word);
     case 'result':
       game.configure(mode: GameMode.dares, targetScore: 5);
       game.start();
@@ -94,12 +93,12 @@ void _open(String shot) {
       game.state.resolve(
         Team.values.firstWhere((Team team) => team != clueTeam),
       );
-      navigator.pushNamed('/game/result');
+      _router.push(Paths.result);
     case 'over':
       game.configure(mode: GameMode.classic, targetScore: 3);
       game.start();
       _play(game, [Team.green, Team.yellow, Team.green]);
       game.state.resolve(Team.green);
-      navigator.pushNamed('/game/over');
+      _router.push(Paths.over);
   }
 }

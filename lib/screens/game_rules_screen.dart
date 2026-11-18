@@ -8,6 +8,8 @@ import '../models/player_model.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/screen_title.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 /// The three rules of the game on one page, in the order they matter.
 class GameRulesScreen extends StatelessWidget {
@@ -51,8 +53,7 @@ class GameRulesScreen extends StatelessWidget {
           icon: Icons.play_arrow_rounded,
           text: l10n.startGameButtonLabel,
           backgroundColor: ThemeConstants.ctaPrimaryColor,
-          onPressed: () =>
-              Navigator.pushReplacementNamed(context, '/team_selector'),
+          onPressed: () => context.pushReplacement(Paths.players),
         ),
       ],
       children: [

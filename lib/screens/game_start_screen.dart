@@ -9,6 +9,8 @@ import '../widgets/custom_scaffold.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/game_header.dart';
 import '../widgets/word_card.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 class GameStartScreen extends StatefulWidget {
   const GameStartScreen({super.key});
@@ -55,10 +57,7 @@ class _GameStartScreenState extends State<GameStartScreen> {
   }
 
   void goToNextPage() {
-    Navigator.pushReplacementNamed(
-      context,
-      '/game/progress',
-    );
+    GameExit.allow(() => context.pushReplacement(Paths.word));
   }
 }
 
@@ -77,6 +76,7 @@ class _TurnCard extends StatelessWidget {
 
     return Hero(
       tag: "popup",
+      createRectTween: ThemeConstants.heroRectTween,
       child: Container(
         width: double.infinity,
         height: WordCard.height,

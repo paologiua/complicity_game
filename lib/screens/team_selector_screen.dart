@@ -13,6 +13,8 @@ import '../sheets/player_editor_sheet.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/name_chip.dart';
 import '../widgets/screen_title.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 /// Lists the players of each team and lets them be added, edited or moved.
 class TeamSelectorScreen extends StatefulWidget {
@@ -68,7 +70,7 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
           text: l10n.nextButtonLabel,
           backgroundColor: ThemeConstants.ctaPrimaryColor,
           enabled: _playerManagerService.isReadyToPlay(),
-          onPressed: () => Navigator.pushNamed(context, '/game/setup'),
+          onPressed: () => context.push(Paths.setup),
         ),
       ],
       children: [

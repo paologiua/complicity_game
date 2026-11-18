@@ -15,6 +15,8 @@ import '../widgets/bouncy.dart';
 import '../widgets/custom_floating_button.dart';
 import '../widgets/custom_scaffold.dart';
 import '../widgets/screen_title.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 /// Lets the players pick the game mode and how many words win the game.
 class GameSetupScreen extends StatefulWidget {
@@ -121,7 +123,7 @@ class _GameSetupScreenState extends State<GameSetupScreen> {
     _gameService.configure(mode: _mode, targetScore: _targetScore);
     _gameService.start();
 
-    Navigator.pushNamed(context, '/game/start');
+    context.push(Paths.turn);
   }
 
   @override

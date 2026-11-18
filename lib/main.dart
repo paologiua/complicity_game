@@ -1,7 +1,7 @@
 import 'dart:ui' show FlutterView;
 
 import 'package:complicity_game/constants/theme.dart';
-import 'package:complicity_game/routes.dart';
+import 'package:complicity_game/router.dart';
 import 'package:complicity_game/services/game_service.dart';
 import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:complicity_game/models/game_mode.dart';
@@ -10,10 +10,15 @@ import 'package:complicity_game/widgets/playful_background.dart';
 import 'package:complicity_game/widgets/tablet_scale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:go_router/go_router.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  // On the web, screens have plain addresses such as /players, not #/players.
+  usePathUrlStrategy();
+
   runApp(
     MultiProvider(
       providers: [
@@ -69,26 +74,26 @@ const SystemUiOverlayStyle _systemBars = SystemUiOverlayStyle(
   systemNavigationBarContrastEnforced: false,
 );
 
-class ComplicityGame extends StatelessWidget {
-  const ComplicityGame({
-    super.key,
-    this.initialRoute = '/splash',
-    this.navigatorKey,
-    this.locale,
-  });
+class ComplicityGame extends StatefulWidget {
+  const ComplicityGame({super.key, this.router, this.locale});
 
-  /// Where the app opens. Only the tool that takes the store screenshots
-  /// starts anywhere else than the splash screen.
-  final String initialRoute;
-  final GlobalKey<NavigatorState>? navigatorKey;
+  /// The screens of the app. Only the tool that takes the store screenshots
+  /// brings its own, which skips the splash.
+  final GoRouter? router;
 
   /// Language of the app; the one of the device when null.
   final Locale? locale;
 
-  // This widget is the root of application
+  @override
+  State<ComplicityGame> createState() => _ComplicityGameState();
+}
+
+class _ComplicityGameState extends State<ComplicityGame> {
+  late final GoRouter _router = widget.router ?? buildRouter();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Complicity Game',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -108,8 +113,7 @@ class ComplicityGame extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      routes: routes,
-      navigatorObservers: [BackgroundNavigatorObserver()],
+      routerConfig: _router,
       // One background behind every screen: pages slide over it instead of
       // each bringing its own.
       builder: (BuildContext context, Widget? child) {
@@ -132,17 +136,7 @@ class ComplicityGame extends StatelessWidget {
           ),
         );
       },
-      initialRoute: initialRoute,
-      // Always open on [initialRoute], whatever screen the address names: the
-      // screens of a game need the game that a reload has just thrown away.
-      onGenerateInitialRoutes: (String _) => [
-        MaterialPageRoute<void>(
-          builder: routes[initialRoute]!,
-          settings: RouteSettings(name: initialRoute),
-        ),
-      ],
-      navigatorKey: navigatorKey,
-      locale: locale,
+      locale: widget.locale,
     );
   }
 }

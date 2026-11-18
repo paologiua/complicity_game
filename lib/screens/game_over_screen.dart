@@ -12,6 +12,8 @@ import '../widgets/custom_scaffold.dart';
 import '../widgets/fireworks.dart';
 import '../widgets/pill.dart';
 import '../widgets/score_board.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 /// Celebrates the winning team and offers a rematch.
 class GameOverScreen extends StatefulWidget {
@@ -38,11 +40,11 @@ class _GameOverScreenState extends State<GameOverScreen> {
 
   void _playAgain() {
     _gameService.restart();
-    Navigator.pushReplacementNamed(context, '/game/start');
+    GameExit.allow(() => context.pushReplacement(Paths.turn));
   }
 
   void _goHome() {
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    GameExit.backHome(GoRouter.of(context));
   }
 
   /// What the losing team has to do, or null in the classic mode.

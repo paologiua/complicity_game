@@ -109,6 +109,13 @@ class ThemeConstants {
   static const Duration entranceDuration = Duration(milliseconds: 450);
   static const Curve bounceCurve = Curves.easeOutBack;
 
+  /// The curved path shared elements fly along between screens, as in
+  /// Material. Set on each [Hero], since go_router gives its navigator a
+  /// plain hero controller that would fly them in a straight line.
+  static RectTween heroRectTween(Rect? begin, Rect? end) {
+    return MaterialRectArcTween(begin: begin, end: end);
+  }
+
   /// Blends [color] with white to get a brighter shade of the same hue.
   static Color lighten(Color color, [double amount = 0.2]) {
     return Color.lerp(color, Colors.white, amount)!;

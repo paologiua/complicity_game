@@ -6,6 +6,8 @@ import 'package:complicity_game/widgets/game_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -39,7 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
     // A longer sweep than a normal page change: the game is opening.
     BackgroundMotion.sweep(1.0);
-    Navigator.pushReplacementNamed(context, '/');
+    AppStart.done = true;
+    context.go(Paths.home);
   }
 
   @override

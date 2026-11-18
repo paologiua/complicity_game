@@ -55,6 +55,7 @@ class _CustomFloatingButtonState extends State<CustomFloatingButton> {
             ? body
             : Hero(
                 tag: widget.heroTag!,
+                createRectTween: ThemeConstants.heroRectTween,
                 flightShuttleBuilder: _flightShuttle,
                 child: body,
               ),

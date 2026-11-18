@@ -173,7 +173,11 @@ class _WordCardState extends State<WordCard>
 
     return widget.heroTag == null
         ? card
-        : Hero(tag: widget.heroTag!, child: card);
+        : Hero(
+            tag: widget.heroTag!,
+            createRectTween: ThemeConstants.heroRectTween,
+            child: card,
+          );
   }
 
   Widget _face({

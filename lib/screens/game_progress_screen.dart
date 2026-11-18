@@ -15,6 +15,8 @@ import '../widgets/custom_scaffold.dart';
 import '../widgets/game_header.dart';
 import '../widgets/pill.dart';
 import '../widgets/word_card.dart';
+import 'package:complicity_game/router.dart';
+import 'package:go_router/go_router.dart';
 
 class GameProgressScreen extends StatefulWidget {
   const GameProgressScreen({super.key});
@@ -133,10 +135,7 @@ class _GameProgressScreenState extends State<GameProgressScreen>
     _countdown.stop();
     _gameService.state.resolve(team);
 
-    Navigator.pushReplacementNamed(
-      context,
-      "/game/result",
-    );
+    GameExit.allow(() => context.pushReplacement(Paths.result));
   }
 
   void draw() {
