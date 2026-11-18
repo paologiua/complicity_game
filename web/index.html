@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -8,9 +8,6 @@
     The path provided below has to start and end with a slash "/" in order for
     it to work correctly.
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
@@ -18,11 +15,27 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFF7ED">
   <meta name="description" content="The party game of secret words: give clues, guess together, beat the other team.">
 
+  <!--
+    Preview when the link is shared. Some apps (WhatsApp, Telegram, X) only
+    read og:image from a full address: once the site has its domain, write
+    it in front, e.g. https://example.com/og-image.png.
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Complicity Game">
+  <meta property="og:description" content="The party game of secret words: give clues, guess together, beat the other team.">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Complicity Game">
+  <meta name="twitter:card" content="summary_large_image">
+
   <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Complicity Game">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
@@ -32,28 +45,77 @@
   <title>Complicity Game</title>
   <link rel="manifest" href="manifest.json">
 
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <style>
+    /*
+      Shown while the game downloads, like the splash screen of the app: the
+      logo in the middle and three clay dots hopping below it. It fades out
+      on the first frame drawn by Flutter.
+    */
+    html, body { margin: 0; height: 100%; background: #FFF7ED; }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: #FFF7ED;
+      transition: opacity .25s ease-out;
+    }
+    #loading.done { opacity: 0; pointer-events: none; }
+
+    #loading img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(340px, calc(100vw - 40px));
+      transform: translate(-50%, -50%);
+    }
+
+    #loading .dots {
+      position: absolute;
+      left: 50%;
+      top: 86%;
+      display: flex;
+      gap: 14px;
+      transform: translate(-50%, -50%);
+    }
+    #loading .dots span {
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 3px solid var(--edge);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--fill) 78%, #fff), var(--fill));
+      box-shadow: 0 8px 14px color-mix(in srgb, var(--edge) 38%, transparent);
+      animation: hop .42s ease-out infinite alternate;
+    }
+    #loading .dots span:nth-child(1) { --fill: #8EE5A8; --edge: #3FAE66; }
+    #loading .dots span:nth-child(2) { --fill: #FFDB6E; --edge: #DFA11C; animation-delay: .14s; }
+    #loading .dots span:nth-child(3) { --fill: #FDA65A; --edge: #D9661A; animation-delay: .28s; }
+    @keyframes hop { to { transform: translateY(-14px); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      #loading .dots span { animation: none; }
+    }
+  </style>
 </head>
 <body>
+  <div id="loading" role="progressbar" aria-label="Loading Complicity Game">
+    <img src="assets/assets/images/splash-icon.svg" alt="">
+    <div class="dots"><span></span><span></span><span></span></div>
+  </div>
+
   <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
+    window.addEventListener('flutter-first-frame', function () {
+      var loading = document.getElementById('loading');
+      loading.classList.add('done');
+      setTimeout(function () { loading.remove(); }, 300);
     });
   </script>
+
+  <!--
+    Loads the game with Flutter's default settings. For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
