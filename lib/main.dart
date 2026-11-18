@@ -1,3 +1,5 @@
+import 'dart:ui' show FlutterView;
+
 import 'package:complicity_game/constants/theme.dart';
 import 'package:complicity_game/routes.dart';
 import 'package:complicity_game/services/game_service.dart';
@@ -27,12 +29,28 @@ void main() {
     ),
   );
 
-  //Setting PreferredOrientations
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  if (_isPhone()) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+}
+
+/// Phones stay upright, the game is made to be passed from hand to hand.
+/// Tablets turn freely, as the App Store asks of iPad apps. On iPhone the
+/// Info.plist already allows only portrait, in case the size is not known yet.
+bool _isPhone() {
+  final Iterable<FlutterView> views =
+      WidgetsBinding.instance.platformDispatcher.views;
+  if (views.isEmpty || views.first.physicalSize.isEmpty) {
+    return false;
+  }
+
+  final FlutterView view = views.first;
+  final double shortestSide =
+      view.physicalSize.shortestSide / view.devicePixelRatio;
+
+  return shortestSide < 600.0;
 }
 
 /// The cream background runs under transparent system bars, with dark icons
