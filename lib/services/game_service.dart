@@ -254,8 +254,11 @@ class GameService with ChangeNotifier, DiagnosticableTreeMixin {
   GameService(BuildContext context, {String? languageCode})
       : _context = context,
         _languageCode = languageCode {
-    _load();
+    ready = _load();
   }
+
+  /// Completes once the words and dares of the device language are loaded.
+  late final Future<void> ready;
 
   final BuildContext _context;
 

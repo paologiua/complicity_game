@@ -1,10 +1,11 @@
-import 'dart:async';
-
 import 'package:complicity_game/constants/theme.dart';
+import 'package:complicity_game/services/game_service.dart';
+import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:complicity_game/widgets/background_motion.dart';
 import 'package:complicity_game/widgets/game_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,23 +15,31 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Timer? _timer;
-
   @override
   void initState() {
     super.initState();
-    _timer = Timer(const Duration(milliseconds: 2400), () {
-      if (!mounted) return;
-      // A longer sweep than a normal page change: the game is opening.
-      BackgroundMotion.sweep(1.0);
-      Navigator.pushReplacementNamed(context, '/');
-    });
+    _openHome();
   }
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+  /// Leaves the splash once it has been on screen long enough and the saved
+  /// players, the words and the dares are all loaded, so no screen after it
+  /// ever shows up half empty. On a slow connection the splash simply waits.
+  Future<void> _openHome() async {
+    final Future<void> players = context.read<PlayerManagerService>().restore();
+    final Future<void> words = context.read<GameService>().ready;
+
+    await Future.wait<void>([
+      Future<void>.delayed(const Duration(milliseconds: 2400)),
+      // Both already cope with missing data: a failure only means the game
+      // goes on without it, so it must not keep the splash up.
+      players.catchError((Object _) {}),
+      words.catchError((Object _) {}),
+    ]);
+
+    if (!mounted) return;
+    // A longer sweep than a normal page change: the game is opening.
+    BackgroundMotion.sweep(1.0);
+    Navigator.pushReplacementNamed(context, '/');
   }
 
   @override

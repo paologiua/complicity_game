@@ -51,6 +51,9 @@ class _TeamSelectorScreenState extends State<TeamSelectorScreen> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context)!;
+    // Rebuilds when the saved players come back, should the screen open
+    // before they are read.
+    context.watch<PlayerManagerService>();
 
     return CustomScaffold(
       floatingButtons: [

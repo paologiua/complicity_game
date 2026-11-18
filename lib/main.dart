@@ -133,6 +133,14 @@ class ComplicityGame extends StatelessWidget {
         );
       },
       initialRoute: initialRoute,
+      // Always open on [initialRoute], whatever screen the address names: the
+      // screens of a game need the game that a reload has just thrown away.
+      onGenerateInitialRoutes: (String _) => [
+        MaterialPageRoute<void>(
+          builder: routes[initialRoute]!,
+          settings: RouteSettings(name: initialRoute),
+        ),
+      ],
       navigatorKey: navigatorKey,
       locale: locale,
     );

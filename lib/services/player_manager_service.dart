@@ -15,8 +15,13 @@ class PlayerManagerService with ChangeNotifier, DiagnosticableTreeMixin {
   /// that has not been read yet is never overwritten.
   SharedPreferences? _storage;
 
-  /// Brings back the players of the last time the game was open.
-  Future<void> restore() async {
+  Future<void>? _restoring;
+
+  /// Brings back the players of the last time the game was open. Calling it
+  /// again returns the same future, so a screen can wait for it to be done.
+  Future<void> restore() => _restoring ??= _restore();
+
+  Future<void> _restore() async {
     try {
       final SharedPreferences storage = await SharedPreferences.getInstance();
       final String? saved = storage.getString(_storageKey);
