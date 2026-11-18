@@ -134,6 +134,7 @@ class _PillState extends State<Pill> {
               // Never scrolls: it only lets the content be clipped, instead
               // of overflowing, while a Hero flight squeezes the card.
               : SingleChildScrollView(
+                  primary: false,
                   physics: const NeverScrollableScrollPhysics(),
                   child: content,
                 ),

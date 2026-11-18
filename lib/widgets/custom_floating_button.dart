@@ -213,6 +213,7 @@ class _ButtonBody extends StatelessWidget {
                     child: LayoutBuilder(
                       builder: (context, constraints) => SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
+                        primary: false,
                         physics: const NeverScrollableScrollPhysics(),
                         child: Container(
                           height: widget.size,

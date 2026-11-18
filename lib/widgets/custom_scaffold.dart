@@ -30,6 +30,52 @@ class CustomScaffold extends StatefulWidget {
 }
 
 class _CustomScaffoldState extends State<CustomScaffold> {
+  /// Taken by the list of the screen, so the scrollbar can be drawn at the
+  /// edge of the screen instead of next to the narrow column.
+  final ScrollController _scroll = ScrollController();
+
+  static const Set<TargetPlatform> _desktop = {
+    TargetPlatform.linux,
+    TargetPlatform.macOS,
+    TargetPlatform.windows,
+  };
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// The screen with one scrollbar at its right edge, on the platforms that
+  /// show one, for the list of the screen. The scroll view of the screen
+  /// takes [_scroll] as its primary controller and keeps no bar of its own.
+  Widget _scrollable(BuildContext context, Widget screen) {
+    final Widget withoutOwnBar = PrimaryScrollController(
+      controller: _scroll,
+      automaticallyInheritForPlatforms: TargetPlatform.values.toSet(),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: screen,
+      ),
+    );
+
+    if (!_desktop.contains(Theme.of(context).platform)) {
+      return withoutOwnBar;
+    }
+
+    return Scrollbar(
+      controller: _scroll,
+      // Only the list of the screen, not the cards that never scroll.
+      notificationPredicate: (ScrollNotification notification) =>
+          notification.depth == 0 &&
+          _scroll.positions.any(
+            (ScrollPosition position) =>
+                position.context.notificationContext == notification.context,
+          ),
+      child: withoutOwnBar,
+    );
+  }
+
   /// How far below the header the content is still fading in.
   static const double _headerFadeDepth = 16.0;
 
@@ -105,62 +151,65 @@ class _CustomScaffoldState extends State<CustomScaffold> {
     // screens of a game in progress ask first: see GameExit in router.dart.
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          _column(Stack(children: widget.children)),
-          // Content scrolling up fades out under the notch, or under the
-          // header, instead of being cut off at their edge.
-          if (widget.header == null)
-            Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: 0.0,
-              height: MediaQuery.of(context).padding.top + 20.0,
-              child: _fade(style, fromTop: true),
-            )
-          else ...[
-            Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: 0.0,
-              height: MediaQuery.of(context).padding.top +
-                  GameHeader.extent +
-                  _headerFadeDepth,
-              // The same veil as under the buttons at the bottom, upside down.
-              child: _fade(style, fromTop: true, underBar: true),
-            ),
-            _column(
-                Align(alignment: Alignment.topCenter, child: widget.header)),
-          ],
-          if (widget.floatingButtons != null) ...[
-            // Fades the content out under the buttons, across the whole
-            // screen and in step with the background colour.
-            Positioned(
-              left: 0.0,
-              right: 0.0,
-              bottom: 0.0,
-              height: 116.0 + MediaQuery.of(context).padding.bottom,
-              child: _fade(style, fromTop: false),
-            ),
-            _column(
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: widget.floatingButtons!
-                      .map(
-                        (CustomFloatingButton button) => Padding(
-                          padding: const EdgeInsets.all(12.0)
-                              .copyWith(top: 28.0, bottom: 20.0),
-                          child: button,
-                        ),
-                      )
-                      .toList(),
+      body: _scrollable(
+        context,
+        Stack(
+          children: [
+            _column(Stack(children: widget.children)),
+            // Content scrolling up fades out under the notch, or under the
+            // header, instead of being cut off at their edge.
+            if (widget.header == null)
+              Positioned(
+                left: 0.0,
+                right: 0.0,
+                top: 0.0,
+                height: MediaQuery.of(context).padding.top + 20.0,
+                child: _fade(style, fromTop: true),
+              )
+            else ...[
+              Positioned(
+                left: 0.0,
+                right: 0.0,
+                top: 0.0,
+                height: MediaQuery.of(context).padding.top +
+                    GameHeader.extent +
+                    _headerFadeDepth,
+                // The same veil as under the buttons at the bottom, upside down.
+                child: _fade(style, fromTop: true, underBar: true),
+              ),
+              _column(
+                  Align(alignment: Alignment.topCenter, child: widget.header)),
+            ],
+            if (widget.floatingButtons != null) ...[
+              // Fades the content out under the buttons, across the whole
+              // screen and in step with the background colour.
+              Positioned(
+                left: 0.0,
+                right: 0.0,
+                bottom: 0.0,
+                height: 116.0 + MediaQuery.of(context).padding.bottom,
+                child: _fade(style, fromTop: false),
+              ),
+              _column(
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: widget.floatingButtons!
+                        .map(
+                          (CustomFloatingButton button) => Padding(
+                            padding: const EdgeInsets.all(12.0)
+                                .copyWith(top: 28.0, bottom: 20.0),
+                            child: button,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

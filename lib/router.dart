@@ -48,9 +48,8 @@ abstract final class AppStart {
 abstract final class GameExit {
   static bool _allowed = false;
 
-  /// Up while the players walk out of a game: the home then comes back
-  /// without the card of the game flying into its start button, which only
-  /// makes sense when the game has been played to the end.
+  /// Up while the players go back home from a game: the home then comes
+  /// back without the card of the game flying into its start button.
   static final ValueNotifier<bool> walkingOut = ValueNotifier<bool>(false);
 
   /// Runs [navigate] without asking: go_router calls [GoRoute.onExit] while
@@ -72,15 +71,7 @@ abstract final class GameExit {
     }
 
     final GoRouter router = GoRouter.of(context);
-    void goHome() {
-      walkingOut.value = true;
-      Future<void>.microtask(() async {
-        await backHome(router);
-        // Long enough for the way back home to be over.
-        await Future<void>.delayed(const Duration(milliseconds: 700));
-        walkingOut.value = false;
-      });
-    }
+    void goHome() => Future<void>.microtask(() => backHome(router));
 
     if (state.matchedLocation == Paths.over) {
       goHome();
@@ -103,6 +94,7 @@ abstract final class GameExit {
   /// sit still in the middle. The screens in between are removed first, out
   /// of sight under the game, and the game is closed on the next frame.
   static Future<void> backHome(GoRouter router) async {
+    walkingOut.value = true;
     final GoRouterDelegate delegate = router.routerDelegate;
     final RouteMatchList stack = delegate.currentConfiguration;
 
@@ -120,6 +112,10 @@ abstract final class GameExit {
     }
 
     allow(() => router.go(Paths.home));
+
+    // Long enough for the way back home to be over.
+    await Future<void>.delayed(const Duration(milliseconds: 700));
+    walkingOut.value = false;
   }
 
   static Future<bool> _ask(BuildContext context) async {

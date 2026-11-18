@@ -49,6 +49,7 @@ class WordCard extends StatefulWidget {
   /// squeezes the card, so it is clipped instead of overflowing.
   static Widget unsqueezable(Widget child) {
     return SingleChildScrollView(
+      primary: false,
       physics: const NeverScrollableScrollPhysics(),
       child: SizedBox(
         height: height -
