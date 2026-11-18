@@ -22,4 +22,5 @@ flutter run
 - `lib/l10n` – translations (run `flutter gen-l10n` after editing the `.arb` files)
 - `assets/data` – word lists and dares, one file per language
 - `design/icon` – sources of the app icon (run `dart run flutter_launcher_icons` after changing them)
+- `design/logo` – the script that draws the logo and the link preview
 - `word_sources` – the larger word lists the game lists were picked from; not shipped with the app
