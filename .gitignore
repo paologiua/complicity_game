@@ -55,3 +55,6 @@ app.*.map.json
 
 # Gradle writes a cache here besides the root build folder
 /android/build/
+
+# Local cache of the Cloudflare CLI
+/.wrangler/
