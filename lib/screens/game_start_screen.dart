@@ -43,11 +43,8 @@ class _GameStartScreenState extends State<GameStartScreen> {
           onPressed: goToNextPage,
         ),
       ],
+      header: const GameHeader(),
       children: [
-        const Align(
-          alignment: Alignment.topCenter,
-          child: GameHeader(),
-        ),
         Align(
           alignment: Alignment.center,
           child: _TurnCard(player: player),

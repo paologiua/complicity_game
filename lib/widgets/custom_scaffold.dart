@@ -4,17 +4,23 @@ import '../constants/theme.dart';
 import '../models/game_mode.dart';
 import 'custom_floating_button.dart';
 import 'background_motion.dart';
+import 'game_header.dart';
 
 class CustomScaffold extends StatefulWidget {
   const CustomScaffold({
     super.key,
     required this.children,
     this.floatingButtons,
+    this.header,
     this.mode = GameMode.classic,
   });
 
   final List<Widget> children;
   final List<CustomFloatingButton>? floatingButtons;
+
+  /// A bar pinned at the top, [GameHeader.extent] tall. Content scrolls under
+  /// it and fades out, as it does under the [floatingButtons].
+  final Widget? header;
 
   /// The game mode that colours the frame and the animated background.
   final GameMode mode;
@@ -24,6 +30,9 @@ class CustomScaffold extends StatefulWidget {
 }
 
 class _CustomScaffoldState extends State<CustomScaffold> {
+  /// How far below the header the content is still fading in.
+  static const double _headerFadeDepth = 16.0;
+
   /// Centres [child] in the safe area, in the column every screen shares.
   Widget _column(Widget child) {
     return SafeArea(
@@ -45,7 +54,16 @@ class _CustomScaffoldState extends State<CustomScaffold> {
 
   /// A veil of the background colour, solid at one edge of the screen and
   /// clear at the other end. It follows the colour when the mode changes.
-  Widget _fade(GameModeStyle style, {required bool fromTop}) {
+  ///
+  /// The veil under a bar of buttons is light, so what scrolls under the bar
+  /// still shows through; the one under the notch is denser, as there is
+  /// nothing to see there.
+  Widget _fade(
+    GameModeStyle style, {
+    required bool fromTop,
+    bool underBar = false,
+  }) {
+    final bool light = underBar || !fromTop;
     return IgnorePointer(
       child: TweenAnimationBuilder<Color?>(
         tween: ColorTween(end: style.backgroundColor),
@@ -59,10 +77,10 @@ class _CustomScaffoldState extends State<CustomScaffold> {
                 end: fromTop ? Alignment.bottomCenter : Alignment.topCenter,
                 colors: [
                   base,
-                  base.withValues(alpha: fromTop ? 0.9 : 0.73),
+                  base.withValues(alpha: light ? 0.73 : 0.9),
                   base.withValues(alpha: 0.0),
                 ],
-                stops: [0.0, fromTop ? 0.45 : 0.3, 1.0],
+                stops: [0.0, light ? 0.3 : 0.45, 1.0],
               ),
             ),
           );
@@ -90,15 +108,30 @@ class _CustomScaffoldState extends State<CustomScaffold> {
       body: Stack(
         children: [
           _column(Stack(children: widget.children)),
-          // Content scrolling up fades out under the notch instead of being
-          // cut off at the edge of the safe area.
-          Positioned(
-            left: 0.0,
-            right: 0.0,
-            top: 0.0,
-            height: MediaQuery.of(context).padding.top + 20.0,
-            child: _fade(style, fromTop: true),
-          ),
+          // Content scrolling up fades out under the notch, or under the
+          // header, instead of being cut off at their edge.
+          if (widget.header == null)
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              top: 0.0,
+              height: MediaQuery.of(context).padding.top + 20.0,
+              child: _fade(style, fromTop: true),
+            )
+          else ...[
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              top: 0.0,
+              height: MediaQuery.of(context).padding.top +
+                  GameHeader.extent +
+                  _headerFadeDepth,
+              // The same veil as under the buttons at the bottom, upside down.
+              child: _fade(style, fromTop: true, underBar: true),
+            ),
+            _column(
+                Align(alignment: Alignment.topCenter, child: widget.header)),
+          ],
           if (widget.floatingButtons != null) ...[
             // Fades the content out under the buttons, across the whole
             // screen and in step with the background colour.

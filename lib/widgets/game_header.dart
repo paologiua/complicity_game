@@ -17,6 +17,11 @@ class GameHeader extends StatelessWidget {
   /// The team that just scored, if any.
   final Team? highlight;
 
+  /// How far the header reaches down from the top of the safe area. Content
+  /// that scrolls under it starts this far down.
+  static const double extent =
+      ThemeConstants.defaultPadding + ScoreBoard.height;
+
   /// Heads home: the screens of a game in progress ask first, see
   /// [GameExit], so the X, the back button and the back gesture behave alike.
   void _confirmExit(BuildContext context) {

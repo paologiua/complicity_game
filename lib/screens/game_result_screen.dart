@@ -123,15 +123,15 @@ class _GameResultScreenState extends State<GameResultScreen> {
           onPressed: goToNextPage,
         ),
       ],
+      header: GameHeader(highlight: team),
       children: [
         Column(
           children: [
-            GameHeader(highlight: team),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.only(
-                    top: ThemeConstants.defaultPadding,
+                    top: GameHeader.extent + ThemeConstants.defaultPadding,
                     bottom: 110.0,
                   ),
                   child: Column(

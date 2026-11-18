@@ -26,6 +26,11 @@ class ScoreBoard extends StatelessWidget {
   /// starting earlier would play once on that copy and again on the real one.
   static const Duration highlightDelay = Duration(milliseconds: 650);
 
+  /// Two rows of fixed height, their gap, the padding and the clay border:
+  /// the board is this tall whatever the size of the text.
+  static const double height =
+      2 * _TeamRow.height + 6.0 + 2 * 10.0 + 2 * ThemeConstants.clayBorderWidth;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,6 +65,9 @@ class ScoreBoard extends StatelessWidget {
 }
 
 class _TeamRow extends StatelessWidget {
+  /// Height of a row, set by the score badge at its start.
+  static const double height = 26.0;
+
   const _TeamRow({
     required this.team,
     required this.score,
@@ -111,7 +119,7 @@ class _TeamRow extends StatelessWidget {
       children: [
         Container(
           width: 26.0,
-          height: 26.0,
+          height: height,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: team.color,

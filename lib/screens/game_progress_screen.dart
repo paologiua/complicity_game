@@ -81,15 +81,16 @@ class _GameProgressScreenState extends State<GameProgressScreen>
 
     return CustomScaffold(
       mode: _gameService.mode,
+      header: const GameHeader(),
       children: [
         Column(
           children: [
-            const GameHeader(),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: ThemeConstants.defaultPadding,
+                  padding: const EdgeInsets.only(
+                    top: GameHeader.extent + ThemeConstants.defaultPadding,
+                    bottom: ThemeConstants.defaultPadding,
                   ),
                   child: WordCard(
                     heroTag: "popup",
