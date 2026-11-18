@@ -12,7 +12,7 @@ class GameLogo extends StatelessWidget {
   /// Width over height of the artwork. Reserving the space up front matters:
   /// the picture loads a moment after the first frame, and a logo with no
   /// height yet gives the flight between screens nowhere to land.
-  static const double _aspectRatio = 367.52 / 148.03;
+  static const double _aspectRatio = 631.99 / 247.50;
 
   @override
   Widget build(BuildContext context) {
