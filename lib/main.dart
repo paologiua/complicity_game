@@ -7,6 +7,7 @@ import 'package:complicity_game/services/player_manager_service.dart';
 import 'package:complicity_game/models/game_mode.dart';
 import 'package:complicity_game/widgets/background_motion.dart';
 import 'package:complicity_game/widgets/playful_background.dart';
+import 'package:complicity_game/widgets/tablet_scale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
@@ -114,18 +115,20 @@ class ComplicityGame extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: _systemBars,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: ValueListenableBuilder<GameMode>(
-                  valueListenable: BackgroundMotion.mode,
-                  builder: (BuildContext context, GameMode mode, _) {
-                    return PlayfulBackground(mode: mode);
-                  },
+          child: TabletScale(
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: ValueListenableBuilder<GameMode>(
+                    valueListenable: BackgroundMotion.mode,
+                    builder: (BuildContext context, GameMode mode, _) {
+                      return PlayfulBackground(mode: mode);
+                    },
+                  ),
                 ),
-              ),
-              if (child != null) child,
-            ],
+                if (child != null) child,
+              ],
+            ),
           ),
         );
       },
