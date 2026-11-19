@@ -1,0 +1,9 @@
+# Headers of the site on Cloudflare Pages.
+#
+# Cross-origin isolation lets Flutter's skwasm renderer draw on a thread of
+# its own, which keeps the animations smooth. It blocks files from other
+# sites that do not opt in, so the page must not load any: everything it
+# needs is served from here, CanvasKit included (see flutter_bootstrap.js).
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp

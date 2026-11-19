@@ -24,3 +24,17 @@ flutter run
 - `design/icon` – sources of the app icon (run `dart run flutter_launcher_icons` after changing them)
 - `design/logo` – the script that draws the logo and the link preview
 - `word_sources` – the larger word lists the game lists were picked from; not shipped with the app
+
+## Web version
+
+```sh
+flutter build web --release --wasm
+```
+
+The site is served from `build/web` on Cloudflare Pages. Build it with
+`--wasm`: Safari then runs Flutter's skwasm renderer, which keeps the
+animations smooth on iPhone, while browsers without WebAssembly GC fall back
+to the JavaScript build. `web/flutter_bootstrap.js` turns skwasm on for
+Safari, and `web/_headers` makes the page cross-origin isolated so skwasm can
+draw on a thread of its own. Because of that isolation the page cannot load
+files from other sites.
