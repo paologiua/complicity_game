@@ -38,3 +38,10 @@ to the JavaScript build. `web/flutter_bootstrap.js` turns skwasm on for
 Safari, and `web/_headers` makes the page cross-origin isolated so skwasm can
 draw on a thread of its own. Because of that isolation the page cannot load
 files from other sites.
+
+To publish it, deploy `build/web` to the `complicity-game` Pages project
+(check first that `build/web/_headers` is there):
+
+```sh
+npx --yes wrangler pages deploy build/web --project-name complicity-game --branch main
+```
