@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:complicity_game/l10n/app_localizations.dart';
 
@@ -101,7 +102,12 @@ class _PlayerEditorSheetState extends State<PlayerEditorSheet> {
             borderColor: _team.borderColor,
             icon: _team.icon,
             maxLength: 15,
-            autofocus: true,
+            // In Safari on iPhone a field focused without a tap gets no
+            // keyboard, but its hidden web input is left over the field, low
+            // on the screen: the first tap then opens the keyboard on top of
+            // it and Safari pushes the whole page up. There the field waits
+            // for the tap, which places the input out of the way first.
+            autofocus: !(kIsWeb && defaultTargetPlatform == TargetPlatform.iOS),
             hintText: l10n.playerNameHintText,
             onSubmit: (_) => _save(),
           ),
