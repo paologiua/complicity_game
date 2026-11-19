@@ -100,6 +100,24 @@ abstract class AppLocalizations {
     Locale('it')
   ];
 
+  /// Short title of part 1 of the game rules
+  ///
+  /// In en, this message translates to:
+  /// **'The teams'**
+  String get gameRulesTitle1;
+
+  /// Short title of part 2 of the game rules
+  ///
+  /// In en, this message translates to:
+  /// **'Each turn'**
+  String get gameRulesTitle2;
+
+  /// Short title of part 3 of the game rules
+  ///
+  /// In en, this message translates to:
+  /// **'Who wins'**
+  String get gameRulesTitle3;
+
   /// The first part of the game rules displayed to the user
   ///
   /// In en, this message translates to:

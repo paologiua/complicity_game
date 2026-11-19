@@ -1,4 +1,16 @@
 {
+	"gameRulesTitle1": "The teams",
+	"@gameRulesTitle1": {
+		"description": "Short title of part 1 of the game rules"
+	},
+	"gameRulesTitle2": "Each turn",
+	"@gameRulesTitle2": {
+		"description": "Short title of part 2 of the game rules"
+	},
+	"gameRulesTitle3": "Who wins",
+	"@gameRulesTitle3": {
+		"description": "Short title of part 3 of the game rules"
+	},
 	"gameRulesPart1": "Complicity Game is a group game. You need to divide the participants into two teams composed of people with a great sense of mutual complicity",
 	"@gameRulesPart1": {
 		"description": "The first part of the game rules displayed to the user"

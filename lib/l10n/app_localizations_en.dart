@@ -9,6 +9,15 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get gameRulesTitle1 => 'The teams';
+
+  @override
+  String get gameRulesTitle2 => 'Each turn';
+
+  @override
+  String get gameRulesTitle3 => 'Who wins';
+
+  @override
   String get gameRulesPart1 =>
       'Complicity Game is a group game. You need to divide the participants into two teams composed of people with a great sense of mutual complicity';
 

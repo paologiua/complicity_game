@@ -25,18 +25,21 @@ class GameRulesScreen extends StatelessWidget {
         IconsConstants.emojiObjects,
         Team.yellow.color,
         Team.yellow.borderColor,
+        l10n.gameRulesTitle1,
         l10n.gameRulesPart1,
       ),
       _Rule(
         IconsConstants.cognition,
         Team.green.color,
         Team.green.borderColor,
+        l10n.gameRulesTitle2,
         l10n.gameRulesPart2,
       ),
       _Rule(
         IconsConstants.socialLeaderboard,
         ThemeConstants.bluePrimaryColor,
         ThemeConstants.blueSecondaryColor,
+        l10n.gameRulesTitle3,
         l10n.gameRulesPart3,
       ),
     ];
@@ -66,8 +69,8 @@ class GameRulesScreen extends StatelessWidget {
             ScreenTitle(title: l10n.gameRulesButtonLabel),
             for (int index = 0; index < rules.length; index++)
               reduceMotion
-                  ? _RuleCard(number: index + 1, rule: rules[index])
-                  : _RuleCard(number: index + 1, rule: rules[index])
+                  ? _RuleCard(rule: rules[index])
+                  : _RuleCard(rule: rules[index])
                       .animate(delay: Duration(milliseconds: 50 * index))
                       .fadeIn(duration: ThemeConstants.entranceDuration)
                       .slideY(
@@ -84,18 +87,18 @@ class GameRulesScreen extends StatelessWidget {
 }
 
 class _Rule {
-  const _Rule(this.icon, this.color, this.borderColor, this.text);
+  const _Rule(this.icon, this.color, this.borderColor, this.title, this.text);
 
   final IconData icon;
   final Color color;
   final Color borderColor;
+  final String title;
   final String text;
 }
 
 class _RuleCard extends StatelessWidget {
-  const _RuleCard({required this.number, required this.rule});
+  const _RuleCard({required this.rule});
 
-  final int number;
   final _Rule rule;
 
   @override
@@ -112,18 +115,21 @@ class _RuleCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 52.0,
-            height: 52.0,
-            decoration: BoxDecoration(
-              color: rule.color,
-              shape: BoxShape.circle,
-              border: Border.all(color: rule.borderColor, width: 2.5),
-            ),
-            child: Icon(
-              rule.icon,
-              size: 28.0,
-              color: ThemeConstants.defaultTextColor,
+          // Decorative: the title next to it already says what the rule is.
+          ExcludeSemantics(
+            child: Container(
+              width: 52.0,
+              height: 52.0,
+              decoration: BoxDecoration(
+                color: rule.color,
+                shape: BoxShape.circle,
+                border: Border.all(color: rule.borderColor, width: 2.5),
+              ),
+              child: Icon(
+                rule.icon,
+                size: 28.0,
+                color: ThemeConstants.defaultTextColor,
+              ),
             ),
           ),
           const SizedBox(width: 14.0),
@@ -132,20 +138,21 @@ class _RuleCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$number',
+                  rule.title,
                   style: textStyle.copyWith(
-                    fontSize: 14.0,
+                    fontSize: 18.0,
                     fontWeight: FontWeight.w700,
-                    color: ThemeConstants.mutedTextColor,
+                    height: 1.3,
+                    color: ThemeConstants.defaultTextColor,
                   ),
                 ),
-                const SizedBox(height: 2.0),
+                const SizedBox(height: 4.0),
                 Text(
                   rule.text,
                   style: textStyle.copyWith(
-                    fontSize: 15.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w500,
-                    height: 1.45,
+                    height: 1.5,
                   ),
                 ),
               ],

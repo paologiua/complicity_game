@@ -9,6 +9,15 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get gameRulesTitle1 => 'Los equipos';
+
+  @override
+  String get gameRulesTitle2 => 'El turno';
+
+  @override
+  String get gameRulesTitle3 => 'Quién gana';
+
+  @override
   String get gameRulesPart1 =>
       'El Juego de la Complicidad es un juego de grupo. Tienes que dividir a los participantes en dos equipos compuestos por personas con un gran sentido de la complicidad mutua';
 

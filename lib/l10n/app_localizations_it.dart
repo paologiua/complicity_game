@@ -9,6 +9,15 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
+  String get gameRulesTitle1 => 'Le squadre';
+
+  @override
+  String get gameRulesTitle2 => 'Il turno';
+
+  @override
+  String get gameRulesTitle3 => 'Chi vince';
+
+  @override
   String get gameRulesPart1 =>
       'Complicity Game è un gioco di gruppo. Occorre dividere i partecipanti in due squadre composte da persone con un grande senso di complicità reciproco';
 
